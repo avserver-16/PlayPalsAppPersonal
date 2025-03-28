@@ -105,7 +105,7 @@ const LangSport = ({ navigation }) => {
         <TouchableOpacity onPress={() => handlePress("Badminton")} activeOpacity={0.7}>
           <View
             style={{
-              backgroundColor: selectedSports.includes("Badminton") ? "#0000009 0" : "#ffffff2a",
+              backgroundColor: selectedSports.includes("Badminton") ? "#00000090" : "#ffffff2a",
               width: 250,
               height: 60,
               justifyContent: "center",

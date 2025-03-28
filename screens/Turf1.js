@@ -3,6 +3,7 @@ import BG2 from './BG2';
 import { View, ScrollView, TouchableOpacity, Text, TextInput, ImageBackground } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { useNavigation } from '@react-navigation/native';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 const Turf1 = () => {
     const navigation = useNavigation();
@@ -24,6 +25,14 @@ const Turf1 = () => {
 
     return (
         <BG2>
+            {/* Arrow Button */}
+            <TouchableOpacity onPress={() => navigation.goBack()} style={{
+                position: 'absolute',
+                top: 40, left: 10, zIndex: 10,
+            }}>
+                <AntDesign name="arrowleft" size={34} color="white" />
+            </TouchableOpacity>
+
             {/* Filter Blur View */}
             {showFilter && (
                 <BlurView intensity={100} tint="dark" style={{
@@ -68,7 +77,7 @@ const Turf1 = () => {
             )}
 
             {/* Date Selector */}
-            <View style={{ backgroundColor: 'transparent', height: 81, justifyContent: 'center', top: 56, position: 'absolute' }}>
+            <View style={{ backgroundColor: 'transparent', height: 81, justifyContent: 'center', top: 80, position: 'absolute' }}>
                 <ScrollView
                     horizontal
                     showsHorizontalScrollIndicator={false}

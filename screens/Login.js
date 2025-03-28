@@ -1,19 +1,35 @@
-import { TouchableOpacity, Text, View, TextInput, ImageBackground } from "react-native";
+import { TouchableOpacity, Text, View, TextInput, ImageBackground, Alert } from "react-native";
 import { useState } from "react";
 import Background from "./Background";
 import React from "react";
 import { Feather } from "@expo/vector-icons";
 
 const Login = ({ navigation }) => {
-    const [pass, setPass] = useState('');
-    const [seeCheck, setSeeCheck] = useState(true);
+    const [username, setUsername] = useState('');  // Username state
+    const [pass, setPass] = useState('');  // Password state
+    const [seeCheck, setSeeCheck] = useState(true);  // Password visibility toggle
 
     const handlePass = (text) => {
         setPass(text);
     };
 
+    const handleUsername = (text) => {
+        setUsername(text);
+    };
+
     const togglePasswordVisibility = () => {
         setSeeCheck((prevState) => !prevState);
+    };
+
+    const handleLogin = () => {
+        // Check if both fields are filled
+        if (!username || !pass) {
+            Alert.alert("Error", "Please fill in both fields.");
+            return; // Prevent navigation if fields are empty
+        }
+        
+        // If fields are filled, proceed to Homescreen
+        navigation.navigate('Homescreen');
     };
 
     return (
@@ -65,6 +81,8 @@ const Login = ({ navigation }) => {
                     }}
                     placeholder="Username"
                     placeholderTextColor={'#0000004d'}
+                    value={username}
+                    onChangeText={handleUsername}
                 />
 
                 <View style={{
@@ -83,8 +101,8 @@ const Login = ({ navigation }) => {
                         style={{
                             flex: 1,
                             fontFamily: 'Kanit_400Regular',
-                            fontSize: 24
-                        }}
+                        fontSize: 24
+                    }}
                         placeholder="Password"
                         placeholderTextColor={'#0000004d'}
                         onChangeText={handlePass}
@@ -108,7 +126,7 @@ const Login = ({ navigation }) => {
             </View>
 
             <TouchableOpacity
-                onPress={() => navigation.navigate('Homescreen')}
+                onPress={handleLogin}  // Call handleLogin to check if fields are filled
                 style={{
                     backgroundColor: '#0091ff',
                     width: 300,

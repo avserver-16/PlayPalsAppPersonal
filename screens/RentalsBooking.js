@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, ImageBackground, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
+
 const RentalsBooking = () => {
     const navigation = useNavigation();
     const route = useRoute();

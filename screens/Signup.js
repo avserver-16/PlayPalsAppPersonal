@@ -46,7 +46,7 @@ export default function Signup() {
       setPasswordError("");
     }
     setFormError("");
-    navigation.navigate("OtpVerification", { email, name });
+    navigation.navigate("LangSport", { email, name });
   };
 
   const showDatePicker = () => {

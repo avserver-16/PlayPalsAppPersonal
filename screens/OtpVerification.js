@@ -17,9 +17,8 @@ export default function OtpVerification({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const route = useRoute();
-  //const navigation = useNavigation();
 
-  const { email, name } = route.params;
+  const { email } = route.params; // Access the email passed from ForgotPassword page
 
   const inputRefs = [useRef(), useRef(), useRef(), useRef()];
 
@@ -39,7 +38,8 @@ export default function OtpVerification({ navigation }) {
     const otpString = otp.join("");
     if (otpString === dummyOtp) {
       setLoading(true);
-      navigation.navigate('LangSport');
+      navigation.navigate('Login');
+      alert("Please Login using the updated credentials.")
     } else {
       setError("Invalid OTP. Please try again.");
       setOtp(["", "", "", ""]);
@@ -62,7 +62,7 @@ export default function OtpVerification({ navigation }) {
           Please enter the OTP sent to {email}
         </Text>
 
-        \        <View style={styles.otpContainer}>
+        <View style={styles.otpContainer}>
           {otp.map((digit, index) => (
             <TextInput
               key={index}
@@ -104,15 +104,16 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    //fontWeight: "bold",
     color: "#fff",
-    marginBottom: 20, fontFamily: 'Kanit_400Regular'
+    marginBottom: 20,
+    fontFamily: 'Kanit_400Regular'
   },
   description: {
     fontSize: 18,
     color: "#fff",
     marginBottom: 30,
-    textAlign: "center", fontFamily: 'Kanit_400Regular'
+    textAlign: "center",
+    fontFamily: 'Kanit_400Regular'
   },
   otpContainer: {
     flexDirection: "row",
@@ -128,7 +129,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: "#fff",
     textAlign: "center",
-    marginHorizontal: 10, fontFamily: 'Kanit_400Regular'
+    marginHorizontal: 10,
+    fontFamily: 'Kanit_400Regular'
   },
   button: {
     backgroundColor: "#4CAF50",
@@ -142,13 +144,13 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontSize: 18,
-    //fontWeight: "bold",
     fontFamily: 'Kanit_400Regular'
   },
   errorText: {
     color: "red",
     fontSize: 14,
-    marginBottom: 20, fontFamily: 'Kanit_400Regular'
+    marginBottom: 20,
+    fontFamily: 'Kanit_400Regular'
   },
   loader: {
     marginTop: 20,

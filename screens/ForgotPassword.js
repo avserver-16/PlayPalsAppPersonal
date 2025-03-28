@@ -1,15 +1,22 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import Background from "./Background";
 
 const ForgotPassword = ({ navigation }) => {
     const [email, setEmail] = useState("");
 
     const handleResetPassword = () => {
+        // Check if the email is empty
+        if (!email) {
+            Alert.alert("Error", "Please enter your email address.");
+            return; // Prevent navigation if email is empty
+        }
+
         // Placeholder for password reset functionality
         console.log("Password reset link sent to:", email);
-        alert("Password reset link has been sent to your email.");
-        navigation.goBack();
+        
+        // Navigate to OTPVerification page and pass email as a parameter
+        navigation.navigate('OtpVerification', { email });
     };
 
     return (
@@ -45,10 +52,12 @@ const ForgotPassword = ({ navigation }) => {
                         fontFamily: 'Kanit_400Regular',
                         fontSize: 24
                     }}
-                    placeholder="Enter your Email or Username"
+                    placeholder="Enter your Email"
                     placeholderTextColor={'#0000004d'}
                     value={email}
                     onChangeText={setEmail}
+                    keyboardType="email-address"  // This sets the keyboard type for email input
+                    autoCapitalize="none"         // Prevents auto-capitalization
                 />
             </View>
 

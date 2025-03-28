@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import BG2 from './BG2';
 import { View, ScrollView, TouchableOpacity, Text, TextInput, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AntDesign from '@expo/vector-icons/AntDesign';
+
 
 const Rentals = () => {
     const navigation = useNavigation();
@@ -18,7 +20,13 @@ const Rentals = () => {
     return (
         <BG2>
             {/* Date Scroll Section */}
-            <View style={{ backgroundColor: 'transparent', height: 81, justifyContent: 'center', top: 56, position: 'absolute' }}>
+            <TouchableOpacity onPress={() => navigation.goBack()} style={{
+                position: 'absolute',
+                top: 40, left: 10, zIndex: 10,
+            }}>
+                <AntDesign name="arrowleft" size={34} color="white" />
+            </TouchableOpacity>
+            <View style={{ backgroundColor: 'transparent', height: 81, justifyContent: 'center', top: 81, position: 'absolute' }}>
                 <ScrollView
                     horizontal
                     showsHorizontalScrollIndicator={false}
