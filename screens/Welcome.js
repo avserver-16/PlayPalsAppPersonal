@@ -20,7 +20,7 @@ const Welcome = ({ navigation }) => {
       </View>
 
       <View style={styles.backgroundWrapper}>
-        <ImageBackground source={require("./asset/image.png")} style={styles.background}>
+        <ImageBackground source={require("./asset/homescreenBG.png")} style={styles.background}>
           <ImageBackground source={require("./asset/bgGradientHomescreen.png")} style={styles.gradient} />
           <ImageBackground source={require("./asset/player.png")} style={styles.player} />
         </ImageBackground>

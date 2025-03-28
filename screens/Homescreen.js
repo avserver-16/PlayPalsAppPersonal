@@ -14,6 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { DrawerActions } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { LinearGradient } from "expo-linear-gradient";
 
 const { width, height } = Dimensions.get("window");
 
@@ -24,9 +25,13 @@ const sports = [
 ];
 
 const gears = [
-  { id: "4", name: "Badminton Racket", image: require("./asset/Badminton.png") },
-  { id: "5", name: "Cricket Bat", image: require("./asset/Cricket.png") },
-  { id: "6", name: "Football Gloves", image: require("./asset/Football.png") },
+  {
+    id: "4",
+    name: "Badminton Racket",
+    image: require("./asset/badmintonRacket.png"),
+  },
+  { id: "5", name: "Cricket Kit", image: require("./asset/cKit.png") },
+  { id: "6", name: "Football Gloves", image: require("./asset/FBgloves.png") },
 ];
 
 const HomeScreen = () => {
@@ -57,12 +62,24 @@ const HomeScreen = () => {
       </SafeAreaView>
 
       {/* Scrollable Content */}
-      <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
+      >
         {/* Background Images */}
         <View style={styles.backgroundWrapper}>
-          <ImageBackground source={require("./asset/image.png")} style={styles.background}>
-            <ImageBackground source={require("./asset/bgGradientHomescreen.png")} style={styles.gradient} />
-            <ImageBackground source={require("./asset/player.png")} style={styles.player} />
+          <ImageBackground
+            source={require("./asset/homescreenBG.png")}
+            style={styles.background}
+          >
+            <ImageBackground
+              source={require("./asset/bgGradientHomescreen.png")}
+              style={styles.gradient}
+            />
+            <ImageBackground
+              source={require("./asset/player.png")}
+              style={styles.player}
+            />
           </ImageBackground>
         </View>
 
@@ -81,16 +98,38 @@ const HomeScreen = () => {
             </View>
             <Carousel
               loop
-              width={width * 0.7}
+              width={width * 0.7} // Adjust width to fit better
               height={200}
               autoPlay={false}
               data={sports}
               scrollAnimationDuration={800}
+              mode="parallax" // Helps align items better
+              modeConfig={{
+                parallaxScrollingScale: 0.9, // Adjusts scale to prevent gaps
+                parallaxScrollingOffset: 110, // Reduces the extra space
+              }}
               renderItem={({ item }) => (
-                <View style={styles.card}>
-                  <ImageBackground source={item.image} style={styles.cardImage} />
+                <LinearGradient
+                colors={["rgba(0, 0, 0, 0.1)", "rgba(0, 0, 0, 0.8)"]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 0, y: 1 }}
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: "#fff",
+                    borderRadius: 10,
+                    padding: 20,
+                    marginHorizontal: 5,
+                    width: width * 0.4,
+                    height: 200,
+                  }}
+                >
+                  <ImageBackground
+                    source={item.image}
+                    style={styles.cardImage}
+                  />
                   <Text style={styles.cardText}>{item.name}</Text>
-                </View>
+                </LinearGradient>
               )}
             />
           </View>
@@ -98,24 +137,40 @@ const HomeScreen = () => {
 
         {/* Gear Section */}
         <View style={[styles.sectionContainer, styles.lastSection]}>
-          <View style={[styles.sectionTitleContainer, { alignSelf: "flex-end" }]}>
+          <View
+            style={[styles.sectionTitleContainer, { alignSelf: "flex-end" }]}
+          >
             <Text style={styles.sectionTitle}>Gear</Text>
           </View>
           <View style={styles.carouselContainer}>
             <Carousel
               loop
-              width={width * 0.6}
+              width={width * 0.7} // Adjust width to fit better
               height={200}
               autoPlay={false}
               data={gears}
               scrollAnimationDuration={800}
+              mode="parallax" // Helps align items better
+              modeConfig={{
+                parallaxScrollingScale: 0.9, // Adjusts scale to prevent gaps
+                parallaxScrollingOffset: 110, // Reduces the extra space
+              }}
               renderItem={({ item }) => (
-                <View style={styles.card}>
-                  <ImageBackground source={item.image} style={styles.cardImage} />
+                <LinearGradient
+                  colors={["rgba(0, 0, 0, 0.1)", "rgba(0, 0, 0, 0.8)"]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 0, y: 1 }}
+                  style={styles.card}
+                >
+                  <ImageBackground
+                    source={item.image}
+                    style={styles.cardImage}
+                  />
                   <Text style={styles.cardText}>{item.name}</Text>
-                </View>
+                </LinearGradient>
               )}
             />
+
             <View style={styles.pickPlayRepeatCard}>
               <Text style={styles.pickPlayRepeatText}>PICK</Text>
               <Text style={styles.pickPlayRepeatText}>PLAY</Text>
@@ -194,6 +249,8 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     zIndex: 4,
     paddingLeft: 10,
+    width:120,
+    alignItems:'center'
   },
   sportsText: {
     fontSize: 20,
@@ -214,10 +271,12 @@ const styles = StyleSheet.create({
   sectionTitleContainer: {
     backgroundColor: "white",
     padding: 10,
-    borderRadius: 5,
+    borderTopLeftRadius: 15,
     alignSelf: "flex-start",
     marginLeft: 20,
     marginTop: 20,
+    width:120,
+    alignItems:'center'
   },
   sectionTitle: { fontSize: 20, fontWeight: "bold", color: "#000" },
 
@@ -227,15 +286,15 @@ const styles = StyleSheet.create({
   },
 
   pickPlayRepeatCard: {
-    backgroundColor: "#111",
+    backgroundColor: "black",
     paddingVertical: 20,
     paddingHorizontal: 40,
     borderRadius: 10,
     alignItems: "center",
     height: 200,
     justifyContent: "center",
-    marginRight: 10,
   },
+
   pickPlayRepeatText: { fontSize: 18, fontWeight: "bold", color: "white" },
 
   card: {
@@ -244,9 +303,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 10,
     padding: 20,
-    margin: 10,
+    marginHorizontal: 5,
     width: width * 0.4,
-    height: 200,
+    height: 210,
   },
   cardImage: { width: 100, height: 100, resizeMode: "contain" },
   cardText: { marginTop: 10, fontSize: 16, fontWeight: "bold" },

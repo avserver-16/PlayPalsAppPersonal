@@ -25,7 +25,7 @@ const UserAccount = () => {
   const [profileImage, setProfileImage] = useState(null);
   const [dob, setDob] = useState("");
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [selectedGames, setSelectedGames] = useState([]); 
+  const [selectedGames, setSelectedGames] = useState([]);
 
   const bookings = [
     { id: 1, name: "Turf A", type: "Turfs", date: "01/03/2025", seats: 5 },
@@ -94,6 +94,10 @@ const UserAccount = () => {
 
   return (
     <View style={styles.container}>
+      <Image
+        source={require("./asset/cricketBat.png")} // Update the path if needed
+        style={styles.cricketBat}
+      />
       <SafeAreaView style={styles.header}>
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <Ionicons name="menu" size={32} color="white" />
@@ -236,6 +240,17 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingVertical: 20,
   },
+  cricketBat: {
+    position: "absolute",
+    top: "20%", // Adjust to position it correctly
+    left: "-10%", // Center it
+    width: 500, // Adjust size as needed
+    height: 600, // Adjust size as needed
+    opacity: 0.4, // Lower opacity for subtle effect
+    transform: [{ rotate: "-15deg" }], // Rotate ONLY the bat
+    zIndex: 0, // Send it behind all other UI elements
+  },
+
   scrollContainer: { paddingBottom: 40 },
   profileContainer: {
     flexDirection: "row",
@@ -292,7 +307,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 12,
     borderRadius: 8,
-    marginTop:15
+    marginTop: 15,
   },
   showMoreText: { textAlign: "center", color: "white", marginTop: 10 },
 });
