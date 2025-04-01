@@ -1,31 +1,79 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BG2 from './BG2';
-import { View, ScrollView, TouchableOpacity, Text, TextInput, Image } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Text, TextInput, Image, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
+//price perr hour 
+//itemname
+//description
+//category
+//quantity
+//location
 
 const Rentals = () => {
     const navigation = useNavigation();
     const today = new Date();
     const [selectedIndex, setSelectedIndex] = useState(null);
+    const [rentals, setRentals] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    // Rental Data
-    const rentals = [
-        { id: 1, name: 'Badminton Racket', location: 'Andheri', duration: '24hrs', price: '$10', image: require("./asset/badmintonRacket.png") },
-        { id: 2, name: 'Cricket Kit', location: 'Malad', duration: '24hrs', price: '$100', image: require("./asset/cKit.png") },
-        { id: 3, name: 'Football Gloves', location: 'Bandra', duration: '12hrs', price: '$25', image: require("./asset/FBgloves.png") },
-    ];
+
+    useEffect(() => {
+        const fetchRentals = async () => {
+            console.log("Fetching Rentals...");
+            try {
+                const storedToken = await AsyncStorage.getItem("token");
+                if (!storedToken) {
+                    console.log("No Token Found");
+                    return;
+                }
+
+                console.log("Retrieved Token", JSON.stringify(storedToken, null, 2));
+                const response = await fetch("https://playpals-l797.onrender.com/rentals", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${storedToken}`
+                    }
+                });
+
+                const data = await response.json();
+                console.log("Fetched Data:", JSON.stringify(data, null, 2));
+
+                if (Array.isArray(data)) {
+                    setRentals(data);
+                    //console.log(rentals[0].photos[0])
+                }
+            } catch (error) {
+                console.error("Error fetching rentals:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchRentals();
+    }, []);
+    const capitalizeWords = (sentence) => {
+        if (!sentence) return "";
+        return sentence
+          .split(" ")
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ");
+      };
 
     return (
         <BG2>
-            {/* Date Scroll Section */}
+        
             <TouchableOpacity onPress={() => navigation.goBack()} style={{
                 position: 'absolute',
                 top: 40, left: 10, zIndex: 10,
             }}>
                 <AntDesign name="arrowleft" size={34} color="white" />
             </TouchableOpacity>
+
             <View style={{ backgroundColor: 'transparent', height: 81, justifyContent: 'center', top: 81, position: 'absolute' }}>
                 <ScrollView
                     horizontal
@@ -75,58 +123,59 @@ const Rentals = () => {
             </View>
 
             {/* Rental List Section */}
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ flexDirection: 'column', alignItems: 'center', paddingTop: 20, paddingBottom: 20 }}
-                style={{ marginTop: 200 }}
-            >
-                {rentals.map((rental) => (
-                    <View key={rental.id} style={{
-                        height: 150, width: 308, backgroundColor: 'transparent',
-                        borderBottomWidth: 2, borderColor: '#FFFFFF', marginBottom: 30,
-                    }}>
-                        <View style={{ alignItems: 'center', backgroundColor: 'white' }}>
-                            <Image source={rental.image} style={{
-                                flex: 1, height: 100, width: 150, position: "absolute", bottom: 0, opacity: 1, left: 20, top: 20, resizeMode: 'contain'
-                            }} />
-                            <TouchableOpacity
-                                style={{
-                                    zIndex: 2, width: 60, height: 30, backgroundColor: '#B8F4AA', borderRadius: 10,
-                                    alignItems: 'center', justifyContent: 'center', position: 'absolute', left: 5, top: 5
-                                }}
-                            >
-                                <Text style={{ fontSize: 15, color: 'black' }}>{rental.price}</Text>
-                            </TouchableOpacity>
-                        </View>
+            {loading ? (
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 200 }}>
+                    <ActivityIndicator size="large" color="#B8F4AA" />
+                </View>
+            ) : (
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{ flexDirection: 'column', alignItems: 'center', paddingTop: 20, paddingBottom: 20 }}
+                    style={{ marginTop: 200 }}
+                >
+                    {rentals.length === 0 ? (
+                        <Text style={{ color: 'white', fontSize: 18 }}>No rentals available.</Text>
+                    ) : (
+                        rentals.map((rental) => (
+                            <View key={rental.id} style={{
+                                height: 150, width: 308, backgroundColor: 'transparent',
+                                borderBottomWidth: 2, borderColor: '#FFFFFF', marginBottom: 30,
+                            }}>
+                                <View style={{ alignItems: 'center', backgroundColor: 'white' }}>
+                                    <Image source={{ uri: rentals[0].photos[0]}} style={{
+                                        flex: 1, height: 100, width: 150, position: "absolute", bottom: 0, opacity: 1, left: 20, top: 20, resizeMode: 'contain',borderRadius:20
+                                    }} />
+                                    <TouchableOpacity
+                                        style={{
+                                            zIndex: 2, width: 60, height: 30, backgroundColor: '#B8F4AA', borderRadius: 10,
+                                            alignItems: 'center', justifyContent: 'center', position: 'absolute', left: 5, top: 5
+                                        }}
+                                    >
+                                        <Text style={{ fontSize: 15, color: 'black' }}>${rental.pricePerHour}</Text>
+                                    </TouchableOpacity>
+                                </View>
 
-                        <View style={{ left: 190, top: 20 }}>
-                            <Text style={{ fontSize: 20, fontWeight: '600', color: '#FFFFFF', marginBottom: 5 }}>{rental.name}</Text>
-                            <Text style={{ fontSize: 15, fontWeight: '400', color: '#FFFFFF' }}>Pickup: {rental.location}</Text>
-                            <Text style={{ fontSize: 15, fontWeight: '400', color: '#FFFFFF' }}>Duration: {rental.duration}</Text>
+                                <View style={{ left: 190, top: 20 }}>
+                                    <Text style={{ fontSize: 20, fontWeight: '600', color: '#FFFFFF', marginBottom: 5 }}>{capitalizeWords(rental.name)}</Text>
+                                    <Text style={{ fontSize: 15, fontWeight: '400', color: '#FFFFFF' }}>Category: {rental.category}</Text>
+                                    <Text style={{ fontSize: 15, fontWeight: '400', color: '#FFFFFF' }}>Quantity: {rental.quantity}</Text>
 
-                            <TouchableOpacity
-                                style={{
-                                    zIndex: 2, width: 80, height: 35, backgroundColor: 'transparent',
-                                    borderRadius: 10, alignItems: 'center', justifyContent: 'center',
-                                    position: 'absolute', left: 0, top: 80, borderWidth: 2, borderColor: '#B8F4AA'
-                                }}
-                                onPress={() => navigation.navigate('RentalsBooking', { 
-                                    rentalDetails: {
-                                        id: rental.id,
-                                        name: rental.name,
-                                        location: rental.location,
-                                        duration: rental.duration,
-                                        price: rental.price,
-                                        image: rental.image
-                                    }
-                                })}
-                            >
-                                <Text style={{ fontSize: 15, color: 'white' }}>View</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                ))}
-            </ScrollView>
+                                    <TouchableOpacity
+                                        style={{
+                                            zIndex: 2, width: 80, height: 35, backgroundColor: 'transparent',
+                                            borderRadius: 10, alignItems: 'center', justifyContent: 'center',
+                                            position: 'absolute', left: 0, top: 80, borderWidth: 2, borderColor: '#B8F4AA'
+                                        }}
+                                        onPress={() => navigation.navigate('RentalsBooking', { rentalDetails: rentals })}
+                                    >
+                                        <Text style={{ fontSize: 15, color: 'white' }}>View</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        ))
+                    )}
+                </ScrollView>
+            )}
         </BG2>
     );
 };
