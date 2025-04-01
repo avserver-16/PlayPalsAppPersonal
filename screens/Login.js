@@ -8,7 +8,7 @@ import { Alert } from "react-native";
 
 
 
-const Login = ({navigation}) => {
+const Login = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPass] = useState('');
     const [seeCheck, setSeeCheck] = useState(true);
@@ -26,16 +26,21 @@ const Login = ({navigation}) => {
         const data = await response.json();
         console.log(data);
         console.log(data.message);
-        console.log(data.data.token);
-const token=data?.data?.token;
+        
+        const token = data?.data?.token;
+        console.log(token);
         if (token) {
             console.log("Entered true");
-            await AsyncStorage.setItem("token", data.data.token);
+            await AsyncStorage.setItem("token",token);
             const storedToken = await AsyncStorage.getItem("token");
+            console.log(storedToken)
             Alert.alert("Success", "Logged in successfully");
-            navigation.navigate("Homescreen",{email,password})
+            navigation.navigate("Homescreen")
+            console.log("Run")
         } else {
-            Alert.alert("Error", data.message || "Login failed");
+            if (data.message === "Invalid credentials") {
+                Alert.alert("Error", "Invalid Credentials");
+            }
         }
     }
 
@@ -126,7 +131,7 @@ const token=data?.data?.token;
             style={{ backgroundColor: '#0091ff', width: 300, height: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 10, position: 'absolute', bottom: 100 }}>
             <Text style={{ fontFamily: 'Kanit_400Regular', fontSize: 24 }}>Login</Text>
         </TouchableOpacity>
-        <Text style={{ fontFamily: 'Kanit_400Regular', color: '#ffffff80', fontSize: 24, position: 'absolute', bottom: 10 }} onPress={() => { navigation.navigate('Signup') }} >Register<Text style={{ color: '#0000007d', position: 'absolute', fontSize: 20 }}> yourself !!!</Text></Text>
+        <Text style={{ fontFamily: 'Kanit_400Regular', color: '#ffffff90', fontSize: 24, position: 'absolute', bottom: 10 }} onPress={() => { navigation.navigate('Signup') }} >Register<Text style={{ color: '#0000007d', position: 'absolute', fontSize: 20 }}> yourself !!!</Text></Text>
     </Background>);
 }
 export default Login;

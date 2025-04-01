@@ -23,6 +23,7 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [dob, setDob] = useState("");
+  const [city,setCity]=useState('')
   const [gender, setGender] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -34,7 +35,7 @@ export default function Signup() {
 
 
 
-  const bFunc = async (name, email, password, dob, gender) => {
+  const bFunc = async (name, email, password, dob, gender,city) => {
     try {
       // Convert dob to ISO format
       const formattedDob = dob ? new Date(dob).toISOString() : null;
@@ -48,7 +49,7 @@ export default function Signup() {
       const response = await fetch("https://playpals-l797.onrender.com/user/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password, dob: formattedDob, gender }),
+        body: JSON.stringify({ name, email, password, dob: formattedDob, gender,city }),
       });
   
       const text = await response.text();
@@ -73,7 +74,7 @@ export default function Signup() {
 
 
   const handleSubmit = () => {
-    bFunc(name,email,password,dob,gender);
+    bFunc(name,email,password,dob,gender,city);
     if (!name || !email || !password || !dob || !gender) {
       setFormError("All fields must be filled out.");
       return;
@@ -151,6 +152,12 @@ export default function Signup() {
             value={password}
             onChangeText={setPassword} />
           {passwordError ? <Text style={styles.error}>{passwordError}</Text> : null}
+          <TextInput
+            style={styles.input}
+            placeholder="City"
+           
+            value={city}
+            onChangeText={setCity} />
           <TouchableOpacity onPress={showDatePicker} style={styles.input}>
             <Text style={styles.dateText}>
               {dob ? dob : "Select Date of Birth"}

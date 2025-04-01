@@ -28,9 +28,10 @@ const styles = StyleSheet.create({
   logoText: { fontSize: 18, fontWeight: "bold", color: "white", marginVertical: 20 },
   menuContainer: { flex: 1, marginVertical: 20 },
   signOutButton: {
+    width:310,
     backgroundColor: "#fff",
     padding: 15,
-    borderRadius: 5,
+    borderRadius: 15,
     alignItems: "center",
     marginTop: 20,
   },

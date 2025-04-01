@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   StyleSheet,
   Dimensions,
@@ -16,6 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from "moment";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width } = Dimensions.get("window");
 
@@ -24,8 +24,71 @@ const UserAccount = () => {
   const [gender, setGender] = useState("");
   const [profileImage, setProfileImage] = useState(null);
   const [dob, setDob] = useState("");
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedGames, setSelectedGames] = useState([]);
+  const [token, setToken] = useState(null);
+  const [name,setName]=useState("");
+  const [email,setEmail]=useState("");
+  const [city,setCity]=useState("");
+  
+  const capitalizeWords = (sentence) => {
+    if (!sentence) return "";
+    return sentence
+      .split(" ")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const storedToken = await AsyncStorage.getItem("token");
+        if (!storedToken) {
+          console.error("No token found");
+          return;
+        }
+
+        setToken(token);
+        console.log("Retrieved token:", storedToken);
+
+        const response = await fetch("https://playpals-l797.onrender.com/user/profile", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${storedToken}`, // ✅ Use the correct token
+          },
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          const formatDOB = (dob) => {
+            return new Date(dob).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric"
+            });
+          }
+          console.log(data.user)
+          data.user.profilePhoto=profileImage;
+          setName(data.user.name);
+          setEmail(data.user.email);
+          setGender(data.user.gender)
+          setDob(formatDOB(data.user.dob))
+          setCity(data.user.city)
+        } else {
+          console.error("Failed to fetch user data:", data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+
+
+
 
   const bookings = [
     { id: 1, name: "Turf A", type: "Turfs", date: "01/03/2025", seats: 5 },
@@ -69,6 +132,7 @@ const UserAccount = () => {
     if (!result.canceled && result.assets.length > 0) {
       setProfileImage(result.assets[0].uri);
     }
+    
   };
 
   const showDatePicker = () => {
@@ -109,7 +173,7 @@ const UserAccount = () => {
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.profileContainer}>
-          <Text style={styles.welcomeText}>Welcome User</Text>
+          <Text style={styles.welcomeText}>Welcome {name}</Text>
           <TouchableOpacity style={styles.profileIcon} onPress={pickImage}>
             {profileImage ? (
               <Image
@@ -125,28 +189,20 @@ const UserAccount = () => {
         <View style={styles.detailsContainer}>
           <Text style={styles.sectionTitle}>Account Details</Text>
           <View style={styles.inputGroup}>
-            <TextInput
+            <Text
               style={styles.input}
               placeholder="Name"
               placeholderTextColor="black"
-            />
-            <TextInput
+            >{name}</Text>
+            <Text
               style={styles.input}
               placeholder="Email Address"
               placeholderTextColor="black"
-            />
+            >{email}</Text>
 
             <View style={styles.row}>
               <View style={styles.dropdownContainer}>
-                <Picker
-                  selectedValue={gender}
-                  onValueChange={(itemValue) => setGender(itemValue)}
-                >
-                  <Picker.Item label="Gender" value="" />
-                  <Picker.Item label="Male" value="Male" />
-                  <Picker.Item label="Female" value="Female" />
-                  <Picker.Item label="Other" value="Other" />
-                </Picker>
+                <Text style={{left:10}}>{capitalizeWords(gender)}</Text>
               </View>
 
               <TouchableOpacity
@@ -154,24 +210,16 @@ const UserAccount = () => {
                 onPress={showDatePicker}
               >
                 <Text style={{ color: dob ? "black" : "gray" }}>
-                  {dob ? dob : "Date of Birth"}
+                  {dob}
                 </Text>
               </TouchableOpacity>
             </View>
 
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
-              maximumDate={new Date()}
-            />
-
-            <TextInput
+            <Text
               style={styles.input}
               placeholder="City"
               placeholderTextColor="black"
-            />
+            >{city}</Text>
 
             <Text style={styles.sectionTitle}>Game Preferences</Text>
             {["Cricket", "Football", "Badminton"].map((game) => (
@@ -228,6 +276,7 @@ const UserAccount = () => {
             <Text style={styles.showMoreText}>Show more</Text>
           </TouchableOpacity>
         </View>
+        
       </ScrollView>
     </View>
   );
@@ -282,13 +331,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   inputGroup: { gap: 10 },
-  input: { backgroundColor: "white", padding: 12, borderRadius: 8 },
+  input: { backgroundColor: "white", padding: 12, borderRadius: 8 ,textAlign:'left'},
   row: { flexDirection: "row", justifyContent: "space-between" },
   dropdownContainer: {
     backgroundColor: "white",
     borderRadius: 8,
     flex: 1,
     marginRight: 10,
+    justifyContent:'center'
   },
   dateInput: { flex: 1, justifyContent: "center", paddingLeft: 12 },
   checkboxContainer: {
@@ -310,6 +360,13 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   showMoreText: { textAlign: "center", color: "white", marginTop: 10 },
+  tokenText: { color: "black", fontSize: 14, fontWeight: "bold" },
+  tokenContainer: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: "white",
+    borderRadius: 8,
+  },
 });
 
 export default UserAccount;
