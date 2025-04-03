@@ -107,134 +107,168 @@ const UserAccount = () => {
         </TouchableOpacity>
       </SafeAreaView>
 
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.profileContainer}>
-          <Text style={styles.welcomeText}>Welcome User</Text>
-          <TouchableOpacity style={styles.profileIcon} onPress={pickImage}>
-            {profileImage ? (
-              <Image
-                source={{ uri: profileImage }}
-                style={styles.profileImage}
+      <View style={styles.whiteBorderContainer}>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <View style={styles.profileContainer}>
+            <Text style={styles.welcomeText}>Welcome User</Text>
+            <TouchableOpacity style={styles.profileIcon} onPress={pickImage}>
+              {profileImage ? (
+                <Image
+                  source={{ uri: profileImage }}
+                  style={styles.profileImage}
+                />
+              ) : (
+                <Ionicons name="camera-outline" size={48} color="white" />
+              )}
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.detailsContainer}>
+            <Text style={styles.sectionTitle}>Account Details</Text>
+            <View style={styles.inputGroup}>
+              <TextInput
+                style={styles.input}
+                placeholder="Name"
+                placeholderTextColor="black"
               />
-            ) : (
-              <Ionicons name="camera-outline" size={48} color="white" />
-            )}
-          </TouchableOpacity>
-        </View>
+              <TextInput
+                style={styles.input}
+                placeholder="Email Address"
+                placeholderTextColor="black"
+              />
 
-        <View style={styles.detailsContainer}>
-          <Text style={styles.sectionTitle}>Account Details</Text>
-          <View style={styles.inputGroup}>
-            <TextInput
-              style={styles.input}
-              placeholder="Name"
-              placeholderTextColor="black"
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Email Address"
-              placeholderTextColor="black"
-            />
+              <View style={styles.inputGroup}>
+                <View style={styles.dropdownContainer}>
+                  <Picker
+                    selectedValue={gender}
+                    onValueChange={(itemValue) => setGender(itemValue)}
+                    style={styles.picker} // Apply text color
+                    dropdownIconColor="white" // Changes dropdown arrow color
+                  >
+                    <Picker.Item
+                      label="Gender"
+                      value=""
+                      style={styles.pickerItem}
+                    />
+                    <Picker.Item
+                      label="Male"
+                      value="Male"
+                      style={styles.pickerItem}
+                    />
+                    <Picker.Item
+                      label="Female"
+                      value="Female"
+                      style={styles.pickerItem}
+                    />
+                    <Picker.Item
+                      label="Other"
+                      value="Other"
+                      style={styles.pickerItem}
+                    />
+                  </Picker>
+                </View>
 
-            <View style={styles.row}>
-              <View style={styles.dropdownContainer}>
-                <Picker
-                  selectedValue={gender}
-                  onValueChange={(itemValue) => setGender(itemValue)}
+                <TouchableOpacity
+                  style={[styles.input, styles.dateInput]}
+                  onPress={showDatePicker}
                 >
-                  <Picker.Item label="Gender" value="" />
-                  <Picker.Item label="Male" value="Male" />
-                  <Picker.Item label="Female" value="Female" />
-                  <Picker.Item label="Other" value="Other" />
-                </Picker>
+                  <Text style={{ color: dob ? "white" : "black" }}>
+                    {dob ? dob : "Date of Birth"}
+                  </Text>
+                </TouchableOpacity>
               </View>
 
-              <TouchableOpacity
-                style={[styles.input, styles.dateInput]}
-                onPress={showDatePicker}
-              >
-                <Text style={{ color: dob ? "black" : "gray" }}>
-                  {dob ? dob : "Date of Birth"}
+              <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                onConfirm={handleConfirm}
+                onCancel={hideDatePicker}
+                maximumDate={new Date()}
+              />
+
+              <TextInput
+                style={styles.input}
+                placeholder="City"
+                placeholderTextColor="black"
+              />
+
+              <Text style={styles.sectionTitle}>Game Preferences</Text>
+              {["Cricket", "Football", "Badminton"].map((game) => (
+                <TouchableOpacity
+                  key={game}
+                  style={styles.checkboxContainer}
+                  onPress={() => toggleGameSelection(game)}
+                >
+                  <Ionicons
+                    name={
+                      selectedGames.includes(game)
+                        ? "checkbox"
+                        : "square-outline"
+                    }
+                    size={24}
+                    color="white"
+                  />
+                  <Text style={styles.checkboxText}>{game}</Text>
+                </TouchableOpacity>
+              ))}
+
+              {selectedGames.length > 0 && (
+                <Text style={styles.selectedGamesText}>
+                  Selected: {selectedGames.join(", ")}
                 </Text>
-              </TouchableOpacity>
+              )}
+            </View>
+          </View>
+
+          <View style={styles.bookingsContainer}>
+            <Text style={styles.sectionTitle}>Previous Bookings</Text>
+            <View style={styles.dropdownContainer}>
+              <Picker
+                selectedValue={selectedFilter}
+                onValueChange={(itemValue) => setSelectedFilter(itemValue)}
+              >
+                <Picker.Item label="All" value="All" />
+                <Picker.Item label="Turfs" value="Turfs" />
+                <Picker.Item label="Items" value="Items" />
+              </Picker>
             </View>
 
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
-              maximumDate={new Date()}
-            />
-
-            <TextInput
-              style={styles.input}
-              placeholder="City"
-              placeholderTextColor="black"
-            />
-
-            <Text style={styles.sectionTitle}>Game Preferences</Text>
-            {["Cricket", "Football", "Badminton"].map((game) => (
-              <TouchableOpacity
-                key={game}
-                style={styles.checkboxContainer}
-                onPress={() => toggleGameSelection(game)}
-              >
-                <Ionicons
-                  name={
-                    selectedGames.includes(game) ? "checkbox" : "square-outline"
-                  }
-                  size={24}
-                  color="white"
-                />
-                <Text style={styles.checkboxText}>{game}</Text>
-              </TouchableOpacity>
+            {filteredBookings.map((booking) => (
+              <View key={booking.id} style={styles.bookingItem}>
+                <Text style={styles.bookingText}>{booking.name}</Text>
+                <Text style={styles.bookingSubText}>
+                  Date: {booking.date}{" "}
+                  {booking.type === "Turfs"
+                    ? `Seats booked: ${booking.seats}`
+                    : `Number: ${booking.number}`}
+                </Text>
+              </View>
             ))}
 
-            {selectedGames.length > 0 && (
-              <Text style={styles.selectedGamesText}>
-                Selected: {selectedGames.join(", ")}
-              </Text>
-            )}
+            <TouchableOpacity>
+              <Text style={styles.showMoreText}>Show more</Text>
+            </TouchableOpacity>
           </View>
-        </View>
-
-        <View style={styles.bookingsContainer}>
-          <Text style={styles.sectionTitle}>Previous Bookings</Text>
-          <View style={styles.dropdownContainer}>
-            <Picker
-              selectedValue={selectedFilter}
-              onValueChange={(itemValue) => setSelectedFilter(itemValue)}
-            >
-              <Picker.Item label="All" value="All" />
-              <Picker.Item label="Turfs" value="Turfs" />
-              <Picker.Item label="Items" value="Items" />
-            </Picker>
-          </View>
-
-          {filteredBookings.map((booking) => (
-            <View key={booking.id} style={styles.bookingItem}>
-              <Text style={styles.bookingText}>{booking.name}</Text>
-              <Text style={styles.bookingSubText}>
-                Date: {booking.date}{" "}
-                {booking.type === "Turfs"
-                  ? `Seats booked: ${booking.seats}`
-                  : `Number: ${booking.number}`}
-              </Text>
-            </View>
-          ))}
-
-          <TouchableOpacity>
-            <Text style={styles.showMoreText}>Show more</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#000", paddingHorizontal: 20 },
+  whiteBorderContainer: {
+    flex: 1,
+    borderWidth: 2, // White border
+    borderColor: "rgba(255,255,255,0.7)",
+    borderRadius: 15,
+    padding: 15,
+    overflow: "hidden",
+    backgroundColor: "rgba(255, 255, 255, 0.1)", // Slight translucency
+    marginTop: 10,
+    marginBottom: 15,
+  },
+
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -282,14 +316,29 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   inputGroup: { gap: 10 },
-  input: { backgroundColor: "white", padding: 12, borderRadius: 8 },
+  input: {
+    backgroundColor: "rgba(255, 255, 255, 0.4)",
+    padding: 14,
+    borderRadius: 8,
+    color: "white",
+  },
   row: { flexDirection: "row", justifyContent: "space-between" },
   dropdownContainer: {
-    backgroundColor: "white",
+    backgroundColor: "rgba(255, 255, 255, 0.4)",
     borderRadius: 8,
     flex: 1,
-    marginRight: 10,
+    color: "white",
   },
+  picker: {
+    color: "white", // Changes text color
+    borderRadius: 8,
+    paddingHorizontal: 10,
+  },
+
+  pickerItem: {
+    color: "white", // Ensures text remains white
+  },
+
   dateInput: { flex: 1, justifyContent: "center", paddingLeft: 12 },
   checkboxContainer: {
     flexDirection: "row",
@@ -304,12 +353,18 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   bookingItem: {
-    backgroundColor: "white",
+    backgroundColor: "rgba(255, 255, 255, 0.4)",
     padding: 12,
     borderRadius: 8,
     marginTop: 15,
   },
   showMoreText: { textAlign: "center", color: "white", marginTop: 10 },
+  bookingText: {
+    color: "white",
+  },
+  bookingSubText: {
+    color: "white",
+  },
 });
 
 export default UserAccount;
