@@ -103,7 +103,7 @@ const RoleSelectionScreen = ({ navigation }) => {
             size={28}
             color="#0091ff"
           />
-          <Text style={styles.checkboxLabel}>Admin</Text>
+          <Text style={styles.checkboxLabel}>Turf Owner</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.confirmBtn} onPress={handleConfirm}>
           <Text style={{fontFamily:'Kanit_400Regular',color:'white',fontSize:20}}>Confirm →</Text>
