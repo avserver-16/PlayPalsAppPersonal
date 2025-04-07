@@ -8,6 +8,8 @@ const RentalsBooking = () => {
     const route = useRoute();
     const { rentalDetails } = route.params || {};
 
+     console.log(rentalDetails[0].photos[0])
+
     if (!rentalDetails) {
         return (
             <View style={styles.centered}>
@@ -16,7 +18,7 @@ const RentalsBooking = () => {
         );
     }
  
-    const { name, location, duration, price, image } = rentalDetails;
+    //const { name, description,category, price, image } = rentalDetails;
 
     return (
         <View style={styles.container}>
@@ -32,14 +34,14 @@ const RentalsBooking = () => {
                 {/* Rental Image + Details Container with Semi-Transparent Background */}
                 <View style={styles.rentalContainer}>
                     {/* Rental Image */}
-                    <Image source={image} style={styles.rentalImage} />
+                    <Image source={{uri:rentalDetails[0].photos[0]}} style={styles.rentalImage} />
 
                     {/* Rental Information */}
                     <View style={styles.infoContainer}>
-                        <Text style={styles.rentalName}>{name}</Text>
-                        <Text style={styles.rentalInfo}>Pickup: {location}</Text>
-                        <Text style={styles.rentalInfo}>Duration: {duration}</Text>
-                        <Text style={styles.rentalInfo}>Price: {price}</Text>
+                        <Text style={styles.rentalName}>{rentalDetails[0].name}</Text>
+                        <Text style={styles.rentalInfo}>Pickup: {rentalDetails[0].category}</Text>
+                        <Text style={styles.rentalInfo}>Duration: {rentalDetails[0].description}</Text>
+                        <Text style={styles.rentalInfo}>Price: {rentalDetails[0].pricePerHour}</Text>
                     </View>
                 </View>
 
@@ -94,10 +96,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     rentalImage: {
-        width: '100%',
+        width:300,
+        //backgroundColor:'white',
         height: 200,
         resizeMode: 'contain',
         marginTop: 10,
+        borderRadius:20,
+        zIndex:10
     },
     infoContainer: {
         width: '100%',

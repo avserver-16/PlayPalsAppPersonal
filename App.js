@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -6,6 +6,8 @@ import { useFonts, Kanit_400Regular } from "@expo-google-fonts/kanit";
 import * as SplashScreen from "expo-splash-screen";
 import "react-native-gesture-handler";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 SplashScreen.preventAutoHideAsync();
 
@@ -28,12 +30,34 @@ import ForgotPassword from "./screens/ForgotPassword";
 
 SplashScreen.preventAutoHideAsync();
 import Turf1 from "./screens/Turf1";
+import RoleSelectionScreen from "./screens/AdminScreens/RoleSelectionScreen";
+import AdminHomeScreen from "./screens/AdminScreens/AdminHomeScreen";
+import AdminTurf from "./screens/AdminScreens/AdminTurf";
+import AdminRental from "./screens/AdminScreens/AdminRental";
+import AdminLogin from "./screens/AdminScreens/AdminLogin"
+import AdminSignup from "./screens/AdminScreens/AdminSignup";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 // Drawer Navigator
 function DrawerNavigator() {
+  const [role, setRole] = useState(null); // ⬅️ Add state for role
+
+  useEffect(() => {
+    const fetchRole = async () => {
+      try {
+        const storedRole = await AsyncStorage.getItem("userRole");
+        if (storedRole) {
+          setRole(storedRole);
+        }
+      } catch (error) {
+        console.error("Error fetching user role:", error);
+      }
+    };
+
+    fetchRole();
+  }, []);
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
@@ -46,11 +70,11 @@ function DrawerNavigator() {
         drawerIcon: ({ color, size }) => {
           let iconName;
 
-          if (route.name === "Home") {
+          if (route.name === "Home" || route.name === "AdminHome") {
             iconName = "home-outline";
-          } else if (route.name === "Turfs") {
+          } else if (route.name === "Turfs" || route.name === "AdminTurfs") {
             iconName = "football-outline";
-          } else if (route.name === "Rentals") {
+          } else if (route.name === "Rentals" || route.name === "AdminRentals") {
             iconName = "cart-outline";
           } else if (route.name === "Notifications") {
             iconName = "notifications-outline";
@@ -68,14 +92,24 @@ function DrawerNavigator() {
         },
       })}
     >
-      <Drawer.Screen name="Home" component={HomeScreen} />
-      <Drawer.Screen name="Turfs" component={Turf1} />
-      <Drawer.Screen name="Rentals" component={Rentals} />
-      <Drawer.Screen name="Notifications" component={Notifications} />
-      <Drawer.Screen name="Settings" component={Settings} />
-      <Drawer.Screen name="Rewards" component={Rewards} />
-      <Drawer.Screen name="Help" component={Help} />
-      <Drawer.Screen name="UserAccount" component={UserAccount} />
+      {/* {role === "admin" ? (
+        <>
+          <Drawer.Screen name="Home" component={HomeScreen} />
+          <Drawer.Screen name="AdminTurfs" component={AdminTurf} />
+          <Drawer.Screen name="AdminRentals" component={AdminRental} />
+        </>
+      ) : (
+        <> */}
+          <Drawer.Screen name="Home" component={HomeScreen} />
+          <Drawer.Screen name="Turfs" component={Turf1} />
+          <Drawer.Screen name="Rentals" component={Rentals} />
+          <Drawer.Screen name="Notifications" component={Notifications} />
+          <Drawer.Screen name="Settings" component={Settings} />
+          <Drawer.Screen name="Rewards" component={Rewards} />
+          <Drawer.Screen name="Help" component={Help} />
+          <Drawer.Screen name="UserAccount" component={UserAccount} />
+        {/* </>
+      )} */}
     </Drawer.Navigator>
   );
 }
@@ -116,6 +150,11 @@ export default function App() {
         <Stack.Screen name="TurfsMain" component={TurfsMain} options={{headerShown:false}}/>
         <Stack.Screen name="RentalsBooking" component={RentalsBooking} options={{headerShown:false}}/>
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerShown:false}}/>
+
+        <Stack.Screen name="RoleSelectionScreen" component={RoleSelectionScreen} options={{headerShown:false}}/>
+        <Stack.Screen name="AdminHomeScreen" component={AdminHomeScreen} options={{headerShown:false}}/>
+        <Stack.Screen name="AdminLogin" component={AdminLogin} options={{headerShown:false}}/>
+        <Stack.Screen name="AdminSignup" component={AdminSignup} options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

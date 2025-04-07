@@ -7,7 +7,7 @@ const { width, height } = Dimensions.get("window");
 const Welcome = ({ navigation }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.navigate("Login");
+      navigation.navigate("RoleSelectionScreen");
     }, 1500);
 
     return () => clearTimeout(timer);

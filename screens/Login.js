@@ -1,159 +1,235 @@
-import { TouchableOpacity, Text, View, TextInput, ImageBackground, Alert } from "react-native";
+import {
+  TouchableOpacity,
+  Text,
+  View,
+  TextInput,
+  ImageBackground,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { useState } from "react";
 import Background from "./Background";
 import React from "react";
 import { Feather } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Alert } from "react-native";
 
 const Login = ({ navigation }) => {
-    const [username, setUsername] = useState('');  // Username state
-    const [pass, setPass] = useState('');  // Password state
-    const [seeCheck, setSeeCheck] = useState(true);  // Password visibility toggle
+  const [email, setEmail] = useState("");
+  const [password, setPass] = useState("");
+  const [seeCheck, setSeeCheck] = useState(true);
 
-    const handlePass = (text) => {
-        setPass(text);
-    };
-
-    const handleUsername = (text) => {
-        setUsername(text);
-    };
-
-    const togglePasswordVisibility = () => {
-        setSeeCheck((prevState) => !prevState);
-    };
-
-    const handleLogin = () => {
-        // Check if both fields are filled
-        if (!username || !pass) {
-            Alert.alert("Error", "Please fill in both fields.");
-            return; // Prevent navigation if fields are empty
-        }
-        
-        // If fields are filled, proceed to Homescreen
-        navigation.navigate('Homescreen');
-    };
-
-    return (
-        <Background style={{ zIndex: -2 }}>
-            <Text style={{
-                color: "#ffffff0a",
-                fontFamily: 'Kanit_400Regular',
-                fontSize: 75,
-                position: 'absolute',
-                left: 20,
-                top: 50,
-                zIndex: 1
-            }}>PlayPals</Text>
-
-            <ImageBackground source={require('./asset/Cricket.png')}
-                style={{
-                    flex: 1,
-                    height: 720,
-                    width: 720,
-                    position: 'absolute',
-                    bottom: 0,
-                    opacity: 0.08,
-                    right: -30,
-                    zIndex: 0
-                }} />
-
-            <View style={{
-                height: 275,  // Adjusted height to fit Forgot Password button
-                width: 350,
-                position: 'absolute',
-                backgroundColor: '#ffffff0a',
-                borderRadius: 20,
-                borderWidth: 5,
-                borderColor: '#ffffff80',
-                bottom: 200,
-                alignItems: 'center'
-            }}>
-                <TextInput
-                    style={{
-                        top: 25,
-                        borderRadius: 10,
-                        backgroundColor: '#ffffff80',
-                        height: 60,
-                        width: 300,
-                        position: 'absolute',
-                        paddingLeft: 20,
-                        fontFamily: 'Kanit_400Regular',
-                        fontSize: 24
-                    }}
-                    placeholder="Username"
-                    placeholderTextColor={'#0000004d'}
-                    value={username}
-                    onChangeText={handleUsername}
-                />
-
-                <View style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    position: 'absolute',
-                    top: 125,
-                    width: 300,
-                    height: 60,
-                    borderRadius: 10,
-                    backgroundColor: '#ffffff80',
-                    paddingLeft: 20,
-                    paddingRight: 15  // Added space on the right side
-                }}>
-                    <TextInput
-                        style={{
-                            flex: 1,
-                            fontFamily: 'Kanit_400Regular',
-                        fontSize: 24
-                    }}
-                        placeholder="Password"
-                        placeholderTextColor={'#0000004d'}
-                        onChangeText={handlePass}
-                        value={pass}
-                        secureTextEntry={seeCheck}
-                    />
-
-                    {/* Eye Icon with extra right spacing */}
-                    <TouchableOpacity onPress={togglePasswordVisibility} style={{ paddingLeft: 10 }}>
-                        <Feather name={seeCheck ? 'eye-off' : 'eye'} color={'black'} size={30} />
-                    </TouchableOpacity>
-                </View>
-
-                {/* Forgot Password Button */}
-                <TouchableOpacity
-                    style={{ position: 'absolute', bottom: 20 }}
-                    onPress={() => navigation.navigate('ForgotPassword')}
-                >
-                    <Text style={{ fontFamily: 'Kanit_400Regular', color: '#0091ff', fontSize: 18 }}>Forgot Password?</Text>
-                </TouchableOpacity>
-            </View>
-
-            <TouchableOpacity
-                onPress={handleLogin}  // Call handleLogin to check if fields are filled
-                style={{
-                    backgroundColor: '#0091ff',
-                    width: 300,
-                    height: 60,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: 10,
-                    position: 'absolute',
-                    bottom: 100
-                }}>
-                <Text style={{ fontFamily: 'Kanit_400Regular', fontSize: 24 }}>Login</Text>
-            </TouchableOpacity>
-
-            <Text
-                style={{
-                    fontFamily: 'Kanit_400Regular',
-                    color: '#ffffff80',
-                    fontSize: 24,
-                    position: 'absolute',
-                    bottom: 10
-                }}
-                onPress={() => navigation.navigate('Signup')}
-            >
-                Register<Text style={{ color: '#0000007d', fontSize: 20 }}> yourself !!!</Text>
-            </Text>
-        </Background>
+  //backend connection
+  const userLogin = async () => {
+    const response = await fetch(
+      "https://playpals-l797.onrender.com/user/login",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      }
     );
-};
+    //const checVal=await response.text();
+    // console.log(checVal);
+    const data = await response.json();
+    console.log(data);
+    console.log(data.message);
 
+    const token = data?.data?.token;
+    console.log(token);
+    if (token) {
+      console.log("Entered true");
+      await AsyncStorage.setItem("token", token);
+      const storedToken = await AsyncStorage.getItem("token");
+      console.log(storedToken);
+      //   Alert.alert("Success", "Logged in successfully");
+      //   navigation.navigate("Homescreen");
+      Alert.alert("Success", "Logged in successfully");
+
+      // Get role from AsyncStorage
+      const role = await AsyncStorage.getItem("userRole");
+
+      // Navigate to respective home screen
+    //   if (role === "admin") {
+    //     navigation.navigate("AdminHomeScreen");
+    //   } else {
+    //     navigation.navigate("Homescreen");
+    //   }
+    navigation.navigate("Homescreen")
+
+    } else {
+      if (data.message === "Invalid credentials") {
+        Alert.alert("Error", "Invalid Credentials");
+      }
+    }
+  };
+
+  const handlePass = (text) => {
+    setPass(text);
+  };
+
+  const check = () => {
+    if (seeCheck === true) {
+      setSeeCheck(false);
+    } else {
+      setSeeCheck(true);
+    }
+    console.log("Eye pressed");
+  };
+
+  return (
+    <Background style={{ zIndex: -2 }}>
+      <Text
+        style={{
+          color: "#ffffff0a",
+          fontFamily: "Kanit_400Regular",
+          fontSize: 75,
+          position: "absolute",
+          left: 20,
+          top: 50,
+          zIndex: 1,
+        }}
+      >
+        PlayPals
+      </Text>
+      <ImageBackground
+        source={require("./asset/Cricket.png")}
+        style={{
+          flex: 1,
+          height: 720,
+          width: 720,
+          position: "absolute",
+          bottom: 0,
+          opacity: 0.08,
+          right: -30,
+          zIndex: 0,
+        }}
+      ></ImageBackground>
+      <View
+        style={{
+          height: 255,
+          width: 350,
+          position: "absolute",
+          backgroundColor: "#ffffff0a",
+          opacity: 1,
+          borderRadius: 20,
+          borderWidth: 5,
+          borderColor: "#ffffff80",
+          bottom: 200,
+          //justifyContent:'center',
+          alignItems: "center",
+        }}
+      >
+        <TextInput
+          style={{
+            top: 25,
+            borderRadius: 10,
+            backgroundColor: "#ffffff80",
+            height: 60,
+            width: 300,
+            position: "absolute",
+            paddingLeft: 20,
+            fontFamily: "Kanit_400Regular",
+            fontSize: 24,
+          }}
+          placeholder="Email"
+          placeholderTextColor={"#0000004d"}
+          onChangeText={setEmail}
+          value={email}
+        ></TextInput>
+        <TextInput
+          style={{
+            top: 125,
+            borderRadius: 10,
+            backgroundColor: "#ffffff80",
+            height: 60,
+            width: 300,
+            position: "absolute",
+            paddingLeft: 20,
+            fontFamily: "Kanit_400Regular",
+            fontSize: 24,
+          }}
+          placeholder="Password"
+          placeholderTextColor={"#0000004d"}
+          onChangeText={handlePass}
+          value={password}
+          secureTextEntry={seeCheck}
+        ></TextInput>
+        <TouchableOpacity
+          style={{
+            backgroundColor: "transparent",
+            height: 30,
+            width: 30,
+            color: "grey",
+            justifyContent: "center",
+            alignItems: "center",
+            position: "absolute",
+            right: 30,
+            bottom: 75,
+          }}
+          onPress={check}
+        >
+          <Feather name="eye" color={"grey"} size={30}></Feather>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("ForgotPassword")}
+          style={{
+            height: 35,
+            width: 300,
+            top: 200,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text
+            style={{
+              color: "#0091ff",
+              fontFamily: "Kanit_400Regular",
+              fontSize: 22,
+            }}
+          >
+            Forgot Password
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <TouchableOpacity
+        onPress={userLogin}
+        style={{
+          backgroundColor: "#0091ff",
+          width: 300,
+          height: 60,
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: 10,
+          position: "absolute",
+          bottom: 100,
+        }}
+      >
+        <Text style={{ fontFamily: "Kanit_400Regular", fontSize: 24 }}>
+          Login
+        </Text>
+      </TouchableOpacity>
+      <Text
+        style={{
+          fontFamily: "Kanit_400Regular",
+          color: "#ffffff90",
+          fontSize: 24,
+          position: "absolute",
+          bottom: 10,
+        }}
+        onPress={() => {
+          navigation.navigate("Signup");
+        }}
+      >
+        Register
+        <Text
+          style={{ color: "#0000007d", position: "absolute", fontSize: 20 }}
+        >
+          {" "}
+          yourself !!!
+        </Text>
+      </Text>
+    </Background>
+  );
+};
 export default Login;

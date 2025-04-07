@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef,useState,useEffect } from "react";
 import {
   View,
   Text,
@@ -15,6 +15,8 @@ import { DrawerActions } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 const { width, height } = Dimensions.get("window");
 
@@ -37,6 +39,22 @@ const gears = [
 const HomeScreen = () => {
   const scrollY = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation();
+  const [role, setRole] = useState(null); // ⬅️ Add state for role
+
+  useEffect(() => {
+    const fetchRole = async () => {
+      try {
+        const storedRole = await AsyncStorage.getItem("userRole");
+        if (storedRole) {
+          setRole(storedRole);
+        }
+      } catch (error) {
+        console.error("Error fetching user role:", error);
+      }
+    };
+
+    fetchRole();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -83,6 +101,9 @@ const HomeScreen = () => {
           </ImageBackground>
         </View>
 
+
+        {/* {role=="user" && (
+          <> */}
         {/* Sports Text Positioned Separately */}
         <View style={styles.sportsTextContainer}>
           <Text style={styles.sportsText}>Sports</Text>
@@ -178,7 +199,10 @@ const HomeScreen = () => {
             </View>
           </View>
         </View>
+        {/* </>
+        )} */}
       </ScrollView>
+    
     </View>
   );
 };
@@ -225,7 +249,7 @@ const styles = StyleSheet.create({
   gradient: {
     position: "absolute",
     width: "100%",
-    height: "100%",
+    height: "100.2%",
     resizeMode: "cover",
     zIndex: 2,
   },

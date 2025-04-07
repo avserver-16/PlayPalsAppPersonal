@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Alert,ImageBackground,ScrollView } from "react-native";
 import Background from "./Background";
 
 const ForgotPassword = ({ navigation }) => {
     const [email, setEmail] = useState("");
+    const [newPassword,setNewPassword]=useState("");
+    const [confirmNewPassword,setConfirmNewPassword] =useState("");
 
     const handleResetPassword = () => {
         // Check if the email is empty
@@ -29,9 +31,22 @@ const ForgotPassword = ({ navigation }) => {
                 left: 20,
                 top: 50
             }}>PlayPals</Text>
+            <ImageBackground
+        source={require("./asset/Cricket.png")}
+        style={{
+          flex: 1,
+          height: 720,
+          width: 720,
+          position: "absolute",
+          bottom: 0,
+          opacity: 0.08,
+          right: -30,
+          zIndex: 0,
+        }}
+      ></ImageBackground>
 
             <View style={{
-                height: 200,
+                height: 300,
                 width: 350,
                 backgroundColor: '#ffffff0a',
                 borderRadius: 20,
@@ -57,6 +72,42 @@ const ForgotPassword = ({ navigation }) => {
                     value={email}
                     onChangeText={setEmail}
                     keyboardType="email-address"  // This sets the keyboard type for email input
+                    autoCapitalize="none"         // Prevents auto-capitalization
+                />
+                <TextInput
+                    style={{
+                        backgroundColor: '#ffffff80',
+                        height: 60,
+                        width: 300,
+                        borderRadius: 10,
+                        paddingLeft: 20,
+                        fontFamily: 'Kanit_400Regular',
+                        fontSize: 24,
+                        marginTop:25
+                    }}
+                    placeholder="New Password"
+                    placeholderTextColor={'#0000004d'}
+                    value={newPassword}
+                    onChangeText={setNewPassword}
+                    keyboardType="password"  
+                    autoCapitalize="none"         // Prevents auto-capitalization
+                />
+                <TextInput
+                    style={{
+                        backgroundColor: '#ffffff80',
+                        height: 60,
+                        width: 300,
+                        borderRadius: 10,
+                        paddingLeft: 20,
+                        fontFamily: 'Kanit_400Regular',
+                        fontSize: 24,
+                        marginTop:25
+                    }}
+                    placeholder="Confirm New Password"
+                    placeholderTextColor={'#0000004d'}
+                    value={confirmNewPassword}
+                    onChangeText={setConfirmNewPassword}
+                    keyboardType="password"  
                     autoCapitalize="none"         // Prevents auto-capitalization
                 />
             </View>
