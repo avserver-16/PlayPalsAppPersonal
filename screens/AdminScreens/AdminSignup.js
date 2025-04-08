@@ -23,9 +23,9 @@ export default function AdminSignup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [dob, setDob] = useState("");
-  const [city,setCity]=useState('')
-  const [phoneNumber,setPhoneNumber]=useState("");
-  const [orgName,setOrgName]=useState("");
+  const [city, setCity] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [orgName, setOrgName] = useState("");
   const [gender, setGender] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -37,47 +37,52 @@ export default function AdminSignup() {
 
 
 
-//   const bFunc = async (name, email, password, dob, gender,city) => {
-//     try {
-//       // Convert dob to ISO format
-//       const formattedDob = dob ? new Date(dob).toISOString() : null;
-  
-//       // Validate before sending request
-//       if (dob && isNaN(new Date(dob).getTime())) {
-//         Alert.alert("Error", "Invalid date format. Please select a valid date.");
-//         return;
-//       }
-  
-//       const response = await fetch("https://playpals-l797.onrender.com/user/signup", {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify({ name, email, password, dob: formattedDob, gender,city }),
-//       });
-  
-//       const text = await response.text();
-//       console.log("Raw Response:", text);
-  
-//       // Parse response safely
-//       try {
-//         const data = JSON.parse(text);
-//         Alert.alert(data.message ? "Success" : "Error", data.message || "Registration failed");
-//       } catch (jsonError) {
-//         console.error("JSON Parse Error:", jsonError);
-//         Alert.alert("Error", "Invalid response from server.");
-//       }
-//     } catch (error) {
-//       console.error("Signup error:", error);
-//       Alert.alert("Error", "Something went wrong. Please try again.");
-//     }
-//   };
-  
-  
-  
+  const bFunc = async (name, email, password, dob, gender, city) => {
+    try {
+
+      const formattedDob = dob ? new Date(dob).toISOString() : null;
+
+      // Validate before sending request
+      if (dob && isNaN(new Date(dob).getTime())) {
+        Alert.alert("Error", "Invalid date format. Please select a valid date.");
+        return;
+      }
+
+      const response = await fetch("https://playpals-l797.onrender.com/turf/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name, email, password, dob: formattedDob, gender, city,
+          phoneNumber: '9999999999',
+          ownerType: 'INDIVIDUAL',
+          turfName: "Default Turf Name",
+          turfLocation: "Default Location"
+        }),
+      });
+      const text = await response.text();
+      console.log("Raw Response:", text);
+
+      // Parse response safely
+      try {
+        const data = JSON.parse(text);
+        Alert.alert(data.message ? "Success" : "Error", data.message || "Registration failed");
+      } catch (jsonError) {
+        console.error("JSON Parse Error:", jsonError);
+        Alert.alert("Error", "Invalid response from server.");
+      }
+    } catch (error) {
+      console.error("Signup error:", error);
+      Alert.alert("Error", "Something went wrong. Please try again.");
+    }
+  };
 
 
-  const handleSubmit = () => {
-    // bFunc(name,email,password,dob,gender,city);
-    if (!name || !email || !password ) {
+
+
+
+  function handleSubmit() {
+    bFunc(name, email, password, dob, gender, city);
+    if (!name || !email || !password) {
       setFormError("All fields must be filled out.");
       return;
     }
@@ -94,10 +99,10 @@ export default function AdminSignup() {
       setPasswordError("");
     }
     setFormError("");
-   
+
     navigation.navigate("AdminLogin");
-  };
-  
+  }
+
   return (
     <Background >
       <ImageBackground source={require('./../asset/Cricket.png')}
@@ -148,25 +153,25 @@ export default function AdminSignup() {
           <TextInput
             style={styles.input}
             placeholder="Phone Number"
-           
+            keyboardType="numeric"
             value={phoneNumber}
             onChangeText={setPhoneNumber} />
-            
-            <TextInput
+
+          <TextInput
             style={styles.input}
             placeholder="Name of Organization"
-           
+
             value={orgName}
             onChangeText={setOrgName} />
-          
+
           {formError ? <Text style={styles.error}>{formError}</Text> : null}
-          </View>
+        </View>
         <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
           <Text style={styles.submitButtonText}>Register</Text>
         </TouchableOpacity>
       </ScrollView>
     </Background>
-    
+
   );
 }
 
@@ -198,7 +203,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
     paddingHorizontal: 10,
-    justifyContent: "center", 
+    justifyContent: "center",
     fontFamily: 'Kanit_400Regular'
   },
 

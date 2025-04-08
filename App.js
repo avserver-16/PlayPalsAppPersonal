@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -100,15 +100,15 @@ function DrawerNavigator() {
         </>
       ) : (
         <> */}
-          <Drawer.Screen name="Home" component={HomeScreen} />
-          <Drawer.Screen name="Turfs" component={Turf1} />
-          <Drawer.Screen name="Rentals" component={Rentals} />
-          <Drawer.Screen name="Notifications" component={Notifications} />
-          <Drawer.Screen name="Settings" component={Settings} />
-          <Drawer.Screen name="Rewards" component={Rewards} />
-          <Drawer.Screen name="Help" component={Help} />
-          <Drawer.Screen name="UserAccount" component={UserAccount} />
-        {/* </>
+      <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen name="Turfs" component={Turf1} />
+      <Drawer.Screen name="Rentals" component={Rentals} />
+      <Drawer.Screen name="Notifications" component={Notifications} />
+      <Drawer.Screen name="Settings" component={Settings} />
+      <Drawer.Screen name="Rewards" component={Rewards} />
+      <Drawer.Screen name="Help" component={Help} />
+      <Drawer.Screen name="UserAccount" component={UserAccount} />
+      {/* </>
       )} */}
     </Drawer.Navigator>
   );
@@ -140,21 +140,18 @@ export default function App() {
         <Stack.Screen name="Homescreen" component={DrawerNavigator} options={{ headerShown: false }} />
         <Stack.Screen name="Turf1" component={Turf1} options={{ headerShown: false }} />
         <Stack.Screen name="Help" component={Help} options={{ headerShown: false }} />
- 
         <Stack.Screen name="Notifications" component={Notifications} options={{ headerShown: false }} />
         <Stack.Screen name="Rentals" component={Rentals} options={{ headerShown: false }} />
         <Stack.Screen name="Rewards" component={Rewards} options={{ headerShown: false }} />
         <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
         <Stack.Screen name="UserAccount" component={UserAccount} options={{ headerShown: false }} />
-
-        <Stack.Screen name="TurfsMain" component={TurfsMain} options={{headerShown:false}}/>
-        <Stack.Screen name="RentalsBooking" component={RentalsBooking} options={{headerShown:false}}/>
-        <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerShown:false}}/>
-
-        <Stack.Screen name="RoleSelectionScreen" component={RoleSelectionScreen} options={{headerShown:false}}/>
-        <Stack.Screen name="AdminHomeScreen" component={AdminHomeScreen} options={{headerShown:false}}/>
-        <Stack.Screen name="AdminLogin" component={AdminLogin} options={{headerShown:false}}/>
-        <Stack.Screen name="AdminSignup" component={AdminSignup} options={{headerShown:false}}/>
+        <Stack.Screen name="TurfsMain" component={TurfsMain} options={{ headerShown: false }} />
+        <Stack.Screen name="RentalsBooking" component={RentalsBooking} options={{ headerShown: false }} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false }} />
+        <Stack.Screen name="RoleSelectionScreen" component={RoleSelectionScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="AdminHomeScreen" component={AdminHomeScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="AdminLogin" component={AdminLogin} options={{ headerShown: false }} />
+        <Stack.Screen name="AdminSignup" component={AdminSignup} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

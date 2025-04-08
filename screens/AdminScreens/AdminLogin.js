@@ -55,7 +55,7 @@ import {
       //   } else {
       //     navigation.navigate("Homescreen");
       //   }
-      navigation.navigate("Homescreen")
+      navigation.navigate("AdminHomeScreen")
   
       } else {
         if (data.message === "Invalid credentials") {
@@ -204,6 +204,7 @@ import {
             position: "absolute",
             bottom: 100,
           }}
+
         >
           <Text style={{ fontFamily: "Kanit_400Regular", fontSize: 24 }}>
             Login
