@@ -36,6 +36,11 @@ import AdminTurf from "./screens/AdminScreens/AdminTurf";
 import AdminRental from "./screens/AdminScreens/AdminRental";
 import AdminLogin from "./screens/AdminScreens/AdminLogin"
 import AdminSignup from "./screens/AdminScreens/AdminSignup";
+import AddTurf from "./screens/AdminScreens/AddTurf";
+import TurfInfo from "./screens/AdminScreens/TurfInfo"
+import RentalInfo from "./screens/AdminScreens/RentalInfo";
+import AddRental from "./screens/AdminScreens/AddRental";
+import AdminProfile from "./screens/AdminScreens/AdminProfile";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -152,6 +157,13 @@ export default function App() {
         <Stack.Screen name="AdminHomeScreen" component={AdminHomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="AdminLogin" component={AdminLogin} options={{ headerShown: false }} />
         <Stack.Screen name="AdminSignup" component={AdminSignup} options={{ headerShown: false }} />
+        <Stack.Screen name="AdminTurf" component={AdminTurf} options={{ headerShown: false }}/>
+        <Stack.Screen name="AdminRental" component={AdminRental} options={{ headerShown: false }}/>
+        <Stack.Screen name="AddTurf" component={AddTurf} options={{headerShown:false}}/>
+        <Stack.Screen name="TurfInfo" component={TurfInfo} options={{headerShown:false}}/>
+        <Stack.Screen name="AddRental" component={AddRental} options={{headerShown:false}}/>
+        <Stack.Screen name="RentalInfo" component={RentalInfo} options={{headerShown:false}}/>
+        <Stack.Screen name="AdminProfile" component={AdminProfile} options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

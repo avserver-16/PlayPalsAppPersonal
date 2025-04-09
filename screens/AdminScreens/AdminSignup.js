@@ -257,7 +257,3 @@ const styles = StyleSheet.create({
     fontFamily: 'Kanit_400Regular', fontSize: 24
   },
 });
-
-
-
-
