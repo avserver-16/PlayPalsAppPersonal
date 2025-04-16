@@ -15,7 +15,6 @@ const Turf1 = () => {
         setShowFilter(!showFilter);
     };
 
-    // Turf Data
     const turfs = [
         { id: 1, name: 'Nsf Turf', location: 'Satya Nagar', time: '9.00pm-11.00pm', maxPlayers: 12, image: require("./asset/TurfFront.png") },
         { id: 2, name: 'Elite Sports', location: 'Ghatkopar', time: '6.00pm-8.00pm', maxPlayers: 10, image: require("./asset/TurfFront.png") },

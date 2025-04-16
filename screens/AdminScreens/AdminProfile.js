@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,15 +7,19 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
-} from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import { LinearGradient } from 'expo-linear-gradient';
+} from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const AdminProfile = () => {
   const [profileImage, setProfileImage] = useState(null);
-  const [adminName, setAdminName] = useState('Admin Name');
-  const [email, setEmail] = useState('admin@example.com');
-  const [contactNumber, setContactNumber] = useState('9876543210');
+  const [adminName, setAdminName] = useState("Admin Name");
+  const [email, setEmail] = useState("admin@example.com");
+  const [contactNumber, setContactNumber] = useState("9876543210");
+
+  const navigation = useNavigation();
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -31,62 +35,52 @@ const AdminProfile = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <LinearGradient
-        colors={['#0f172a', '#1e293b']}
-        style={styles.header}
-      >
-        <Text style={styles.headerText}>Admin Profile</Text>
-      </LinearGradient>
-
-      <View style={styles.profileContainer}>
-        <TouchableOpacity onPress={pickImage}>
-          <Image
-            source={
-              profileImage
-                ? { uri: profileImage }
-                : require('./../asset/cKit.png') // use your admin avatar fallback here
-            }
-            style={styles.profileImage}
-          />
-        </TouchableOpacity>
-        <Text style={styles.changePhotoText}>Change Photo</Text>
-      </View>
-            
-      <View style={styles.formSection}>
-        <Text style={styles.label}>Name</Text>
-        <TextInput
-          style={styles.input}
-          value={adminName}
-          onChangeText={setAdminName}
-        />
-
-        <Text style={styles.label}>Email</Text>
-        <TextInput
-          style={styles.input}
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-        />
-
-        <Text style={styles.label}>Contact Number</Text>
-        <TextInput
-          style={styles.input}
-          value={contactNumber}
-          onChangeText={setContactNumber}
-          keyboardType="numeric"
-        />
-      </View>
-
-      <TouchableOpacity style={styles.saveButton}>
-        <LinearGradient
-          colors={['#0284c7', '#0ea5e9']}
-          style={styles.gradientButton}
+    <View style={styles.container}>
+      <Image
+        source={require("./../asset/cricketBat.png")}
+        style={styles.cricketBat}
+      />
+      <View style={styles.header}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("AdminHomeScreen")}
         >
-          <Text style={styles.saveButtonText}>Save Changes</Text>
-        </LinearGradient>
-      </TouchableOpacity>
-    </ScrollView>
+          <Ionicons name="home-outline" size={32} color="white" />
+        </TouchableOpacity>
+        </View>
+
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <View style={styles.profileContainer}>
+            <Text style={styles.welcomeText}>Welcome user</Text>
+            <TouchableOpacity style={styles.profileIcon} onPress={pickImage}>
+            {profileImage ? (
+              <Image
+                source={{ uri: profileImage }}
+                style={styles.profileImage}
+              />
+            ) : (
+              <Ionicons name="camera-outline" size={48} color="white" />
+            )}
+          </TouchableOpacity>
+          </View>
+
+          <View style={styles.detailsContainer}>
+            <Text style={styles.sectionTitle}>Account Details</Text>
+            <View style={styles.inputGroup}>
+              <Text style={styles.input} placeholder="name" placeholderTextColor="black">{adminName}</Text>
+              <Text
+              style={styles.input}
+              placeholder="Email Address"
+              placeholderTextColor="black"
+            >{email}</Text>
+            <Text
+              style={styles.input}
+              placeholder="Contact Number"
+              placeholderTextColor="black"
+            >{contactNumber}</Text>
+            </View>
+          </View>
+        </ScrollView>
+    </View>
   );
 };
 
@@ -95,35 +89,73 @@ export default AdminProfile;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f1f5f9',
+    backgroundColor: "#000",
+    paddingHorizontal: 20,
+  },
+  cricketBat: {
+    position: "absolute",
+    top: "20%",
+    left: "-10",
+    width: 500,
+    height: 600,
+    opacity: 0.4,
+    transform: [{ rotate: "-15deg" }],
+    zIndex: 0,
   },
   header: {
-    padding: 20,
-    alignItems: 'center',
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    paddingTop: 70,
+    paddingBottom:15
   },
-  headerText: {
-    color: '#f8fafc',
-    fontSize: 22,
-    fontWeight: 'bold',
-  },
+  scrollContainer: { paddingBottom: 40 },
   profileContainer: {
-    alignItems: 'center',
-    marginTop: 30,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginVertical: 20,
   },
-  profileImage: {
-    width: 110,
-    height: 110,
-    borderRadius: 55,
-    borderWidth: 2,
-    borderColor: '#38bdf8',
+  welcomeText: { fontSize: 24, fontWeight: "bold", color: "white" },
+
+
+  // profileImage: {
+  //   width: 110,
+  //   height: 110,
+  //   borderRadius: 55,
+  //   borderWidth: 2,
+  //   borderColor: "#38bdf8",
+  // },
+
+  profileIcon: {
+    backgroundColor: "rgba(0, 50, 0, 0.8)",
+    borderRadius: 50,
+    padding: 10,
+    width: 105,
+    height: 105,
+    justifyContent: "center",
+    alignItems: "center",
   },
+  profileImage: { width: 95, height: 95, borderRadius: 50 },
+  detailsContainer: {
+    backgroundColor: "rgba(0, 50, 0, 0.8)",
+    padding: 20,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "white",
+    marginBottom: 10,
+  },
+  inputGroup: { gap: 10 },
+  input: { backgroundColor: "white", padding: 12, borderRadius: 8 ,textAlign:'left'},
+ 
   changePhotoText: {
     marginTop: 8,
     fontSize: 14,
-    color: '#0284c7',
-    fontWeight: '500',
+    color: "#0284c7",
+    fontWeight: "500",
   },
   formSection: {
     paddingHorizontal: 25,
@@ -131,17 +163,17 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    color: '#334155',
+    color: "#334155",
     marginBottom: 4,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   input: {
-    backgroundColor: '#e2e8f0',
+    backgroundColor: "#e2e8f0",
     padding: 12,
     borderRadius: 10,
     marginBottom: 20,
     fontSize: 16,
-    color: '#0f172a',
+    color: "#0f172a",
   },
   saveButton: {
     marginTop: 20,
@@ -150,11 +182,11 @@ const styles = StyleSheet.create({
   gradientButton: {
     padding: 15,
     borderRadius: 12,
-    alignItems: 'center',
+    alignItems: "center",
   },
   saveButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });

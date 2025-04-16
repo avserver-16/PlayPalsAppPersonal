@@ -39,7 +39,7 @@ const gears = [
 const HomeScreen = () => {
   const scrollY = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation();
-  const [role, setRole] = useState(null); // ⬅️ Add state for role
+  const [role, setRole] = useState(null); 
 
   useEffect(() => {
     const fetchRole = async () => {
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
 
   scrollContainer: {
     flexGrow: 1,
-    paddingBottom: 20, // Prevents extra white space
+    paddingBottom: 20, 
   },
 
   menuContainer: {
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
 
   backgroundWrapper: {
     width: "100%",
-    height: height, // Ensures full-screen background
+    height: height, 
   },
 
   background: {
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
 
   sportsTextContainer: {
     position: "relative",
-    marginTop: -15, // Moves text slightly up
+    marginTop: -15, 
     backgroundColor: "white",
     paddingVertical: 10,
     paddingRight: 10,

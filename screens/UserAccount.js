@@ -55,7 +55,7 @@ const UserAccount = () => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${storedToken}`, // ✅ Use the correct token
+            "Authorization": `Bearer ${storedToken}`, 
           },
         });
 
@@ -159,7 +159,7 @@ const UserAccount = () => {
   return (
     <View style={styles.container}>
       <Image
-        source={require("./asset/cricketBat.png")} // Update the path if needed
+        source={require("./asset/cricketBat.png")} 
         style={styles.cricketBat}
       />
       <SafeAreaView style={styles.header}>
@@ -288,12 +288,12 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#000", paddingHorizontal: 20 },
   whiteBorderContainer: {
     flex: 1,
-    borderWidth: 2, // White border
+    borderWidth: 2, 
     borderColor: "rgba(255,255,255,0.7)",
     borderRadius: 15,
     padding: 15,
     overflow: "hidden",
-    backgroundColor: "rgba(255, 255, 255, 0.1)", // Slight translucency
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
     marginTop: 10,
     marginBottom: 15,
   },
@@ -305,13 +305,13 @@ const styles = StyleSheet.create({
   },
   cricketBat: {
     position: "absolute",
-    top: "20%", // Adjust to position it correctly
-    left: "-10%", // Center it
-    width: 500, // Adjust size as needed
-    height: 600, // Adjust size as needed
-    opacity: 0.4, // Lower opacity for subtle effect
-    transform: [{ rotate: "-15deg" }], // Rotate ONLY the bat
-    zIndex: 0, // Send it behind all other UI elements
+    top: "20%", 
+    left: "-10%", 
+    width: 500, 
+    height: 600, 
+    opacity: 0.4, 
+    transform: [{ rotate: "-15deg" }], 
+    zIndex: 0, 
   },
 
   scrollContainer: { paddingBottom: 40 },
@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
   },
 
   pickerItem: {
-    color: "white", // Ensures text remains white
+    color: "white", 
   },
 
   dateInput: { flex: 1, justifyContent: "center", paddingLeft: 12 },

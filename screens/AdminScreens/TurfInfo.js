@@ -166,19 +166,19 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   infoCard: {
-    backgroundColor: "rgba(255, 255, 255, 0.95)",
+    backgroundColor: "rgba(255, 255, 255, 0.3)",
     borderRadius: 16,
     padding: 16,
     marginBottom: 16,
   },
   label: {
     fontSize: 14,
-    color: "#777",
+    color: "white",
     marginBottom: 4,
   },
   value: {
     fontSize: 16,
-    color: "#333",
+    color: "white",
     fontWeight: "500",
   },
   rowContainer: {

@@ -35,7 +35,7 @@ export default function AdminHomeScreen() {
         <View style={{ flexDirection: "row-reverse" }}>
           <TouchableOpacity
             style={styles.accountIcon}
-            onPress={() => navigation.navigate("AdminProfile")} // Replace with navigation to Profile screen
+            onPress={() => navigation.navigate("AdminProfile")}
           >
             <Ionicons name="person-circle-outline" size={35} color="white" />
           </TouchableOpacity>
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     justifyContent: "center",
     alignItems: "center",
-    overflow: "hidden", // important for rounded gradient
+    overflow: "hidden", 
     backgroundColor: "#fff",
   },
   cardText: {

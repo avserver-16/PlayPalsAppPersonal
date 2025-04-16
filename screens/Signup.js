@@ -93,7 +93,7 @@ export default function Signup() {
     }
     setFormError("");
    
-    navigation.navigate("OtpVerification", { email, name });
+    navigation.navigate("Login");
   };
   const showDatePicker = () => {
     setDatePickerVisibility(true);

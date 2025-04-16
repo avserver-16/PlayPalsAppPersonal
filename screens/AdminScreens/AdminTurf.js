@@ -55,7 +55,7 @@ export default function AdminTurfScreen() {
       </View>
     </TouchableOpacity>
   );
-  
+
   return (
     <BG2>
       <View style={styles.container}>
@@ -86,6 +86,8 @@ export default function AdminTurfScreen() {
           style={styles.fab}
           onPress={() => navigation.navigate("AddTurf")}
         >
+        {/* <Text style={{fontSize:13,color:'white'}}>Add new</Text>
+        <Text style={{fontSize:13,color:'white'}}>Turf</Text> */}
           <Ionicons name="add" size={30} color="#fff" />
         </TouchableOpacity>
       </View>
@@ -116,8 +118,8 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     overflow: "hidden",
     elevation: 3,
-    width: width - 32, // Full width with padding
-    alignSelf: "center", // center horizontally
+    width: width - 32, 
+    alignSelf: "center", 
     height:150
   },
   image: {
@@ -160,8 +162,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 30,
     right: 20,
-    width: 56,
-    height: 56,
+    width: 76,
+    height: 76,
     borderRadius: 28,
     backgroundColor: "#1e90ff",
     alignItems: "center",

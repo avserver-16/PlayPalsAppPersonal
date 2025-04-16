@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     overflow: "hidden",
     elevation: 3,
-    alignSelf: "stretch", // this ensures full width inside FlatList
+    alignSelf: "stretch", 
     width:width*0.85,
     height:140
   },
