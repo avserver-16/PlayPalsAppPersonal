@@ -164,6 +164,7 @@ export default function App() {
         <Stack.Screen name="AddRental" component={AddRental} options={{headerShown:false}}/>
         <Stack.Screen name="RentalInfo" component={RentalInfo} options={{headerShown:false}}/>
         <Stack.Screen name="AdminProfile" component={AdminProfile} options={{headerShown:false}}/>
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
