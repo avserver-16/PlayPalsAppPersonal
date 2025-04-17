@@ -289,6 +289,7 @@ const addUserPhoto=async ()=>{
               <Picker
                 selectedValue={selectedFilter}
                 onValueChange={(itemValue) => setSelectedFilter(itemValue)}
+                style={{color:'white'}}
               >
                 <Picker.Item label="All" value="All" />
                 <Picker.Item label="Turfs" value="Turfs" />
@@ -298,8 +299,8 @@ const addUserPhoto=async ()=>{
 
             {filteredBookings.map((booking) => (
               <View key={booking.id} style={styles.bookingItem}>
-                <Text style={styles.bookingText}>{booking.name}</Text>
-                <Text style={styles.bookingSubText}>
+                <Text style={{color:'white'}}>{booking.name}</Text>
+                <Text style={{color:'white'}}>
                   Date: {booking.date}{" "}
                   {booking.type === "Turfs"
                     ? `Seats booked: ${booking.seats}`

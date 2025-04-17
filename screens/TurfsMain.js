@@ -50,6 +50,9 @@ const TurfsMain = () => {
                         <Text style={styles.turfInfo}>Maximum {turfDetails.totalSeats == null ? 10 : turfDetails.totalSeats} Players</Text>
 
                         <Text style={styles.seatsTitle}>Seats Available: {turfDetails.availableSeats}</Text>
+                        <TouchableOpacity style={{marginTop:20,backgroundColor:'green',height:35,width:160,borderRadius:10,justifyContent:'center',alignItems:'center'}} onPress={()=>navigation.navigate("TurfReview")}>
+                            <Text style={{color:'white',fontSize:15}}>Check Turf Reviews</Text>
+                        </TouchableOpacity>
                         <View style={styles.seatsContainer}>
                             {seats.map((status, index) => (
                                 <View
@@ -110,10 +113,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.6)', // Semi-transparent black background
         borderRadius: 15,
         //overflow: 'hidden',
-        marginTop: 100,
+        marginTop: 90,
         //paddingBottom: 20,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        
     },
     turfImage: {
         width: '90%',
@@ -121,7 +125,8 @@ const styles = StyleSheet.create({
         //resizeMode: 'cover',
         alignSelf: 'center',
         left: 20,
-        borderRadius:10
+        borderRadius:10,
+        bottom:-20
     },
     infoContainer: {
         width: '100%',
@@ -166,7 +171,7 @@ const styles = StyleSheet.create({
         borderColor: 'white',
     },
     bookButton: {
-        marginTop: 30,
+        marginTop: 10,
         alignSelf: 'center',
         backgroundColor: '#B8F4AA',
         paddingVertical: 12,
