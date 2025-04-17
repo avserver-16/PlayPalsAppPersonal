@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { View, Text, ImageBackground, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -6,7 +7,7 @@ const TurfsMain = () => {
     const navigation = useNavigation();
     const route = useRoute();
     const { turfDetails } = route.params || {};
-
+    console.log("Data", turfDetails.turfLocation)
     if (!turfDetails) {
         return (
             <View style={styles.centered}>
@@ -16,55 +17,54 @@ const TurfsMain = () => {
     }
 
     const { name, location, time, maxPlayers, image } = turfDetails;
-    const seatsAvailable = maxPlayers - 1;
+    console.log("maxPlayers:", maxPlayers);
+    //const seatsAvailable = 9; // 10 - 1, as you had
 
-    // Generate seat layout: Occupied seats (white) first, then available seats (empty)
+    // Ensure maxPlayers is a number and not less than seatsAvailable
+    const totalPlayers = parseInt(maxPlayers) || 0;
+    const seatsAvailable = Math.min(9, totalPlayers); // prevent more available seats than total
+    const occupied = Math.max(0, totalPlayers - seatsAvailable);
+
+
     const seats = [
-        ...Array(maxPlayers - seatsAvailable).fill('occupied'), // Occupied seats first
-        ...Array(seatsAvailable).fill('available') // Available seats after
+        ...Array(occupied).fill('occupied'),
+        ...Array(seatsAvailable).fill('available')
     ];
 
     return (
         <View style={styles.container}>
-            {/* Background with Opacity */}
             <ImageBackground source={require("./asset/turfBG.png")} style={styles.background}>
                 <View style={styles.overlay} />
 
-                {/* Back Button */}
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
                     <Text style={styles.backText}>← Back</Text>
                 </TouchableOpacity>
 
-                {/* Turf Image + Details Container with Semi-Transparent Background */}
                 <View style={styles.turfContainer}>
-                    {/* Turf Image */}
-                    <ImageBackground source={image} style={styles.turfImage} />
+                    <ImageBackground source={{ uri: turfDetails.turfPhoto[0] }} style={styles.turfImage} />
 
-                    {/* Turf Information */}
                     <View style={styles.infoContainer}>
-                        <Text style={styles.turfName}>{name}</Text>
-                        <Text style={styles.turfInfo}>{location}</Text>
-                        <Text style={styles.turfInfo}>{time}</Text>
-                        <Text style={styles.turfInfo}>Max {maxPlayers} Players</Text>
+                        <Text style={styles.turfName}>{turfDetails.turfName}</Text>
+                        <Text style={styles.turfInfo}></Text>
+                        <Text style={styles.turfInfo}>Time Slot : {turfDetails.availabilitySlots == null ? 9 : turfDetails.availabilitySlots[0].slots[0].start} - {turfDetails.availabilitySlots == null ? 12 : turfDetails.availabilitySlots[0].slots[0].end}</Text>
+                        <Text style={styles.turfInfo}>Maximum {turfDetails.totalSeats == null ? 10 : turfDetails.totalSeats} Players</Text>
 
-                        {/* Seat Availability */}
-                        <Text style={styles.seatsTitle}>Seats Available: {seatsAvailable}</Text>
+                        <Text style={styles.seatsTitle}>Seats Available: {turfDetails.availableSeats}</Text>
                         <View style={styles.seatsContainer}>
                             {seats.map((status, index) => (
-                                <View 
-                                    key={index} 
+                                <View
+                                    key={index}
                                     style={[
                                         styles.seat,
                                         status === 'occupied' ? styles.occupiedSeat : styles.availableSeat,
-                                        (index + 1) % 6 === 0 ? { marginRight: 0 } : {} // Wrap after 6 seats
-                                    ]} 
+                                        (index + 1) % 6 === 0 ? { marginRight: 0 } : {}
+                                    ]}
                                 />
                             ))}
                         </View>
                     </View>
                 </View>
 
-                {/* Book Button */}
                 <TouchableOpacity style={styles.bookButton}>
                     <Text style={styles.bookText}>Book Now</Text>
                 </TouchableOpacity>
@@ -109,20 +109,25 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.6)', // Semi-transparent black background
         borderRadius: 15,
-        overflow: 'hidden',
-        marginTop: 150,
-        paddingBottom: 20,
+        //overflow: 'hidden',
+        marginTop: 100,
+        //paddingBottom: 20,
         alignItems: 'center',
+        justifyContent: 'center'
     },
     turfImage: {
-        width: '100%',
-        height: 200,
-        resizeMode: 'cover',
+        width: '90%',
+        height: '60%',
+        //resizeMode: 'cover',
+        alignSelf: 'center',
+        left: 20,
+        borderRadius:10
     },
     infoContainer: {
         width: '100%',
-        padding: 15,
+        //padding: 15,
         alignItems: 'center',
+        top:-50
     },
     turfName: {
         fontSize: 24,

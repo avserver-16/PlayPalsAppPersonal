@@ -1,12 +1,16 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
+=======
+import React, { useState,useEffect } from 'react';
+>>>>>>> f18a031 (Integrated backend for displaying available turfs to all  players(Users) + Integrated backend with admin side Register and Login)
 import {
   View,
   Text,
-  TextInput,
   Image,
   TouchableOpacity,
   ScrollView,
   StyleSheet,
+<<<<<<< HEAD
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { LinearGradient } from "expo-linear-gradient";
@@ -20,6 +24,62 @@ const AdminProfile = () => {
   const [contactNumber, setContactNumber] = useState("9876543210");
 
   const navigation = useNavigation();
+=======
+} from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import { LinearGradient } from 'expo-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const AdminProfile = () => {
+  const [profileImage, setProfileImage] = useState(null);
+  const [adminName] = useState('Admin Name');
+  const [email] = useState('admin@example.com');
+  const [contactNumber] = useState('9876543210');
+
+const [token,setToken]=useState('')
+useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const storedToken = await AsyncStorage.getItem("token");
+        if (!storedToken) {
+          console.error("No token found");
+          return;
+        }
+
+        setToken(token);
+        console.log("Retrieved token:", storedToken);
+
+        const response = await fetch("https://playpals-l797.onrender.com/turf/all_turfs", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${storedToken}`, 
+          },
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+     console.log(data)
+         
+        
+        } else {
+          console.error("Failed to fetch user data:", data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+
+
+
+
+
+
+>>>>>>> f18a031 (Integrated backend for displaying available turfs to all  players(Users) + Integrated backend with admin side Register and Login)
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -35,6 +95,7 @@ const AdminProfile = () => {
   };
 
   return (
+<<<<<<< HEAD
     <View style={styles.container}>
       <Image
         source={require("./../asset/cricketBat.png")}
@@ -81,6 +142,38 @@ const AdminProfile = () => {
           </View>
         </ScrollView>
     </View>
+=======
+    <ScrollView style={styles.container}>
+      <LinearGradient colors={['#0f172a', '#1e293b']} style={styles.header}>
+        <Text style={styles.headerText}>Admin Profile</Text>
+      </LinearGradient>
+
+      <View style={styles.profileContainer}>
+        <TouchableOpacity onPress={pickImage}>
+          <Image
+            source={
+              profileImage
+                ? { uri: profileImage }
+                : require('./../asset/cKit.png')
+            }
+            style={styles.profileImage}
+          />
+        </TouchableOpacity>
+        <Text style={styles.changePhotoText}>Change Photo</Text>
+      </View>
+
+      <View style={styles.formSection}>
+        <Text style={styles.label}>Name</Text>
+        <Text style={styles.readOnlyText}>{adminName}</Text>
+
+        <Text style={styles.label}>Email</Text>
+        <Text style={styles.readOnlyText}>{email}</Text>
+
+        <Text style={styles.label}>Contact Number</Text>
+        <Text style={styles.readOnlyText}>{contactNumber}</Text>
+      </View>
+    </ScrollView>
+>>>>>>> f18a031 (Integrated backend for displaying available turfs to all  players(Users) + Integrated backend with admin side Register and Login)
   );
 };
 
@@ -103,10 +196,24 @@ const styles = StyleSheet.create({
     zIndex: 0,
   },
   header: {
+<<<<<<< HEAD
     flexDirection: "row",
     justifyContent: "flex-end",
     paddingTop: 70,
     paddingBottom:15
+=======
+    padding: 20,
+    alignItems: 'center',
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    height: 100,
+  },
+  headerText: {
+    color: '#f8fafc',
+    fontSize: 22,
+    fontWeight: 'bold',
+    top: 30,
+>>>>>>> f18a031 (Integrated backend for displaying available turfs to all  players(Users) + Integrated backend with admin side Register and Login)
   },
   scrollContainer: { paddingBottom: 40 },
   profileContainer: {
@@ -167,14 +274,20 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     fontWeight: "600",
   },
+<<<<<<< HEAD
   input: {
     backgroundColor: "#e2e8f0",
+=======
+  readOnlyText: {
+    backgroundColor: '#e2e8f0',
+>>>>>>> f18a031 (Integrated backend for displaying available turfs to all  players(Users) + Integrated backend with admin side Register and Login)
     padding: 12,
     borderRadius: 10,
     marginBottom: 20,
     fontSize: 16,
     color: "#0f172a",
   },
+<<<<<<< HEAD
   saveButton: {
     marginTop: 20,
     paddingHorizontal: 25,
@@ -189,4 +302,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
+=======
+>>>>>>> f18a031 (Integrated backend for displaying available turfs to all  players(Users) + Integrated backend with admin side Register and Login)
 });

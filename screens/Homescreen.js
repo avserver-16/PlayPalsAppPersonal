@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     zIndex: 20,
     backgroundColor: "transparent",
     paddingHorizontal: 20,
-    paddingTop: 20,
+    paddingTop: 40,
   },
 
   menuRow: {
@@ -255,8 +255,8 @@ const styles = StyleSheet.create({
   },
   player: {
     position: "absolute",
-    width: width * 0.8,
-    height: height * 0.5,
+    width: 340,
+    height: 410,
     resizeMode: "contain",
     alignSelf: "center",
     top: "25%",

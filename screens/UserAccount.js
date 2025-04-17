@@ -86,7 +86,41 @@ const UserAccount = () => {
     fetchUserData();
   }, []);
 
+const addUserPhoto=async ()=>{
+  try {
+    const storedToken = await AsyncStorage.getItem("token");
+    if (!storedToken) {
+      console.error("No token found");
+      return;
+    }
 
+    setToken(token);
+    console.log("Retrieved token:", storedToken);
+    const response = await fetch("https://playpals-l797.onrender.com/user/update", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${storedToken}`, 
+      },
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      const formatDOB = (dob) => {
+        return new Date(dob).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        });
+      }
+      console.log(data)
+    } else {
+      console.error("Failed to fetch user data:", data.message);
+    }
+}catch (error) {
+  console.error("Error fetching user data:", error);
+}
+};
 
 
 
@@ -278,7 +312,7 @@ const UserAccount = () => {
             <Text style={styles.showMoreText}>Show more</Text>
           </TouchableOpacity>
         </View>
-        
+        <TouchableOpacity style={{backgroundColor:'white',height:100,width:100}} onPress={addUserPhoto}></TouchableOpacity>
       </ScrollView>
     </View>
   );

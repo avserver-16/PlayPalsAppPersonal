@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -13,6 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 import BG2 from "../BG2";
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const { width } = Dimensions.get("window");
@@ -31,9 +32,41 @@ export default function AddTurf() {
   const [amenities, setAmenities] = useState("");
   const [pricePerPerson, setPricePerPerson] = useState("");
   const [turfPhotos, setTurfPhotos] = useState([]);
-
+  const [token, setToken] = useState("");
   const navigation = useNavigation();
 
+
+  const submitTurf = async () => {
+console.log("entered1")
+      console.log("entered2")
+      try {
+        const storedToken = await AsyncStorage.getItem("token");
+        if (!storedToken) {
+          console.error("No token found");
+          return;
+        }
+
+        setToken(token);
+        console.log("Retrieved token:", storedToken);
+
+        const response = await fetch("https://playpals-l797.onrender.com/turf/all_turfs", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${storedToken}`,
+          },
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          console.log(data)
+        } else {
+          console.error("Failed to fetch user data:", data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+  }
 
   const pickTurfPhotos = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -51,9 +84,9 @@ export default function AddTurf() {
   return (
     <BG2>
       <View style={styles.container}>
-      <TouchableOpacity onPress={()=> navigation.goBack()}>
-      <Ionicons name="arrow-back" size={28} color="white" />
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons name="arrow-back" size={28} color="white" />
+        </TouchableOpacity>
         <Text style={styles.title}>Add New Turf</Text>
 
         <View style={styles.formCard}>
@@ -187,7 +220,7 @@ export default function AddTurf() {
 
             <View style={{ marginTop: 24, marginBottom: 40 }}>
               <TouchableOpacity style={styles.submitButton}>
-                <Text style={styles.submitText}>Submit Turf</Text>
+                <Text style={styles.submitText} onPress={() => submitTurf()}>Submit Turf</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -217,7 +250,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 1,
     borderColor: "rgba(255,255,255,0.3)",
-    width:width*0.9
+    width: width * 0.9
   },
   form: {
     paddingBottom: 80,
@@ -236,7 +269,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 10,
     fontSize: 16,
-    color:'white'
+    color: 'white'
   },
   formRow: {
     flexDirection: "row",
