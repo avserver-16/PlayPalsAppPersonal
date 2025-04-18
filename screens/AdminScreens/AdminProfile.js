@@ -1,8 +1,7 @@
-<<<<<<< HEAD
+
 import React, { useState, useEffect } from "react";
-=======
-import React, { useState } from "react";
->>>>>>> c6097b525b3dc5f98afb73659d246a6db1d714e1
+//import React, { useState } from "react";
+
 import {
   View,
   Text,
@@ -26,7 +25,7 @@ const AdminProfile = () => {
 
   const navigation = useNavigation();
 
-<<<<<<< HEAD
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -61,8 +60,7 @@ const AdminProfile = () => {
     fetchUserData();
   }, []);
 
-=======
->>>>>>> c6097b525b3dc5f98afb73659d246a6db1d714e1
+
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -135,11 +133,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     paddingTop: 70,
-<<<<<<< HEAD
+
     paddingBottom: 15,
-=======
     paddingBottom:15
->>>>>>> c6097b525b3dc5f98afb73659d246a6db1d714e1
+
   },
   scrollContainer: { paddingBottom: 40 },
   profileContainer: {
@@ -182,30 +179,27 @@ const styles = StyleSheet.create({
   inputGroup: {
     gap: 10,
   },
-<<<<<<< HEAD
-  readOnlyText: {
-=======
-  formSection: {
-    paddingHorizontal: 25,
-    paddingTop: 30,
-  },
-  label: {
-    fontSize: 14,
-    color: "#334155",
-    marginBottom: 4,
-    fontWeight: "600",
-  },
-  input: {
->>>>>>> c6097b525b3dc5f98afb73659d246a6db1d714e1
-    backgroundColor: "#e2e8f0",
-    padding: 12,
-    borderRadius: 10,
-    marginBottom: 10,
-    fontSize: 16,
-    color: "#0f172a",
-  },
-<<<<<<< HEAD
-=======
+ 
+    formSection: {
+      paddingHorizontal: 25,
+      paddingTop: 30,
+    },
+    label: {
+      fontSize: 14,
+      color: "#334155",
+      marginBottom: 4,
+      fontWeight: "600",
+    },
+    input: {
+      backgroundColor: "#e2e8f0",
+      padding: 12,
+      borderRadius: 10,
+      marginBottom: 10,
+      fontSize: 16,
+      color: "#0f172a",
+    },
+
+
   saveButton: {
     marginTop: 20,
     paddingHorizontal: 25,
@@ -219,6 +213,5 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
-  },
->>>>>>> c6097b525b3dc5f98afb73659d246a6db1d714e1
-});
+  },}
+  );

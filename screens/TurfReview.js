@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -6,15 +6,19 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import ReviewList from "./components/ReviewList"; // ← import it
+import { useNavigation, useRoute } from "@react-navigation/native";
+import ReviewList from "./components/ReviewList";
 import { Dimensions } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 const { width } = Dimensions.get("window");
 
 export default function TurfReview() {
   const navigation = useNavigation();
-
+  const route=useRoute();
+  const { reviewData } = route.params || {};
+  console.log(reviewData.id)
   const turfReviews = [
     {
       id: 1,
@@ -35,6 +39,39 @@ export default function TurfReview() {
       rating: 4,
     },
   ];
+
+  useEffect(() => {
+    const fetchReview = async () => {
+      console.log("Fetching Reviews...");
+      try {
+        const storedToken = await AsyncStorage.getItem("token");
+        if (!storedToken) {
+          console.log("No Token Found");
+          return;
+        }
+
+        const response = await fetch(`https://playpals-l797.onrender.com/review/turf/${reviewData.id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${storedToken}`
+          }
+        });
+
+        const data = await response.json();
+        console.log(data[0].comment)
+      } catch (error) {
+        console.error("Error fetching rentals:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReview();
+  }, []);
+
+
+
 
   return (
     <View style={styles.container}>

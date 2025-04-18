@@ -81,56 +81,52 @@ const Login = ({ navigation }) => {
     <Background style={{ zIndex: -2 }}>
       <Text
         style={{
-          color: "#ffffff0a",
-          fontFamily: "Kanit_400Regular",
+          color: "#B8F4AA",
+          fontFamily: "KanitLight",
           fontSize: 75,
           position: "absolute",
-          left: 20,
-          top: 50,
-          zIndex: 1,
-        }}
-      >
-        PlayPals
-      </Text>
-      <ImageBackground
-        source={require("./asset/Cricket.png")}
-        style={{
-          flex: 1,
-          height: 720,
-          width: 720,
-          position: "absolute",
-          bottom: 0,
-          opacity: 0.08,
-          right: -30,
+         top:150,
           zIndex: 0,
         }}
-      ></ImageBackground>
+      >
+        Play  Pals
+      </Text>
+      <ImageBackground
+                            source={require('./asset/cricketer.png')}
+                            style={{
+                                height: 130,
+                                width: 105,
+                                zIndex:10,
+                                top:-193.5
+                            }}></ImageBackground>
+
       <View
         style={{
-          height: 255,
-          width: 350,
+          height: 800,
+          width: '100%',
           position: "absolute",
-          backgroundColor: "#ffffff0a",
+          backgroundColor: "#B8F4AA0f",
           opacity: 1,
-          borderRadius: 20,
-          borderWidth: 5,
-          borderColor: "#ffffff80",
-          bottom: 200,
+          borderRadius: 50,
+          top:300,
+          //borderWidth: 5,
+          borderColor: "#B8F4AA",
           //justifyContent:'center',
           alignItems: "center",
         }}
       >
         <TextInput
           style={{
-            top: 25,
-            borderRadius: 10,
-            backgroundColor: "#ffffff80",
-            height: 60,
+            top: 40,
+            borderRadius: 30,
+            backgroundColor: "#B8F4AA",
+            height: 50,
             width: 300,
             position: "absolute",
             paddingLeft: 20,
-            fontFamily: "Kanit_400Regular",
-            fontSize: 24,
+            fontFamily: "KanitLight",
+            fontSize: 20,
+            
           }}
           placeholder="Email"
           placeholderTextColor={"#0000004d"}
@@ -139,15 +135,15 @@ const Login = ({ navigation }) => {
         ></TextInput>
         <TextInput
           style={{
-            top: 125,
-            borderRadius: 10,
-            backgroundColor: "#ffffff80",
-            height: 60,
+            top: 110,
+            borderRadius: 30,
+            backgroundColor: "#B8F4AA",
+            height: 50,
             width: 300,
             position: "absolute",
             paddingLeft: 20,
-            fontFamily: "Kanit_400Regular",
-            fontSize: 24,
+            fontFamily: "KanitLight",
+            fontSize: 20,
           }}
           placeholder="Password"
           placeholderTextColor={"#0000004d"}
@@ -164,71 +160,162 @@ const Login = ({ navigation }) => {
             justifyContent: "center",
             alignItems: "center",
             position: "absolute",
-            right: 30,
-            bottom: 75,
+            right: 60,
+            top:122.5
           }}
           onPress={check}
         >
-          <Feather name="eye" color={"grey"} size={30}></Feather>
+          <Feather name="eye" color={"grey"} size={24}></Feather>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate("ForgotPassword")}
           style={{
             height: 35,
             width: 300,
-            top: 200,
+            top: 180,
             justifyContent: "center",
             alignItems: "center",
           }}
         >
           <Text
             style={{
-              color: "#0091ff",
-              fontFamily: "Kanit_400Regular",
-              fontSize: 22,
+              color: "#B8F4AA",
+              fontFamily: "KanitLight",
+              fontSize: 16,
+              top:-10
             }}
           >
             Forgot Password
           </Text>
         </TouchableOpacity>
-      </View>
+        <View style={
+            {
+                width: '30%',
+                backgroundColor: '#EDF1F3',
+                height: 1,
+                top: 190,
+                left:-100
+            }
+        }>
+        </View>
+        <Text style={{
+            fontFamily: 'KanitLight',
+            color: '#6C7278',
+            fontSize: 16,
+            fontWeight: 500,
+            top:178,
+            left:0
+        }}>Or
+        </Text>
+        <View style={{
+            width: '30%',
+            backgroundColor: '#EDF1F3',
+            height: 1,
+            top: 167,
+            left:100
+            
+        }
+        }></View>
+      
       <TouchableOpacity
+            style={{
+                backgroundColor: '#B8F4AA',
+                height: 48,
+                width: '75%',
+                borderRadius: 40,
+                top: 200,
+                alignItems: 'center',
+                justifyContent: 'center',
+           
+                
+            }}>
+                <ImageBackground
+                            source={require('./asset/google.png')}
+                            style={{
+                                height: 20,
+                                width: 20,
+                                left:'18%',
+                                top:'30%',
+                                position:'absolute'
+                            }}></ImageBackground>
+            <Text style={{
+                top: 0,
+                fontFamily: 'KanitLight',
+                color: 'black',
+                fontSize: 16,
+                fontWeight: 500,
+                left:20
+            }}>Continue with Google</Text>
+        </TouchableOpacity>
+
+
+        <TouchableOpacity
+            style={{
+                backgroundColor: '#B8F4AA',
+                height: 48,
+                width: '75%',
+                borderRadius: 40,
+                top: 220,
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}>
+                <ImageBackground
+                            source={require('./asset/FB.png')}
+                            style={{
+                                height: 20,
+                                width: 20,
+                                left:'18%',
+                                top:'30%',
+                                position:'absolute'
+                            }}></ImageBackground>
+            <Text style={{
+                top: 0,
+                fontFamily: 'KanitLight',
+                color: 'black',
+                fontSize: 16,
+                fontWeight: 500,
+                left:30
+            }}>Continue with Facebook</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
         onPress={userLogin}
         style={{
-          backgroundColor: "#0091ff",
-          width: 300,
+          backgroundColor: "black",
+          width: 200,
           height: 60,
           alignItems: "center",
           justifyContent: "center",
-          borderRadius: 10,
+          borderRadius: 40,
           position: "absolute",
-          bottom: 100,
+          top:430
+          
         }}
-      >
-        <Text style={{ fontFamily: "Kanit_400Regular", fontSize: 24 }}>
+        >
+        <Text style={{ fontFamily: "Kanit_400Regular", fontSize: 24 ,color:'#B8F4AA'}}>
           Login
         </Text>
       </TouchableOpacity>
       <Text
         style={{
-          fontFamily: "Kanit_400Regular",
+          fontFamily: "KanitLight",
           color: "#ffffff90",
-          fontSize: 24,
-          position: "absolute",
-          bottom: 10,
+          fontSize: 20,
+          top:375
+      
         }}
         onPress={() => {
           navigation.navigate("Signup");
         }}
-      >
+        >
         Register
         <Text
           style={{ color: "#0000007d", position: "absolute", fontSize: 20 }}
-        >
+          >
           {" "}
           yourself !!!
         </Text>
       </Text>
+          </View>
     </Background>
   );
 };

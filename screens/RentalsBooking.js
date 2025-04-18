@@ -42,7 +42,8 @@ const RentalsBooking = () => {
                         <Text style={styles.rentalInfo}>Pickup: {rentalDetails[0].category}</Text>
                         <Text style={styles.rentalInfo}>Duration: {rentalDetails[0].description}</Text>
                         <Text style={styles.rentalInfo}>Price: {rentalDetails[0].pricePerHour}</Text>
-                        <TouchableOpacity style={{marginTop:20,backgroundColor:'green',height:35,width:160,borderRadius:10,justifyContent:'center',alignItems:'center'}} onPress={()=>navigation.navigate("RentalReview")}>
+                        <TouchableOpacity style={{marginTop:20,backgroundColor:'green',height:35,width:160,borderRadius:10,justifyContent:'center',alignItems:'center'}} 
+                        onPress={()=>navigation.navigate("RentalReview")}>
                             <Text style={{color:'white',fontSize:15}}>Check Reviews</Text>
                         </TouchableOpacity>
                     </View>

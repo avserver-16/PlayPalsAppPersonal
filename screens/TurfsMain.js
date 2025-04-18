@@ -7,7 +7,7 @@ const TurfsMain = () => {
     const navigation = useNavigation();
     const route = useRoute();
     const { turfDetails } = route.params || {};
-    console.log("Data", turfDetails.turfLocation)
+    console.log("Data", turfDetails)
     if (!turfDetails) {
         return (
             <View style={styles.centered}>
@@ -50,7 +50,8 @@ const TurfsMain = () => {
                         <Text style={styles.turfInfo}>Maximum {turfDetails.totalSeats == null ? 10 : turfDetails.totalSeats} Players</Text>
 
                         <Text style={styles.seatsTitle}>Seats Available: {turfDetails.availableSeats}</Text>
-                        <TouchableOpacity style={{marginTop:20,backgroundColor:'green',height:35,width:160,borderRadius:10,justifyContent:'center',alignItems:'center'}} onPress={()=>navigation.navigate("TurfReview")}>
+                        <TouchableOpacity style={{marginTop:20,backgroundColor:'green',height:35,width:160,borderRadius:10,justifyContent:'center',alignItems:'center'}} 
+                        onPress={()=>navigation.navigate("TurfReview",{reviewData:turfDetails})}>
                             <Text style={{color:'white',fontSize:15}}>Check Turf Reviews</Text>
                         </TouchableOpacity>
                         <View style={styles.seatsContainer}>
