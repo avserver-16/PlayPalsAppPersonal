@@ -74,7 +74,7 @@ export default function Signup() {
 
 
   const handleSubmit = () => {
-    bFunc(name,email,password,dob,gender,city);
+    
     if (!name || !email || !password || !dob || !gender) {
       setFormError("All fields must be filled out.");
       return;
@@ -92,7 +92,7 @@ export default function Signup() {
       setPasswordError("");
     }
     setFormError("");
-   
+    bFunc(name,email,password,dob,gender,city);
     navigation.navigate("Login");
   };
   const showDatePicker = () => {
