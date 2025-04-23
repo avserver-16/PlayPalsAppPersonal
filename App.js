@@ -45,6 +45,8 @@ import TurfReview from "./screens/TurfReview";
 import PostNewReview from "./screens/PostNewReview";
 import RentalReview from "./screens/RentalReview";
 import PostNewRentalReview from "./screens/PostNewRentalReview";
+import TurfPayment from "./screens/TurfPayment";
+import RentalPayment from "./screens/RentalPayment"
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -126,7 +128,27 @@ function DrawerNavigator() {
 
 
 export default function App() {
-  const [fontsLoaded] = useFonts({ Kanit_400Regular });
+  const [fontsLoaded] = useFonts({ Kanit_400Regular,
+    "PB":require('./assets/Poppins/Poppins-Black.ttf'),
+    "PBitalic":require('./assets/Poppins/Poppins-BlackItalic.ttf'),
+    "Pbold":require('./assets/Poppins/Poppins-Bold.ttf'),
+    "Pbolditalic":require('./assets/Poppins/Poppins-BoldItalic.ttf'),
+    "PxBold":require('./assets/Poppins/Poppins-ExtraBold.ttf'),
+    "PxBolditalic":require('./assets/Poppins/Poppins-ExtraBoldItalic.ttf'),
+    "PxL":require('./assets/Poppins/Poppins-ExtraLight.ttf'),
+    "PxLi":require('./assets/Poppins/Poppins-ExtraLightItalic.ttf'),
+    "Pi":require('./assets/Poppins/Poppins-Italic.ttf'),
+    "PL":require('./assets/Poppins/Poppins-Light.ttf'),
+    "PLi":require('./assets/Poppins/Poppins-LightItalic.ttf'),
+    "Pm":require('./assets/Poppins/Poppins-Medium.ttf'),
+    "Pmi":require('./assets/Poppins/Poppins-MediumItalic.ttf'),
+    "Pr":require('./assets/Poppins/Poppins-Regular.ttf'),
+    "PsB":require('./assets/Poppins/Poppins-SemiBold.ttf'),
+    "PsBi":require('./assets/Poppins/Poppins-SemiBoldItalic.ttf'),
+    "Pthin":require('./assets/Poppins/Poppins-Thin.ttf'),
+    "Pthinitalic":require('./assets/Poppins/Poppins-ThinItalic.ttf'),
+    "KanitLight":require('./assets/Kanit/Kanit-Light.ttf')
+   });
 
   useEffect(() => {
     if (fontsLoaded) {
@@ -168,11 +190,12 @@ export default function App() {
         <Stack.Screen name="AddRental" component={AddRental} options={{headerShown:false}}/>
         <Stack.Screen name="RentalInfo" component={RentalInfo} options={{headerShown:false}}/>
         <Stack.Screen name="AdminProfile" component={AdminProfile} options={{headerShown:false}}/>
+        <Stack.Screen name="RentalReview" component={RentalReview} options={{headerShown:false}}/>
         <Stack.Screen name="TurfReview" component={TurfReview} options={{headerShown:false}}/>
         <Stack.Screen name="PostNewReview" component={PostNewReview} options={{headerShown:false}}/>
-        <Stack.Screen name="RentalReview" component={RentalReview} options={{headerShown:false}}/>
         <Stack.Screen name="PostNewRentalReview" component={PostNewRentalReview} options={{headerShown:false}}/>
-        
+        <Stack.Screen name="TurfPayment" component={TurfPayment} options={{headerShown:false}}/>
+        <Stack.Screen name="RentalPayment" component={RentalPayment} options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

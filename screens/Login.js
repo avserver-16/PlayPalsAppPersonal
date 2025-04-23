@@ -14,13 +14,13 @@ import { Feather } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 
-const Login = ({ navigation }) => {
+const AdminLogin = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPass] = useState("");
   const [seeCheck, setSeeCheck] = useState(true);
 
   //backend connection
-  const userLogin = async () => {
+  const adminLogin = async () => {
     const response = await fetch(
       "https://playpals-l797.onrender.com/user/login",
       {
@@ -47,7 +47,7 @@ const Login = ({ navigation }) => {
       Alert.alert("Success", "Logged in successfully");
 
       // Get role from AsyncStorage
-      const role = await AsyncStorage.getItem("userRole");
+      // const role = await AsyncStorage.getItem("userRole");
 
       // Navigate to respective home screen
     //   if (role === "admin") {
@@ -90,7 +90,7 @@ const Login = ({ navigation }) => {
           zIndex: 1,
         }}
       >
-        PlayPals
+        PlayPals TurfOwner
       </Text>
       <ImageBackground
         source={require("./asset/Cricket.png")}
@@ -134,6 +134,7 @@ const Login = ({ navigation }) => {
           }}
           placeholder="Email"
           placeholderTextColor={"#0000004d"}
+          keyboardType="email-address"
           onChangeText={setEmail}
           value={email}
         ></TextInput>
@@ -193,7 +194,7 @@ const Login = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <TouchableOpacity
-        onPress={userLogin}
+        onPress={adminLogin}
         style={{
           backgroundColor: "#0091ff",
           width: 300,
@@ -204,6 +205,7 @@ const Login = ({ navigation }) => {
           position: "absolute",
           bottom: 100,
         }}
+
       >
         <Text style={{ fontFamily: "Kanit_400Regular", fontSize: 24 }}>
           Login
@@ -232,4 +234,15 @@ const Login = ({ navigation }) => {
     </Background>
   );
 };
-export default Login;
+export default AdminLogin;
+
+// import react from "react";
+// import { View,Text } from "react-native";
+
+// export default function AdminLogin(){
+//     return(
+//         <View style={{top:100}}>
+//             <Text>Admin Rental</Text>
+//         </View>
+//     )
+// }

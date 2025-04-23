@@ -319,7 +319,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  pickPlayRepeatText: { fontSize: 18, fontWeight: "bold", color: "white" },
+  pickPlayRepeatText: { fontSize: 18, fontWeight: "bold", color: "white" ,fontFamily:'PxLi'},
 
   card: {
     alignItems: "center",
