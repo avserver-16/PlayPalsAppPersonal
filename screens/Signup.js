@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Kanit_400Regular'
   },
   submitButton: {
-    backgroundColor: "#0091ff",
+    backgroundColor: "#66bb6a",
     borderRadius: 8,
     width: 300,
     height: 60,

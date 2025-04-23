@@ -111,11 +111,11 @@ const Rentals = () => {
             {/* Search and Filter Section */}
             <View style={{
                 height: 61, width: 313, backgroundColor: 'transparent', top: 172, position: 'relative',
-                borderRadius: 50, borderWidth: 1, borderColor: '#B8F4AA', flexDirection: 'row', alignItems: 'center', paddingLeft: 20
+                borderRadius: 50, borderWidth: 1, borderColor: '#66bb6a', flexDirection: 'row', alignItems: 'center', paddingLeft: 20
             }}>
                 <TextInput style={{ flex: 1, fontSize: 18, color: 'white' }} placeholder='Search' placeholderTextColor={'#FFFFFF'} />
                 <TouchableOpacity style={{
-                    width: 112, height: 43, backgroundColor: '#B8F4AA', borderRadius: 30,
+                    width: 112, height: 43, backgroundColor: '#66bb6a', borderRadius: 30,
                     alignItems: 'center', justifyContent: 'center', marginRight: 10
                 }}>
                     <Text style={{ fontSize: 18 }}>Filter</Text>
@@ -164,7 +164,7 @@ const Rentals = () => {
                                         style={{
                                             zIndex: 2, width: 80, height: 35, backgroundColor: 'transparent',
                                             borderRadius: 10, alignItems: 'center', justifyContent: 'center',
-                                            position: 'absolute', left: 0, top: 80, borderWidth: 2, borderColor: '#B8F4AA'
+                                            position: 'absolute', left: 0, top: 80, borderWidth: 2, borderColor: '#66bb6a'
                                         }}
                                         onPress={() => navigation.navigate('RentalsBooking', { rentalDetails: rentals })}
                                     >

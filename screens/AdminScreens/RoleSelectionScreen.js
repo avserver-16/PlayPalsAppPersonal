@@ -87,7 +87,7 @@ const RoleSelectionScreen = ({ navigation }) => {
               selectedRole === "user" ? "check-box" : "check-box-outline-blank"
             }
             size={28}
-            color="#0091ff"
+            color="#66bb6a"
           />
           <Text style={styles.checkboxLabel}>User</Text>
         </TouchableOpacity>
@@ -101,7 +101,7 @@ const RoleSelectionScreen = ({ navigation }) => {
               selectedRole === "admin" ? "check-box" : "check-box-outline-blank"
             }
             size={28}
-            color="#0091ff"
+            color="#66bb6a"
           />
           <Text style={styles.checkboxLabel}>Turf Owner</Text>
         </TouchableOpacity>
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   },
   confirmBtn: {
     marginTop: 40,
-    backgroundColor: "#0091ff",
+    backgroundColor: "#66bb6a",
     paddingVertical:8,
     borderRadius: 10,
     alignItems: "center",

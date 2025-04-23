@@ -115,7 +115,7 @@ const ForgotPassword = ({ navigation }) => {
             <TouchableOpacity
                 onPress={handleResetPassword}
                 style={{
-                    backgroundColor: '#0091ff',
+                    backgroundColor: '#66bb6a',
                     width: 300,
                     height: 60,
                     alignItems: 'center',
@@ -133,7 +133,7 @@ const ForgotPassword = ({ navigation }) => {
                     position: 'absolute',
                     bottom: 80
                 }}>
-                <Text style={{ fontFamily: 'Kanit_400Regular', color: '#ffffff80', fontSize: 20 }}>Back to Login</Text>
+                <Text style={{ fontFamily: 'Kanit_400Regular', color: 'white', fontSize: 20 }}>Back to Login</Text>
             </TouchableOpacity>
         </Background>
     );

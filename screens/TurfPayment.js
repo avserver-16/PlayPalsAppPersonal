@@ -54,7 +54,7 @@ const TurfPayment = () => {
                   <Icon
                     name={selected ? 'checkbox-marked-circle' : 'checkbox-blank-circle-outline'}
                     size={24}
-                    color={selected ? '#4CAF50' : '#555'}
+                    color={selected ? '#66bb6a' : '#555'}
                     style={{ marginRight: 10 }}
                   />
                   <Text style={styles.paymentText}>{option}</Text>
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   payNowButton: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#66bb6a',
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',

@@ -184,9 +184,9 @@ const AdminLogin = ({ navigation }) => {
         >
           <Text
             style={{
-              color: "#0091ff",
+              color: "#66bb6a",
               fontFamily: "Kanit_400Regular",
-              fontSize: 22,
+              fontSize: 24,
             }}
           >
             Forgot Password
@@ -196,7 +196,7 @@ const AdminLogin = ({ navigation }) => {
       <TouchableOpacity
         onPress={adminLogin}
         style={{
-          backgroundColor: "#0091ff",
+          backgroundColor: "#66bb6a",
           width: 300,
           height: 60,
           alignItems: "center",
@@ -214,10 +214,10 @@ const AdminLogin = ({ navigation }) => {
       <Text
         style={{
           fontFamily: "Kanit_400Regular",
-          color: "#ffffff90",
+          color: "white",
           fontSize: 24,
           position: "absolute",
-          bottom: 10,
+          bottom: 30,
         }}
         onPress={() => {
           navigation.navigate("Signup");
@@ -225,7 +225,7 @@ const AdminLogin = ({ navigation }) => {
       >
         Register
         <Text
-          style={{ color: "#0000007d", position: "absolute", fontSize: 20 }}
+          style={{ color: "white", position: "absolute", fontSize: 20 }}
         >
           {" "}
           yourself !!!

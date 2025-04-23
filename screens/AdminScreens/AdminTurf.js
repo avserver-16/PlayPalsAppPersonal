@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     left:width*0.32,
   },
   card: {
-    backgroundColor: "rgba(255, 255, 255, 0.95)",
+    backgroundColor: "rgba(255, 255, 255, 0.85)",
     borderRadius: 16,
     flexDirection: "row",
     alignItems: "center",
@@ -143,10 +143,10 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   price: {
-    fontSize: 14,
-    color: "#1e90ff",
+    fontSize: 16,
+    color: "#66bb6a",
     marginTop: 6,
-    fontWeight: "500",
+    fontWeight: "800",
   },
   emptyState: {
     alignItems: "center",
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     width: 76,
     height: 76,
     borderRadius: 28,
-    backgroundColor: "#1e90ff",
+    backgroundColor: "#66bb6a",
     alignItems: "center",
     justifyContent: "center",
     elevation: 6,

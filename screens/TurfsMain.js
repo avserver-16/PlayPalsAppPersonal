@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     },
     overlay: {
         ...StyleSheet.absoluteFillObject,
-        backgroundColor: 'rgba(0, 0, 0, 0.3)', // Background opacity
+        backgroundColor: 'rgba(0, 0, 0, 0.4)', // Background opacity
     },
     backButton: {
         position: 'absolute',
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     bookButton: {
         marginTop: 10,
         alignSelf: 'center',
-        backgroundColor: '#B8F4AA',
+        backgroundColor: '#66bb6a',
         paddingVertical: 12,
         paddingHorizontal: 40,
         borderRadius: 10,
