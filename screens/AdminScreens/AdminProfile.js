@@ -1,7 +1,4 @@
-
 import React, { useState, useEffect } from "react";
-//import React, { useState } from "react";
-
 import {
   View,
   Text,
@@ -25,7 +22,6 @@ const AdminProfile = () => {
 
   const navigation = useNavigation();
 
-
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -38,6 +34,7 @@ const AdminProfile = () => {
         setToken(storedToken);
         console.log("Retrieved token:", storedToken);
 
+<<<<<<< HEAD
         const response = await fetch("https://playpals-l797.onrender.com/owner/profile", {
           method: "GET",
           headers: {
@@ -45,6 +42,18 @@ const AdminProfile = () => {
             "Authorization": `Bearer ${storedToken}`,
           },
         });
+=======
+        const response = await fetch(
+          "https://playpals-l797.onrender.com/turf/all_turfs",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${storedToken}`,
+            },
+          }
+        );
+>>>>>>> d269f4f3559efa3675cc674d8dfe64de3e4ec0d2
 
         const data = await response.json();
         if (response.ok) {
@@ -62,7 +71,6 @@ const AdminProfile = () => {
 
     fetchUserData();
   }, []);
-
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -83,7 +91,12 @@ const AdminProfile = () => {
         source={require("./../asset/cricketBat.png")}
         style={styles.cricketBat}
       />
+
       <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons name="arrow-back-outline" size={32} color="white" />
+        </TouchableOpacity>
+
         <TouchableOpacity onPress={() => navigation.navigate("AdminHomeScreen")}>
           <Ionicons name="home-outline" size={32} color="white" />
         </TouchableOpacity>
@@ -125,7 +138,7 @@ const styles = StyleSheet.create({
   cricketBat: {
     position: "absolute",
     top: "20%",
-    left: "-10",
+    left: -10,
     width: 500,
     height: 600,
     opacity: 0.4,
@@ -134,15 +147,18 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
     paddingTop: 70,
-
     paddingBottom: 15,
-    paddingBottom:15
-
   },
+<<<<<<< HEAD
   readOnlyText:{fontFamily:'PL',fontSize:16,backgroundColor:'white',padding:10,width:200,borderRadius:18},
   scrollContainer: { paddingBottom: 40 },
+=======
+  scrollContainer: {
+    paddingBottom: 40,
+  },
+>>>>>>> d269f4f3559efa3675cc674d8dfe64de3e4ec0d2
   profileContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -169,7 +185,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   detailsContainer: {
-    backgroundColor: "rgba(0, 50, 0, 0.8)",
+    backgroundColor: "#66bb6a",
     padding: 20,
     borderRadius: 10,
     marginBottom: 20,
@@ -184,6 +200,7 @@ const styles = StyleSheet.create({
     gap: 10,
     fontFamily:'PL'
   },
+<<<<<<< HEAD
  
     formSection: {
       paddingHorizontal: 25,
@@ -205,6 +222,26 @@ const styles = StyleSheet.create({
     },
 
 
+=======
+  formSection: {
+    paddingHorizontal: 25,
+    paddingTop: 30,
+  },
+  label: {
+    fontSize: 14,
+    color: "#334155",
+    marginBottom: 4,
+    fontWeight: "600",
+  },
+  input: {
+    backgroundColor: "#e2e8f0",
+    padding: 12,
+    borderRadius: 10,
+    marginBottom: 10,
+    fontSize: 16,
+    color: "#0f172a",
+  },
+>>>>>>> d269f4f3559efa3675cc674d8dfe64de3e4ec0d2
   saveButton: {
     marginTop: 20,
     paddingHorizontal: 25,
@@ -218,5 +255,8 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
-  },}
-  );
+  },
+  readOnlyText: {
+    color: "white",
+  },
+});

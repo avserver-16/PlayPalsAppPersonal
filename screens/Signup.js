@@ -23,7 +23,7 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [dob, setDob] = useState("");
-  const [city,setCity]=useState('')
+  const [city, setCity] = useState('')
   const [gender, setGender] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -35,26 +35,26 @@ export default function Signup() {
 
 
 
-  const bFunc = async (name, email, password, dob, gender,city) => {
+  const bFunc = async (name, email, password, dob, gender, city) => {
     try {
       // Convert dob to ISO format
       const formattedDob = dob ? new Date(dob).toISOString() : null;
-  
+
       // Validate before sending request
       if (dob && isNaN(new Date(dob).getTime())) {
         Alert.alert("Error", "Invalid date format. Please select a valid date.");
         return;
       }
-  
+
       const response = await fetch("https://playpals-l797.onrender.com/user/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password, dob: formattedDob, gender,city }),
+        body: JSON.stringify({ name, email, password, dob: formattedDob, gender, city }),
       });
-  
+
       const text = await response.text();
       console.log("Raw Response:", text);
-  
+
       // Parse response safely
       try {
         const data = JSON.parse(text);
@@ -68,13 +68,13 @@ export default function Signup() {
       Alert.alert("Error", "Something went wrong. Please try again.");
     }
   };
-  
-  
-  
+
+
+
 
 
   const handleSubmit = () => {
-    bFunc(name,email,password,dob,gender,city);
+
     if (!name || !email || !password || !dob || !gender) {
       setFormError("All fields must be filled out.");
       return;
@@ -92,7 +92,7 @@ export default function Signup() {
       setPasswordError("");
     }
     setFormError("");
-   
+    bFunc(name, email, password, dob, gender, city);
     navigation.navigate("Login");
   };
   const showDatePicker = () => {
@@ -107,7 +107,7 @@ export default function Signup() {
   };
   return (
     <Background >
-     
+
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollViewContainer}>
         <Text style={styles.title}>Sign Up</Text>
         <View
@@ -144,7 +144,7 @@ export default function Signup() {
           <TextInput
             style={styles.input}
             placeholder="City"
-           
+
             value={city}
             onChangeText={setCity} />
           <TouchableOpacity onPress={showDatePicker} style={styles.input}>
@@ -177,7 +177,7 @@ export default function Signup() {
         </TouchableOpacity>
       </ScrollView>
     </Background>
-    
+
   );
 }
 
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     top: -30,
     fontFamily: 'KanitLight',
-    width:300
+    width: 300
   },
   input: {
     width: 260,
@@ -210,9 +210,9 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
     paddingHorizontal: 10,
-    justifyContent: "center", 
+    justifyContent: "center",
     fontFamily: 'KanitLight',
-    color:'black'
+    color: 'black'
   },
 
   pickerContainer: {
@@ -250,18 +250,18 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     backgroundColor: "black",
-            width: 200,
-            height: 60,
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: 40,
+    width: 200,
+    height: 60,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 40,
     alignItems: 'center',
     justifyContent: 'center',
     top: 600,
-    right:50
+    right: 50
   },
   submitButtonText: {
-    fontFamily: "KanitLight", fontSize: 24, color: '#B8F4AA' 
+    fontFamily: "KanitLight", fontSize: 24, color: '#B8F4AA'
   },
 });
 

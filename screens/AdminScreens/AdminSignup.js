@@ -81,7 +81,7 @@ export default function AdminSignup() {
 
 
   function handleSubmit() {
-    bFunc(name, email, password, dob, gender, city);
+    
     if (!name || !email || !password) {
       setFormError("All fields must be filled out.");
       return;
@@ -99,8 +99,9 @@ export default function AdminSignup() {
       setPasswordError("");
     }
     setFormError("");
-
+    bFunc(name, email, password, dob, gender, city);
     navigation.navigate("AdminLogin");
+
   }
 
   return (

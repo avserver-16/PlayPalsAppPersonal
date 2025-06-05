@@ -104,7 +104,7 @@ export default function AddRental() {
                   </View>
                 ))}
                 <TouchableOpacity onPress={pickImages}>
-                  <Ionicons name="add-circle-outline" size={40} color="#1e90ff" />
+                  <Ionicons name="add-circle-outline" size={40} color="#66bb6a" />
                 </TouchableOpacity>
               </View>
             </View>
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   submitButton: {
-    backgroundColor: "#1e90ff",
+    backgroundColor: "#66bb6a",
     paddingVertical: 14,
     borderRadius: 10,
     alignItems: "center",

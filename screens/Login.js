@@ -14,13 +14,13 @@ import { Feather } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 
-const Login = ({ navigation }) => {
+const AdminLogin = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPass] = useState("");
   const [seeCheck, setSeeCheck] = useState(true);
 
   //backend connection
-  const userLogin = async () => {
+  const adminLogin = async () => {
     const response = await fetch(
       "https://playpals-l797.onrender.com/user/login",
       {
@@ -47,7 +47,7 @@ const Login = ({ navigation }) => {
       Alert.alert("Success", "Logged in successfully");
 
       // Get role from AsyncStorage
-      const role = await AsyncStorage.getItem("userRole");
+      // const role = await AsyncStorage.getItem("userRole");
 
       // Navigate to respective home screen
       //   if (role === "admin") {
@@ -81,15 +81,15 @@ const Login = ({ navigation }) => {
     <Background style={{ zIndex: -2 }}>
       <Text
         style={{
-          color: "#B8F4AA",
-          fontFamily: "KanitLight",
+          color: "#ffffff0a",
+          fontFamily: "Kanit_400Regular",
           fontSize: 75,
           position: "absolute",
           top: 150,
           zIndex: 0,
         }}
       >
-        Play  Pals
+        PlayPals TurfOwner
       </Text>
       <ImageBackground
         source={require('./asset/cricketer.png')}
@@ -103,10 +103,10 @@ const Login = ({ navigation }) => {
 
       <View
         style={{
-          height: 800,
-          width: '100%',
+          height: 255,
+          width: 350,
           position: "absolute",
-          backgroundColor: "#B8F4AA0f",
+          backgroundColor: "#ffffff0a",
           opacity: 1,
           borderRadius: 50,
           top: 300,
@@ -118,10 +118,10 @@ const Login = ({ navigation }) => {
       >
         <TextInput
           style={{
-            top: 40,
-            borderRadius: 30,
-            backgroundColor: "#B8F4AA",
-            height: 50,
+            top: 25,
+            borderRadius: 10,
+            backgroundColor: "#ffffff80",
+            height: 60,
             width: 300,
             position: "absolute",
             paddingLeft: 20,
@@ -131,20 +131,21 @@ const Login = ({ navigation }) => {
           }}
           placeholder="Email"
           placeholderTextColor={"#0000004d"}
+          keyboardType="email-address"
           onChangeText={setEmail}
           value={email}
         ></TextInput>
         <TextInput
           style={{
-            top: 110,
-            borderRadius: 30,
-            backgroundColor: "#B8F4AA",
-            height: 50,
+            top: 125,
+            borderRadius: 10,
+            backgroundColor: "#ffffff80",
+            height: 60,
             width: 300,
             position: "absolute",
             paddingLeft: 20,
-            fontFamily: "KanitLight",
-            fontSize: 20,
+            fontFamily: "Kanit_400Regular",
+            fontSize: 24,
           }}
           placeholder="Password"
           placeholderTextColor={"#0000004d"}
@@ -166,14 +167,14 @@ const Login = ({ navigation }) => {
           }}
           onPress={check}
         >
-          <Feather name="eye" color={"grey"} size={24}></Feather>
+          <Feather name="eye" color={"grey"} size={30}></Feather>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate("ForgotPassword")}
           style={{
             height: 35,
             width: 300,
-            top: 180,
+            top: 200,
             justifyContent: "center",
             alignItems: "center",
           }}
@@ -320,4 +321,15 @@ const Login = ({ navigation }) => {
     </Background>
   );
 };
-export default Login;
+export default AdminLogin;
+
+// import react from "react";
+// import { View,Text } from "react-native";
+
+// export default function AdminLogin(){
+//     return(
+//         <View style={{top:100}}>
+//             <Text>Admin Rental</Text>
+//         </View>
+//     )
+// }

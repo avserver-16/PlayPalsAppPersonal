@@ -45,6 +45,8 @@ import TurfReview from "./screens/TurfReview";
 import PostNewReview from "./screens/PostNewReview";
 import RentalReview from "./screens/RentalReview";
 import PostNewRentalReview from "./screens/PostNewRentalReview";
+import TurfPayment from "./screens/TurfPayment";
+import RentalPayment from "./screens/RentalPayment"
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -192,6 +194,8 @@ export default function App() {
         <Stack.Screen name="TurfReview" component={TurfReview} options={{headerShown:false}}/>
         <Stack.Screen name="PostNewReview" component={PostNewReview} options={{headerShown:false}}/>
         <Stack.Screen name="PostNewRentalReview" component={PostNewRentalReview} options={{headerShown:false}}/>
+        <Stack.Screen name="TurfPayment" component={TurfPayment} options={{headerShown:false}}/>
+        <Stack.Screen name="RentalPayment" component={RentalPayment} options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

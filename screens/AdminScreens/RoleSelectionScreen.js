@@ -98,7 +98,7 @@ const RoleSelectionScreen = ({ navigation }) => {
               selectedRole === "admin" ? "radio-button-checked" : "radio-button-unchecked"
             }
             size={28}
-            color="#0091ff"
+            color="#66bb6a"
           />
           <Text style={styles.checkboxLabel}>Turf Owner</Text>
         </TouchableOpacity>

@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   ReviewbuttonBox: {
-    backgroundColor: "rgba(34, 139, 34, 0.8)",
+    backgroundColor: "#66bb6a",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
