@@ -20,7 +20,7 @@ const AdminLogin = ({ navigation }) => {
   const [seeCheck, setSeeCheck] = useState(true);
 
   //backend connection
-  const adminLogin = async () => {
+  const userLogin = async () => {
     const response = await fetch(
       "https://playpals-l797.onrender.com/user/login",
       {
@@ -81,7 +81,7 @@ const AdminLogin = ({ navigation }) => {
     <Background style={{ zIndex: -2 }}>
       <Text
         style={{
-          color: "#ffffff0a",
+          color: "#fff",
           fontFamily: "Kanit_400Regular",
           fontSize: 75,
           position: "absolute",
@@ -89,7 +89,7 @@ const AdminLogin = ({ navigation }) => {
           zIndex: 0,
         }}
       >
-        PlayPals TurfOwner
+        Play  Pals 
       </Text>
       <ImageBackground
         source={require('./asset/cricketer.png')}
@@ -103,8 +103,8 @@ const AdminLogin = ({ navigation }) => {
 
       <View
         style={{
-          height: 255,
-          width: 350,
+          height: 660,
+          width: '100%',
           position: "absolute",
           backgroundColor: "#ffffff0a",
           opacity: 1,
@@ -118,10 +118,10 @@ const AdminLogin = ({ navigation }) => {
       >
         <TextInput
           style={{
-            top: 25,
-            borderRadius: 10,
-            backgroundColor: "#ffffff80",
-            height: 60,
+            top: 45,
+            borderRadius: 50,
+            backgroundColor: "#B8F4AA",
+            height: 50,
             width: 300,
             position: "absolute",
             paddingLeft: 20,
@@ -137,10 +137,10 @@ const AdminLogin = ({ navigation }) => {
         ></TextInput>
         <TextInput
           style={{
-            top: 125,
-            borderRadius: 10,
-            backgroundColor: "#ffffff80",
-            height: 60,
+            top: 135,
+            borderRadius: 50,
+            backgroundColor: "#B8F4AA",
+            height: 50,
             width: 300,
             position: "absolute",
             paddingLeft: 20,
@@ -162,8 +162,8 @@ const AdminLogin = ({ navigation }) => {
             justifyContent: "center",
             alignItems: "center",
             position: "absolute",
-            right: 60,
-            top: 122.5
+            right:70,
+            top: 145
           }}
           onPress={check}
         >
@@ -184,7 +184,7 @@ const AdminLogin = ({ navigation }) => {
               color: "#B8F4AA",
               fontFamily: "KanitLight",
               fontSize: 16,
-              top: -10
+              top: 0,
             }}
           >
             Forgot Password
@@ -195,7 +195,7 @@ const AdminLogin = ({ navigation }) => {
             width: '30%',
             backgroundColor: '#EDF1F3',
             height: 1,
-            top: 190,
+            top: 220,
             left: -100
           }
         }>
@@ -205,7 +205,7 @@ const AdminLogin = ({ navigation }) => {
           color: '#6C7278',
           fontSize: 16,
           fontWeight: 500,
-          top: 178,
+          top: 208,
           left: 0
         }}>Or
         </Text>
@@ -213,7 +213,7 @@ const AdminLogin = ({ navigation }) => {
           width: '30%',
           backgroundColor: '#EDF1F3',
           height: 1,
-          top: 167,
+          top: 197,
           left: 100
 
         }
@@ -225,7 +225,7 @@ const AdminLogin = ({ navigation }) => {
             height: 48,
             width: '75%',
             borderRadius: 40,
-            top: 200,
+            top: 230,
             alignItems: 'center',
             justifyContent: 'center',
 
@@ -257,7 +257,7 @@ const AdminLogin = ({ navigation }) => {
             height: 48,
             width: '75%',
             borderRadius: 40,
-            top: 220,
+            top: 250,
             alignItems: 'center',
             justifyContent: 'center',
           }}>
@@ -289,7 +289,7 @@ const AdminLogin = ({ navigation }) => {
             justifyContent: "center",
             borderRadius: 40,
             position: "absolute",
-            top: 430
+            top: 450
 
           }}
         >

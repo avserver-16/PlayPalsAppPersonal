@@ -34,7 +34,6 @@ const AdminProfile = () => {
         setToken(storedToken);
         console.log("Retrieved token:", storedToken);
 
-<<<<<<< HEAD
         const response = await fetch("https://playpals-l797.onrender.com/owner/profile", {
           method: "GET",
           headers: {
@@ -42,18 +41,6 @@ const AdminProfile = () => {
             "Authorization": `Bearer ${storedToken}`,
           },
         });
-=======
-        const response = await fetch(
-          "https://playpals-l797.onrender.com/turf/all_turfs",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${storedToken}`,
-            },
-          }
-        );
->>>>>>> d269f4f3559efa3675cc674d8dfe64de3e4ec0d2
 
         const data = await response.json();
         if (response.ok) {
@@ -151,14 +138,8 @@ const styles = StyleSheet.create({
     paddingTop: 70,
     paddingBottom: 15,
   },
-<<<<<<< HEAD
   readOnlyText:{fontFamily:'PL',fontSize:16,backgroundColor:'white',padding:10,width:200,borderRadius:18},
   scrollContainer: { paddingBottom: 40 },
-=======
-  scrollContainer: {
-    paddingBottom: 40,
-  },
->>>>>>> d269f4f3559efa3675cc674d8dfe64de3e4ec0d2
   profileContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -200,7 +181,6 @@ const styles = StyleSheet.create({
     gap: 10,
     fontFamily:'PL'
   },
-<<<<<<< HEAD
  
     formSection: {
       paddingHorizontal: 25,
@@ -222,26 +202,6 @@ const styles = StyleSheet.create({
     },
 
 
-=======
-  formSection: {
-    paddingHorizontal: 25,
-    paddingTop: 30,
-  },
-  label: {
-    fontSize: 14,
-    color: "#334155",
-    marginBottom: 4,
-    fontWeight: "600",
-  },
-  input: {
-    backgroundColor: "#e2e8f0",
-    padding: 12,
-    borderRadius: 10,
-    marginBottom: 10,
-    fontSize: 16,
-    color: "#0f172a",
-  },
->>>>>>> d269f4f3559efa3675cc674d8dfe64de3e4ec0d2
   saveButton: {
     marginTop: 20,
     paddingHorizontal: 25,

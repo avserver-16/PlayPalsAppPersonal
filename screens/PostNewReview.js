@@ -30,7 +30,7 @@ export default function PostNewReview() {
 
   return (
     <View style={{ flex: 1 }}>
-      <ReviewForm title="Post a Turf Review" onSubmit={handleReviewSubmit} />
+      <ReviewForm title="Post a Turf Review" onSubmit={handleReviewSubmit(revies)} />
     </View>
   );
 }
