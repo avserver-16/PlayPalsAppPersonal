@@ -48,12 +48,12 @@ export default function AdminSignup() {
         return;
       }
 
-      const response = await fetch("https://playpals-l797.onrender.com/turf/signup", {
+      const response = await fetch("https://playpals-l797.onrender.com/owner/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name, email, password, dob: formattedDob, gender, city,
-          phoneNumber: '9999999999',
+          phoneNumber,
           ownerType: 'INDIVIDUAL',
           turfName: "Default Turf Name",
           turfLocation: "Default Location"

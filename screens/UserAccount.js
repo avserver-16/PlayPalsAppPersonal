@@ -236,14 +236,14 @@ const addUserPhoto=async ()=>{
 
             <View style={styles.row}>
               <View style={styles.dropdownContainer}>
-                <Text style={{left:10}}>{capitalizeWords(gender)}</Text>
+                <Text style={{left:10,fontFamily:'PL',fontSize:16}}>{capitalizeWords(gender)}</Text>
               </View>
 
               <TouchableOpacity
                 style={[styles.input, styles.dateInput]}
                 onPress={showDatePicker}
               >
-                <Text style={{ color: dob ? "black" : "gray" }}>
+                <Text style={{ color: dob ? "black" : "gray" ,fontFamily:'PL'}}>
                   {dob}
                 </Text>
               </TouchableOpacity>
@@ -289,18 +289,18 @@ const addUserPhoto=async ()=>{
               <Picker
                 selectedValue={selectedFilter}
                 onValueChange={(itemValue) => setSelectedFilter(itemValue)}
-                style={{color:'white'}}
+                style={{color:'black',fontFamily:'PL'}}
               >
-                <Picker.Item label="All" value="All" />
-                <Picker.Item label="Turfs" value="Turfs" />
-                <Picker.Item label="Items" value="Items" />
+                <Picker.Item label="All" value="All" style={{fontFamily:'PL'}}/>
+                <Picker.Item label="Turfs" value="Turfs" style={{fontFamily:'PL'}}/>
+                <Picker.Item label="Items" value="Items" style={{fontFamily:'PL'}}/>
               </Picker>
             </View>
 
             {filteredBookings.map((booking) => (
               <View key={booking.id} style={styles.bookingItem}>
-                <Text style={{color:'white'}}>{booking.name}</Text>
-                <Text style={{color:'white'}}>
+                <Text style={{color:'white',fontFamily:'PL'}}>{booking.name}</Text>
+                <Text style={{color:'white',fontFamily:'PL'}}>
                   Date: {booking.date}{" "}
                   {booking.type === "Turfs"
                     ? `Seats booked: ${booking.seats}`
@@ -313,14 +313,13 @@ const addUserPhoto=async ()=>{
             <Text style={styles.showMoreText}>Show more</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={{backgroundColor:'white',height:100,width:100}} onPress={addUserPhoto}></TouchableOpacity>
       </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#000", paddingHorizontal: 20 },
+  container: { flex: 1, backgroundColor: "#000", paddingHorizontal: 20 ,fontFamily:'PL'},
   whiteBorderContainer: {
     flex: 1,
     borderWidth: 2, 
@@ -356,7 +355,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginVertical: 20,
   },
-  welcomeText: { fontSize: 24, fontWeight: "bold", color: "white" },
+  welcomeText: { fontFamily:'PL',fontSize: 24, color: "white" ,},
   profileIcon: {
     backgroundColor: "#222",
     borderRadius: 50,
@@ -370,21 +369,21 @@ const styles = StyleSheet.create({
   detailsContainer: {
     backgroundColor: "rgba(0, 50, 0, 0.8)",
     padding: 20,
-    borderRadius: 10,
+    borderRadius: 20,
     marginBottom: 20,
   },
   sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 20,
     color: "white",
     marginBottom: 10,
+    fontFamily:'PL'
   },
-  inputGroup: { gap: 10 },
-  input: { backgroundColor: "white", padding: 12, borderRadius: 8 ,textAlign:'left'},
+  inputGroup: { gap: 10 ,fontFamily:'PL'},
+  input: { backgroundColor: "white", padding: 12, borderRadius: 18 ,textAlign:'left',fontFamily:'PL',fontSize:15},
   row: { flexDirection: "row", justifyContent: "space-between" },
   dropdownContainer: {
-    backgroundColor: "rgba(255, 255, 255, 0.4)",
-    borderRadius: 8,
+    backgroundColor: "white",
+    borderRadius: 18,
     flex: 1,
     marginRight: 10,
     justifyContent:'center'
@@ -392,34 +391,37 @@ const styles = StyleSheet.create({
 
   pickerItem: {
     color: "white", 
+    fontFamily:'PL'
   },
 
-  dateInput: { flex: 1, justifyContent: "center", paddingLeft: 12 },
+  dateInput: { flex: 1, justifyContent: "center", paddingLeft: 12,fontFamily:'PL' },
   checkboxContainer: {
     flexDirection: "row",
     alignItems: "center",
     marginVertical: 2,
   },
-  checkboxText: { color: "white", marginLeft: 10, fontSize: 16 },
-  selectedGamesText: { color: "white", marginTop: 10 },
+  checkboxText: { color: "white", marginLeft: 10, fontSize: 16 ,fontFamily:'PL'},
+  selectedGamesText: { color: "white", marginTop: 10,fontFamily:'PL' },
   bookingsContainer: {
     backgroundColor: "rgba(0, 50, 0, 0.8)",
     padding: 20,
-    borderRadius: 10,
+    borderRadius: 18,
   },
   bookingItem: {
     backgroundColor: "rgba(255, 255, 255, 0.4)",
     padding: 12,
     borderRadius: 8,
     marginTop: 15,
+    fontFamily:'PL'
   },
-  showMoreText: { textAlign: "center", color: "white", marginTop: 10 },
-  tokenText: { color: "black", fontSize: 14, fontWeight: "bold" },
+  showMoreText: { textAlign: "center", color: "white", marginTop: 10 ,fontFamily:'PL'},
+  tokenText: { color: "black", fontSize: 14, fontWeight: "bold" ,fontFamily:'PL'},
   tokenContainer: {
     marginTop: 20,
     padding: 10,
     backgroundColor: "white",
     borderRadius: 8,
+    fontFamily:'PL'
   },
 });
 

@@ -14,12 +14,12 @@ const ReviewForm = ({ title = "Post a Review", onSubmit }) => {
 
     const navigation = useNavigation();
 
-  const [name, setName] = useState("");
+
   const [review, setReview] = useState("");
   const [rating, setRating] = useState(0);
 
   const handleSubmit = () => {
-    if (!name || !review || rating === 0) {
+    if ( !review || rating === 0) {
       Alert.alert("Please fill out all fields and select a rating.");
       return;
     }
@@ -33,7 +33,6 @@ const ReviewForm = ({ title = "Post a Review", onSubmit }) => {
     onSubmit(newReview);
 
     // Reset form
-    setName("");
     setReview("");
     setRating(0);
   };
@@ -53,13 +52,7 @@ const ReviewForm = ({ title = "Post a Review", onSubmit }) => {
           </TouchableOpacity>
       <Text style={styles.heading}>{title}</Text>
       <View style={{padding:20}}>
-      <TextInput
-        placeholder="Your Name"
-        value={name}
-        onChangeText={setName}
-        style={styles.input}
-        placeholderTextColor="black"
-      />
+   
 
       <TextInput
         placeholder="Write your review..."

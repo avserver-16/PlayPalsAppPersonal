@@ -18,9 +18,9 @@ import { useNavigation } from "@react-navigation/native";
 
 const AdminProfile = () => {
   const [profileImage, setProfileImage] = useState(null);
-  const [adminName] = useState("Admin Name");
-  const [email] = useState("admin@example.com");
-  const [contactNumber] = useState("9876543210");
+  const [adminName,setAdminName] = useState("");
+  const [email,setEmail] = useState("");
+  const [contactNumber,setContactNumber] = useState("");
   const [token, setToken] = useState("");
 
   const navigation = useNavigation();
@@ -38,7 +38,7 @@ const AdminProfile = () => {
         setToken(storedToken);
         console.log("Retrieved token:", storedToken);
 
-        const response = await fetch("https://playpals-l797.onrender.com/turf/all_turfs", {
+        const response = await fetch("https://playpals-l797.onrender.com/owner/profile", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -48,7 +48,10 @@ const AdminProfile = () => {
 
         const data = await response.json();
         if (response.ok) {
-          console.log(data);
+          console.log(data,"NAME:",data.owner.phoneNumber);
+          setAdminName(data.owner.name)
+          setEmail(data.owner.email)
+          setContactNumber(data.owner.phoneNumber)
         } else {
           console.error("Failed to fetch user data:", data.message);
         }
@@ -88,7 +91,7 @@ const AdminProfile = () => {
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.profileContainer}>
-          <Text style={styles.welcomeText}>Welcome user</Text>
+          <Text style={styles.welcomeText}>Welcome {adminName}</Text>
           <TouchableOpacity style={styles.profileIcon} onPress={pickImage}>
             {profileImage ? (
               <Image source={{ uri: profileImage }} style={styles.profileImage} />
@@ -138,6 +141,7 @@ const styles = StyleSheet.create({
     paddingBottom:15
 
   },
+  readOnlyText:{fontFamily:'PL',fontSize:16,backgroundColor:'white',padding:10,width:200,borderRadius:18},
   scrollContainer: { paddingBottom: 40 },
   profileContainer: {
     flexDirection: "row",
@@ -146,8 +150,8 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   welcomeText: {
-    fontSize: 24,
-    fontWeight: "bold",
+    fontSize: 25,
+    fontFamily:'PL',
     color: "white",
   },
   profileIcon: {
@@ -171,18 +175,19 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 20,
+   fontFamily:'PL',
     color: "white",
     marginBottom: 10,
   },
   inputGroup: {
     gap: 10,
+    fontFamily:'PL'
   },
  
     formSection: {
       paddingHorizontal: 25,
-      paddingTop: 30,
+      paddingTop: 30, fontFamily:'PL'
     },
     label: {
       fontSize: 14,

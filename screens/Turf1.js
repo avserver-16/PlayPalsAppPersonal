@@ -15,7 +15,13 @@ const Turf1 = () => {
   const [showFilter, setShowFilter] = useState(false);
   const [turf, setTurf] = useState([]);
   const [loading, setLoading] = useState(true);
-
+function wordCutter(text) {
+  const words = text.trim().split(/\s+/);
+  if (words.length <= 6) {
+    return text;
+  }
+  return words.slice(0, 6).join(' ') + '...';
+}
   useEffect(() => {
     const fetchTurf = async () => {
       console.log("Fetching Rentals...");
@@ -26,7 +32,7 @@ const Turf1 = () => {
           return;
         }
 
-        const response = await fetch("https://playpals-l797.onrender.com/turf/all_turfs", {
+        const response = await fetch("https://playpals-l797.onrender.com/turf/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -37,8 +43,9 @@ const Turf1 = () => {
         const data = await response.json();
         if (Array.isArray(data)) {
           setTurf(data);
-          console.log(data[0].profilePhoto)
-          console.log(turf.profilePhoto)
+          //console.log(data[0].profilePhoto)
+          console.log(turf.turfPhoto)
+          console.log(data[3].turfPhoto[0])
 
         }
       } catch (error) {
@@ -166,11 +173,11 @@ const Turf1 = () => {
         ) : (
           turf.map((item, index) => (
             <View key={index} style={{
-              height: 200, width: 308, backgroundColor: 'transparent',
+              height: 250, width: 308, backgroundColor: 'transparent',
               borderBottomWidth: 2, borderColor: '#FFFFFF', marginBottom: 30,justifyContent:'center'
             }}>
               <View style={{ alignItems: 'center', backgroundColor: 'white' }}>
-                <Image  source={{ uri: item.profilePhoto}}style={{
+                <Image  source={{ uri: item.turfPhoto?.[0] }}style={{
                   flex: 1, height: 80, width: 120, position: "absolute", bottom: 0, opacity: 1, left: 0, top: 20
                 }} />
                 <TouchableOpacity style={{
@@ -180,22 +187,21 @@ const Turf1 = () => {
                 }}
                   onPress={() => navigation.navigate('TurfsMain', { turfDetails: item })}
                 >
-                  <Text style={{ fontSize: 20, color: 'white' }}>Book</Text>
+                  <Text style={{ fontSize: 20, color: 'white' ,fontFamily:'PL'}}>Book</Text>
                 </TouchableOpacity>
               </View>
-              <View style={{ left: 130, top: 0 ,backgroundColor:'transparent',width:200}}>
+              <View style={{ left: 150, top: 0 ,backgroundColor:'transparent',width:180}}>
                 <Text style={{
-                  fontSize: 18, fontWeight: '600', color: '#FFFFFF', marginBottom: 5
+                  fontSize: 20, fontWeight: '600', color: '#FFFFFF', marginBottom: 5,fontFamily:'PB'
                 }}>
                   {item.turfName || "Unnamed Turf"}
                 </Text>
-                <Text style={{ fontSize: 15, fontWeight: '400', color: '#FFFFFF' }}>
-                  {item.turfLocation || "No Location"}
-                </Text>
-                <Text style={{ fontSize: 15, fontWeight: '400', color: '#FFFFFF' }}>
+                <Text style={{ fontSize: 15, fontWeight: '400', color: '#FFFFFF',fontFamily:'PL' }}>
+                {wordCutter(item.turfLocation || "No Location")}</Text>
+                <Text style={{ fontSize: 15, fontWeight: '400', color: '#FFFFFF' ,fontFamily:'PL'}}>
                   Available Seats: {item.availableSeats ?? 0}
                 </Text>
-                <Text style={{ fontSize: 15, fontWeight: '400', color: '#FFFFFF'}}>
+                <Text style={{ fontSize: 15, fontWeight: '400', color: '#FFFFFF',fontFamily:'PL',marginBottom:30}}>
                   Rating: {item.ratings ?? 0}
                 </Text>
               </View>

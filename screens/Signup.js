@@ -107,31 +107,20 @@ export default function Signup() {
   };
   return (
     <Background >
-      <ImageBackground source={require('./asset/Cricket.png')}
-        style={{
-          flex: 1,
-          height: 720,
-          width: 720,
-          position: 'absolute',
-          bottom: 0,
-          opacity: 0.05,
-          right: -30, zIndex: 0
-        }}></ImageBackground>
+     
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollViewContainer}>
         <Text style={styles.title}>Sign Up</Text>
         <View
           style={{
-            height: 560,
+            height: 600,
             width: 300,
             position: 'absolute',
-            backgroundColor: '#ffffff0a',
+            backgroundColor: '#B8F4AA0f',
             opacity: 1,
             borderRadius: 20,
-            borderWidth: 5,
-            borderColor: '#ffffff80',
             justifyContent: 'center',
             alignItems: 'center',
-            top: 100
+            top: 120
           }}>
           <TextInput
             style={styles.input}
@@ -203,25 +192,27 @@ const styles = StyleSheet.create({
     //justifyContent:'center'
   },
   title: {
-    fontSize: 28,
+    fontSize: 30,
     //fontWeight: "bold",
     marginBottom: 0,
     color: "#fff",
-    top: -50,
-    fontFamily: 'Kanit_400Regular'
+    top: -30,
+    fontFamily: 'KanitLight',
+    width:300
   },
   input: {
-    width: 230,
+    width: 260,
     height: 60,
-    marginBottom: 20,
-    backgroundColor: "#ffffff67",
-    borderRadius: 12,
+    marginBottom: 30,
+    backgroundColor: "#B8F4AA",
+    borderRadius: 30,
     fontSize: 20,
     color: "#fff",
     textAlign: "center",
     paddingHorizontal: 10,
     justifyContent: "center", 
-    fontFamily: 'Kanit_400Regular'
+    fontFamily: 'KanitLight',
+    color:'black'
   },
 
   pickerContainer: {
@@ -258,20 +249,19 @@ const styles = StyleSheet.create({
     fontFamily: 'Kanit_400Regular'
   },
   submitButton: {
-    backgroundColor: "#0091ff",
-    borderRadius: 8,
-    width: 300,
-    height: 60,
+    backgroundColor: "black",
+            width: 200,
+            height: 60,
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    top: 530,
-    right: 100
+    top: 600,
+    right:50
   },
   submitButtonText: {
-    color: "#fff",
-    fontSize: 18,
-    //fontWeight: "bold",
-    fontFamily: 'Kanit_400Regular', fontSize: 24
+    fontFamily: "KanitLight", fontSize: 24, color: '#B8F4AA' 
   },
 });
 

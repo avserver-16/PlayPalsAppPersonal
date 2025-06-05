@@ -37,42 +37,38 @@ const RoleSelectionScreen = ({ navigation }) => {
     <Background>
       <Text
         style={{
-          color: "#ffffff0a",
-          fontFamily: "Kanit_400Regular",
+          color: "#B8F4AA",
+          fontFamily: "KanitLight",
           fontSize: 75,
           position: "absolute",
-          left: 20,
-          top: 50,
+          //left: 20,
+          top: 150,
           zIndex: 1,
+          alignSelf:'center'
         }}
       >
-        PlayPals
+        Play  Pals
       </Text>
       <ImageBackground
-        source={require("./../asset/Cricket.png")}
-        style={{
-          flex: 1,
-          height: 720,
-          width: 720,
-          position: "absolute",
-          bottom: 0,
-          opacity: 0.08,
-          right: -30,
-          zIndex: 0,
-        }}
-      ></ImageBackground>
+              source={require('./role.png')}
+              style={{
+                height: 230,
+                width: 180,
+                zIndex: 10,
+                top: 170,
+                position: 'absolute'
+              }}></ImageBackground>
 
       <View
         style={{
           height: height * 0.3,
-          width: width * 0.9,
+          width: width * 0.85,
           position: "absolute",
-          backgroundColor: "#ffffff0a",
+          backgroundColor: "#B8F4AA0f",
           opacity: 1,
-          borderRadius: 20,
-          borderWidth: 5,
-          borderColor: "#ffffff80",
-          bottom: 200,
+          borderRadius: 50,
+      padding:16,
+          bottom: 220,
           //justifyContent:'center',
           alignItems: "center",
         }}
@@ -84,10 +80,11 @@ const RoleSelectionScreen = ({ navigation }) => {
         >
           <MaterialIcons
             name={
-              selectedRole === "user" ? "check-box" : "check-box-outline-blank"
+              selectedRole === "user" ? "radio-button-checked" : "radio-button-unchecked"
             }
             size={28}
             color="#0091ff"
+            borderRadius={20}
           />
           <Text style={styles.checkboxLabel}>User</Text>
         </TouchableOpacity>
@@ -98,15 +95,22 @@ const RoleSelectionScreen = ({ navigation }) => {
         >
           <MaterialIcons
             name={
-              selectedRole === "admin" ? "check-box" : "check-box-outline-blank"
+              selectedRole === "admin" ? "radio-button-checked" : "radio-button-unchecked"
             }
             size={28}
             color="#0091ff"
           />
           <Text style={styles.checkboxLabel}>Turf Owner</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.confirmBtn} onPress={handleConfirm}>
-          <Text style={{fontFamily:'Kanit_400Regular',color:'white',fontSize:20}}>Confirm →</Text>
+        <TouchableOpacity style={{backgroundColor: "black",
+            width: 200,
+            height: 60,
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: 40,
+            position: "absolute",
+            top: 290}} onPress={handleConfirm}>
+          <Text style={{fontFamily: "Kanit_400Regular", fontSize: 24, color: '#B8F4AA' }}>Confirm →</Text>
         </TouchableOpacity>
       </View>
     </Background>
@@ -120,11 +124,12 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    fontSize: 28,
+    fontSize: 30,
     textAlign: "center",
     color: "white",
-    fontFamily: "Kanit_400Regular",
-    marginBottom:40
+    fontFamily: "KanitLight",
+    marginBottom:20,
+    top:20
   },
   buttonContainer: {
     marginBottom: 20,
@@ -133,18 +138,23 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 25,
+    alignSelf:'center',
+    left:45,
+    top:20
   },
   checkboxLabel: {
     fontSize: 22,
     marginLeft: 10,
     color:'white',
-    fontFamily:"Kanit_400Regular",
+    fontFamily:"KanitLight",
     width:width*0.26,
     borderRadius:10,
-    paddingLeft:5
+    paddingLeft:5,
+    width:200,
+    alignSelf:'center',
   },
   confirmBtn: {
-    marginTop: 40,
+    marginTop: 80,
     backgroundColor: "#0091ff",
     paddingVertical:8,
     borderRadius: 10,

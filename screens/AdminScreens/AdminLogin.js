@@ -22,7 +22,7 @@ const AdminLogin = ({ navigation }) => {
   //backend connection
   const adminLogin = async () => {
     const response = await fetch(
-      "https://playpals-l797.onrender.com/turf/login",
+      "https://playpals-l797.onrender.com/owner/login",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
