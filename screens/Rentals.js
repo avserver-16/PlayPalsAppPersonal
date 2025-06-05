@@ -100,8 +100,8 @@ const Rentals = () => {
                                     justifyContent: 'center'
                                 }}
                             >
-                                <Text style={{ fontSize: 32, color: 'white' }}>{date.getDate()}</Text>
-                                <Text style={{ fontSize: 20, color: 'white' }}>{date.toLocaleString('en-US', { month: 'short' })}</Text>
+                                <Text style={{ fontSize: 32, color: 'white',fontFamily:'PL' }}>{date.getDate()}</Text>
+                                <Text style={{ fontSize: 20, color: 'white',fontFamily:'PL' }}>{date.toLocaleString('en-US', { month: 'short' })}</Text>
                             </TouchableOpacity>
                         );
                     })}

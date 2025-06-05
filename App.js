@@ -75,7 +75,7 @@ function DrawerNavigator() {
       screenOptions={({ route }) => ({
         headerShown: false,
         drawerStyle: { backgroundColor: "#000" },
-        drawerLabelStyle: { color: "white" },
+        drawerLabelStyle: { color: "white" ,fontFamily:'PL',fontSize:16},
         drawerActiveTintColor: "white",
         drawerInactiveTintColor: "gray",
         drawerIcon: ({ color, size }) => {

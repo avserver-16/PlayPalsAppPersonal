@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,32 +7,55 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
-  RefreshControl,
+  RefreshControl,ScrollView
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import BG2 from "../BG2";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 const { width } = Dimensions.get("window");
 
+
 export default function AdminTurfScreen() {
+  const [turfs, setTurfs] = useState([])
+  useEffect(() => {
+    const fetchTurf = async () => {
+      console.log("Fetching Rentals...");
+      try {
+        const storedToken = await AsyncStorage.getItem("token");
+        console.log("Token:", storedToken)
+        if (!storedToken) {
+          console.log("No Token Found");
+          return;
+        }
+
+        const response = await fetch("https://playpals-l797.onrender.com/turf/my-turfs", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${storedToken}`
+          }
+        });
+
+        const data = await response.json();
+        console.log("Data:", JSON.stringify(data, null, 2))
+      
+          setTurfs(data.turfs);
+          console.log(turfs.length)
+        
+      } catch (error) {
+        console.error("Error fetching rentals:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTurf();
+  }, []);
   const navigation = useNavigation();
-  const [turfs, setTurfs] = useState([
-    {
-      id: "1",
-      name: "Green Turf",
-      location: "Kochi",
-      price: 150,
-      image: require("./../asset/Sachin.png"),
-    },
-    {
-      id: "2",
-      name: "Elite Arena",
-      location: "Bangalore",
-      price: 200,
-      image: require("./../asset/Sachin.png"),
-    },
-  ]);
+
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -56,37 +79,86 @@ export default function AdminTurfScreen() {
     </TouchableOpacity>
   );
 
+
   return (
     <BG2>
       <View style={styles.container}>
-      <TouchableOpacity onPress={()=> navigation.navigate("AdminHomeScreen")} style={{marginTop:25,marginLeft:12}}>
-      <Ionicons name="arrow-back" size={28} color="white" />
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("AdminHomeScreen")} style={{ marginTop: 40,left:-30 }}>
+          <Ionicons name="arrow-back" size={28} color="white" />
+       
         <Text style={styles.title}>My Turfs</Text>
-
-        {turfs.length === 0 ? (
-          <View style={styles.emptyState}>
-            <Text style={styles.emptyText}>No turfs added yet.</Text>
-            <Text style={styles.emptyText}>Tap + to get started!</Text>
-          </View>
-        ) : (
-          <FlatList
-            data={turfs}
-            keyExtractor={(item) => item.id}
-            renderItem={renderItem}
-            contentContainerStyle={{ paddingBottom: 100, paddingTop: 10 }}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
+ </TouchableOpacity>
+       {turfs.length === 0 ? (
+  <View style={styles.emptyState}>
+    <Text style={styles.emptyText}>No turfs added yet.</Text>
+    <Text style={styles.emptyText}>Tap + to get started!</Text>
+  </View>
+) : (
+  <ScrollView
+    showsVerticalScrollIndicator={false}
+    contentContainerStyle={{
+      flexDirection: 'column',
+      alignItems: 'center',
+      paddingTop: 20,
+      paddingBottom: 100,
+    }}
+    refreshControl={
+      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    }
+  >
+    {turfs.map((item, index) => (
+      <View
+        key={index}
+        style={{
+          height: 250,
+          width: 308,
+          backgroundColor: 'transparent',
+          borderBottomWidth: 2,
+          borderColor: '#FFFFFF',
+          marginBottom: 0,
+          justifyContent: 'center',
+        }}
+      >
+        <View style={{ alignItems: 'center', backgroundColor: 'white' }}>
+          <Image
+            source={{ uri: (item.turfPhoto?.[0])?item.turfPhoto?.[0]:'https://dhhu8n9celg6x.cloudfront.net/system/assets/files/24323/large/1.PNG?1551448036' }}
+            style={{
+              flex: 1,
+              height: 100,
+              width: 130,
+              position: 'absolute',
+              bottom: 0,
+              opacity: 1,
+              left: 0,
+              top: 0,
+              borderRadius:18
+            }}
           />
-        )}
+          
+        </View>
+        <View style={{ left: 150, top: 0, backgroundColor: 'transparent', width: 180 }}>
+          <Text style={{ fontSize: 20, fontWeight: '600', color: '#FFFFFF', marginBottom: 5, fontFamily: 'PB' }}>
+            {item.turfName || 'Turf'}
+          </Text>
+          <Text style={{ fontSize: 15, fontWeight: '400', color: '#FFFFFF', fontFamily: 'PL' }}>
+            📍{(item.turfLocation || 'Location')}
+          </Text>
+          <Text style={{ fontSize: 15, fontWeight: '400', color: '#FFFFFF', fontFamily: 'PL' }}>
+            💸 ₹{(item.pricePerPerson || 'Price')}
+          </Text>
+        </View>
+      </View>
+    ))}
+  </ScrollView>
+)}
+
 
         {/* Floating Add Button */}
         <TouchableOpacity
           style={styles.fab}
           onPress={() => navigation.navigate("AddTurf")}
         >
-        {/* <Text style={{fontSize:13,color:'white'}}>Add new</Text>
+          {/* <Text style={{fontSize:13,color:'white'}}>Add new</Text>
         <Text style={{fontSize:13,color:'white'}}>Turf</Text> */}
           <Ionicons name="add" size={30} color="#fff" />
         </TouchableOpacity>
@@ -107,8 +179,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     color: "white",
-    marginBottom: 20,
-    left:width*0.32,
+    marginTop: -32,
+    left:40
   },
   card: {
     backgroundColor: "rgba(255, 255, 255, 0.85)",
@@ -118,9 +190,9 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     overflow: "hidden",
     elevation: 3,
-    width: width - 32, 
-    alignSelf: "center", 
-    height:150
+    width: width - 32,
+    alignSelf: "center",
+    height: 150
   },
   image: {
     width: CARD_HEIGHT,
@@ -160,14 +232,14 @@ const styles = StyleSheet.create({
   },
   fab: {
     position: "absolute",
-    bottom: 30,
-    right: 20,
     width: 76,
     height: 76,
-    borderRadius: 28,
+    borderRadius: 50,
     backgroundColor: "#66bb6a",
     alignItems: "center",
     justifyContent: "center",
     elevation: 6,
+    alignSelf:'center',
+    bottom:40
   },
 });

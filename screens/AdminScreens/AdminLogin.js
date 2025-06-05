@@ -81,56 +81,68 @@ const AdminLogin = ({ navigation }) => {
     <Background style={{ zIndex: -2 }}>
       <Text
         style={{
-          color: "#ffffff0a",
-          fontFamily: "Kanit_400Regular",
+          color: "#fff",
+          fontFamily: "KanitLight",
           fontSize: 75,
           position: "absolute",
-          left: 20,
-          top: 50,
+          top: 180,
           zIndex: 1,
+          alignSelf:'center'
         }}
       >
-        PlayPals TurfOwner
+        Play Pals
       </Text>
       <ImageBackground
         source={require("./../asset/Cricket.png")}
         style={{
           flex: 1,
-          height: 720,
-          width: 720,
+          height: 200,
+          width: 200,
           position: "absolute",
-          bottom: 0,
-          opacity: 0.08,
-          right: -30,
-          zIndex: 0,
+          top:200,
+          opacity: 1,
+          alignSelf:'center',
+          right:110,
+          zIndex:20
         }}
       ></ImageBackground>
       <View
         style={{
-          height: 255,
-          width: 350,
+             height: 500,
+          width: '100%',
           position: "absolute",
           backgroundColor: "#ffffff0a",
           opacity: 1,
-          borderRadius: 20,
-          borderWidth: 5,
-          borderColor: "#ffffff80",
-          bottom: 200,
+          borderRadius: 50,
+          top: 400,
+          //borderWidth: 5,
+          //borderColor: "#B8F4AA",
           //justifyContent:'center',
-          alignItems: "center",
+          alignItems: "center"
+        }}
+      ><Text
+        style={{
+          color: "#B8F4AA",
+          fontFamily: "KanitLight",
+          fontSize: 55,
+          position: "absolute",
+          zIndex: 1,
+          alignSelf:'center'
         }}
       >
+        Turf Owner
+      </Text>
         <TextInput
           style={{
-            top: 25,
-            borderRadius: 10,
-            backgroundColor: "#ffffff80",
-            height: 60,
+            top: 100,
+            borderRadius: 50,
+            backgroundColor: "#B8F4AA",
+            height: 50,
             width: 300,
             position: "absolute",
             paddingLeft: 20,
-            fontFamily: "Kanit_400Regular",
-            fontSize: 24,
+            fontFamily: "KanitLight",
+            fontSize: 20,
           }}
           placeholder="Email"
           placeholderTextColor={"#0000004d"}
@@ -140,15 +152,15 @@ const AdminLogin = ({ navigation }) => {
         ></TextInput>
         <TextInput
           style={{
-            top: 125,
-            borderRadius: 10,
-            backgroundColor: "#ffffff80",
-            height: 60,
+            top: 180,
+            borderRadius: 50,
+            backgroundColor: "#B8F4AA",
+            height: 50,
             width: 300,
             position: "absolute",
             paddingLeft: 20,
-            fontFamily: "Kanit_400Regular",
-            fontSize: 24,
+            fontFamily: "KanitLight",
+            fontSize: 20,
           }}
           placeholder="Password"
           placeholderTextColor={"#0000004d"}
@@ -165,8 +177,9 @@ const AdminLogin = ({ navigation }) => {
             justifyContent: "center",
             alignItems: "center",
             position: "absolute",
-            right: 30,
-            bottom: 75,
+            right:70,
+            top:190
+            
           }}
           onPress={check}
         >
@@ -184,9 +197,10 @@ const AdminLogin = ({ navigation }) => {
         >
           <Text
             style={{
-              color: "#0091ff",
-              fontFamily: "Kanit_400Regular",
-              fontSize: 22,
+              color: "#B8F4AA",
+              fontFamily: "KanitLight",
+              fontSize: 16,
+              top: 50,
             }}
           >
             Forgot Password
@@ -196,28 +210,27 @@ const AdminLogin = ({ navigation }) => {
       <TouchableOpacity
         onPress={adminLogin}
         style={{
-          backgroundColor: "#0091ff",
-          width: 300,
-          height: 60,
-          alignItems: "center",
-          justifyContent: "center",
-          borderRadius: 10,
-          position: "absolute",
-          bottom: 100,
+         backgroundColor: "black",
+            width: 200,
+            height: 60,
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: 40,
+            position: "absolute",
+            top: 730
         }}
 
       >
-        <Text style={{ fontFamily: "Kanit_400Regular", fontSize: 24 }}>
+        <Text style={{ fontFamily: "Kanit_400Regular", fontSize: 24, color: '#B8F4AA' }}>
           Login
         </Text>
       </TouchableOpacity>
       <Text
         style={{
-          fontFamily: "Kanit_400Regular",
-          color: "#ffffff90",
-          fontSize: 24,
-          position: "absolute",
-          bottom: 10,
+           fontFamily: "KanitLight",
+            color: "#ffffff90",
+            fontSize: 20,
+            top: 405
         }}
         onPress={() => {
           navigation.navigate("AdminSignup");

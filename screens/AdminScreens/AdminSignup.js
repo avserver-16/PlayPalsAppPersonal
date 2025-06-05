@@ -34,10 +34,11 @@ export default function AdminSignup() {
   const navigation = useNavigation();
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA0-9]{2,6}$/;
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  const user="TURFOWNER"
 
 
 
-  const bFunc = async (name, email, password, dob, gender, city) => {
+  const bFunc = async (name, email, password, orgName,phoneNumber) => {
     try {
 
       const formattedDob = dob ? new Date(dob).toISOString() : null;
@@ -52,7 +53,7 @@ export default function AdminSignup() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name, email, password, dob: formattedDob, gender, city,
+          name, email, password, city,orgName,
           phoneNumber,
           ownerType: 'INDIVIDUAL',
           turfName: "Default Turf Name",
@@ -99,39 +100,27 @@ export default function AdminSignup() {
       setPasswordError("");
     }
     setFormError("");
-    bFunc(name, email, password, dob, gender, city);
+    bFunc(name, email, password, orgName,phoneNumber);
     navigation.navigate("AdminLogin");
 
   }
 
   return (
     <Background >
-      <ImageBackground source={require('./../asset/Cricket.png')}
-        style={{
-          flex: 1,
-          height: 720,
-          width: 720,
-          position: 'absolute',
-          bottom: 0,
-          opacity: 0.05,
-          right: -30, zIndex: 0
-        }}></ImageBackground>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollViewContainer}>
-        <Text style={styles.title}>Sign Up</Text>
+        
         <View
           style={{
             height: 560,
             width: 300,
             position: 'absolute',
-            backgroundColor: '#ffffff0a',
+            backgroundColor: '#B8F4AA0f',
             opacity: 1,
             borderRadius: 20,
-            borderWidth: 5,
-            borderColor: '#ffffff80',
             justifyContent: 'center',
             alignItems: 'center',
-            top: 100
-          }}>
+            top: 120
+          }}><Text style={styles.title}>Sign Up</Text>
           <TextInput
             style={styles.input}
             placeholder="Full Name"
@@ -191,21 +180,23 @@ const styles = StyleSheet.create({
     //fontWeight: "bold",
     marginBottom: 0,
     color: "#fff",
-    top: -50,
+    top: -20,
     fontFamily: 'Kanit_400Regular'
   },
   input: {
-    width: 230,
+    width: 260,
     height: 60,
-    marginBottom: 20,
-    backgroundColor: "#ffffff67",
-    borderRadius: 12,
+    marginBottom: 30,
+    backgroundColor: "#B8F4AA",
+    borderRadius: 30,
     fontSize: 20,
     color: "#fff",
     textAlign: "center",
     paddingHorizontal: 10,
     justifyContent: "center",
-    fontFamily: 'Kanit_400Regular'
+    fontFamily: 'KanitLight',
+    color: 'black',
+    top:20
   },
 
   pickerContainer: {
@@ -242,19 +233,19 @@ const styles = StyleSheet.create({
     fontFamily: 'Kanit_400Regular'
   },
   submitButton: {
-    backgroundColor: "#0091ff",
-    borderRadius: 8,
+    backgroundColor: "#000",
+    borderRadius: 50,
     width: 300,
     height: 60,
     alignItems: 'center',
     justifyContent: 'center',
-    top: 530,
+    top: 620,
     right: 100
   },
   submitButtonText: {
-    color: "#fff",
+    color: "#B8F4AA",
     fontSize: 18,
     //fontWeight: "bold",
-    fontFamily: 'Kanit_400Regular', fontSize: 24
+    fontFamily: 'KanitLight', fontSize: 24
   },
 });

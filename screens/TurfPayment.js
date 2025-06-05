@@ -15,6 +15,11 @@ const TurfPayment = () => {
   const [selectedSeats, setSelectedSeats] = useState('1');
   const [selectedPayment, setSelectedPayment] = useState('UPI');
 
+  const payNow = async () => {
+const response=await fetch('https://playpals-l797.onrender.com/payment/create-order')
+console.log(response)
+  }
+
   return (
     <View style={styles.container}>
       <ImageBackground source={require('./asset/turfBG.png')} style={styles.background} />
@@ -64,7 +69,7 @@ const TurfPayment = () => {
           })}
         </View>
 
-        <TouchableOpacity style={styles.payNowButton}>
+        <TouchableOpacity style={styles.payNowButton} onPress={payNow}>
           <Text style={styles.payNowText}>Pay Now</Text>
         </TouchableOpacity>
       </View>

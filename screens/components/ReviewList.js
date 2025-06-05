@@ -10,7 +10,6 @@ const ReviewList = ({ reviews }) => {
     <ScrollView style={styles.reviewsContainer} contentContainerStyle={{ paddingBottom: 20 }}>
       {reviews.map((review) => (
         <View key={review.id} style={styles.reviewCard}>
-          <Text style={styles.reviewName}>{review.name}</Text>
           <Text style={styles.reviewText}>{review.text}</Text>
           <Text style={styles.reviewStars}>{renderStars(review.rating)}</Text>
         </View>

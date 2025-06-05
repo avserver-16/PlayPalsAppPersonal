@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,17 +7,15 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  Dimensions,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
 import BG2 from "../BG2";
-import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
 const { width } = Dimensions.get("window");
-
 
 export default function AddTurf() {
   const [turfName, setTurfName] = useState("");
@@ -32,52 +30,69 @@ export default function AddTurf() {
   const [amenities, setAmenities] = useState("");
   const [pricePerPerson, setPricePerPerson] = useState("");
   const [turfPhotos, setTurfPhotos] = useState([]);
-  const [token, setToken] = useState("");
   const navigation = useNavigation();
-
-
-  const submitTurf = async () => {
-console.log("entered1")
-      console.log("entered2")
-      try {
-        const storedToken = await AsyncStorage.getItem("token");
-        if (!storedToken) {
-          console.error("No token found");
-          return;
-        }
-
-        setToken(token);
-        console.log("Retrieved token:", storedToken);
-
-        const response = await fetch("https://playpals-l797.onrender.com/turf/all_turfs", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${storedToken}`,
-          },
-        });
-
-        const data = await response.json();
-        if (response.ok) {
-          console.log(data)
-        } else {
-          console.error("Failed to fetch user data:", data.message);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-  }
 
   const pickTurfPhotos = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsMultipleSelection: true,
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       quality: 1,
+      base64: true, // ✅ Add base64
     });
 
     if (!result.canceled) {
       const selected = result.assets || [result];
-      setTurfPhotos([...turfPhotos, ...selected]);
+      const formattedPhotos = selected.map((asset) => ({
+        uri: asset.uri,
+        base64: asset.base64,
+      }));
+      setTurfPhotos([...turfPhotos, ...formattedPhotos]);
+    }
+  };
+
+  const submitTurf = async () => {
+    try {
+      const storedToken = await AsyncStorage.getItem("token");
+      if (!storedToken) {
+        console.error("No token found");
+        return;
+      }
+
+      const response = await fetch("https://playpals-l797.onrender.com/turf/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${storedToken}`,
+        },
+        body: JSON.stringify({
+          turfName,
+          turfLocation,
+          registrationNumber,
+          contactPersonName,
+          contactPersonPhone,
+          turfDescription,
+          turfSize,
+          totalSeats,
+          turfGames,
+          amenities,
+          pricePerPerson,
+          turfPhotos: turfPhotos.map((photo) => photo.base64), 
+        }),
+      });
+
+      const text = await response.text();
+      console.log("Raw Response:", text);
+
+      const data = JSON.parse(text);
+
+      if (response.ok) {
+        console.log("Success:", data);
+        navigation.goBack();
+      } else {
+        console.error("Server error:", data.message);
+      }
+    } catch (error) {
+      console.error("Error submitting turf:", error);
     }
   };
 
@@ -91,68 +106,41 @@ console.log("entered1")
 
         <View style={styles.formCard}>
           <ScrollView contentContainerStyle={styles.form} showsVerticalScrollIndicator={false}>
+            {/* All input fields */}
             <View style={styles.formSection}>
               <Text style={styles.label}>Turf Name</Text>
-              <TextInput
-                style={styles.input}
-                value={turfName}
-                onChangeText={setTurfName}
-              />
+              <TextInput style={styles.input} value={turfName} onChangeText={setTurfName} />
             </View>
 
             <View style={styles.formSection}>
               <Text style={styles.label}>Location</Text>
-              <TextInput
-                style={styles.input}
-                value={turfLocation}
-                onChangeText={setTurfLocation}
-              />
+              <TextInput style={styles.input} value={turfLocation} onChangeText={setTurfLocation} />
             </View>
 
             <View style={styles.formSection}>
               <Text style={styles.label}>Registration Number</Text>
-              <TextInput
-                style={styles.input}
-                value={registrationNumber}
-                onChangeText={setRegistrationNumber}
-              />
+              <TextInput style={styles.input} value={registrationNumber} onChangeText={setRegistrationNumber} />
             </View>
 
             <View style={styles.formRow}>
               <View style={styles.rowItem}>
                 <Text style={styles.label}>Turf Size</Text>
-                <TextInput
-                  style={styles.input}
-                  value={turfSize}
-                  onChangeText={setTurfSize}
-                />
+                <TextInput style={styles.input} value={turfSize} onChangeText={setTurfSize} />
               </View>
               <View style={styles.rowItem}>
                 <Text style={styles.label}>Total Seats</Text>
-                <TextInput
-                  style={styles.input}
-                  value={totalSeats}
-                  onChangeText={setTotalSeats}
-                />
+                <TextInput style={styles.input} value={totalSeats} onChangeText={setTotalSeats} />
               </View>
             </View>
 
             <View style={styles.formSection}>
               <Text style={styles.label}>Games</Text>
-              <TextInput
-                style={styles.input}
-                value={turfGames}
-                onChangeText={setTurfGames}
-              />
+              <TextInput style={styles.input} value={turfGames} onChangeText={setTurfGames} />
             </View>
 
             <View style={styles.formSection}>
               <Text style={styles.label}>Amenities</Text>
-              <TextInput
-                style={styles.input}
-                value={amenities}
-                onChangeText={setAmenities}
-              />
+              <TextInput style={styles.input} value={amenities} onChangeText={setAmenities} />
             </View>
 
             <View style={styles.formSection}>
@@ -167,11 +155,7 @@ console.log("entered1")
 
             <View style={styles.formSection}>
               <Text style={styles.label}>Contact Person Name</Text>
-              <TextInput
-                style={styles.input}
-                value={contactPersonName}
-                onChangeText={setContactPersonName}
-              />
+              <TextInput style={styles.input} value={contactPersonName} onChangeText={setContactPersonName} />
             </View>
 
             <View style={styles.formSection}>
@@ -219,8 +203,8 @@ console.log("entered1")
             </View>
 
             <View style={{ marginTop: 24, marginBottom: 40 }}>
-              <TouchableOpacity style={styles.submitButton}>
-                <Text style={styles.submitText} onPress={() => submitTurf()}>Submit Turf</Text>
+              <TouchableOpacity style={styles.submitButton} onPress={submitTurf}>
+                <Text style={styles.submitText}>Submit Turf</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -231,11 +215,7 @@ console.log("entered1")
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    margin: 45,
-
-  },
+  container: { flex: 1, margin: 45 },
   title: {
     fontSize: 24,
     color: "white",
@@ -250,35 +230,21 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 1,
     borderColor: "rgba(255,255,255,0.3)",
-    width: width * 0.9
+    width: width * 0.9,
   },
-  form: {
-    paddingBottom: 80,
-  },
-  formSection: {
-    marginBottom: 16,
-  },
-  label: {
-    color: "white",
-    marginBottom: 6,
-    fontSize: 16,
-  },
+  form: { paddingBottom: 80 },
+  formSection: { marginBottom: 16 },
+  label: { color: "white", marginBottom: 6, fontSize: 16 },
   input: {
     backgroundColor: "rgba(255,255,255,0.3)",
     borderRadius: 10,
     paddingHorizontal: 12,
     paddingVertical: 10,
     fontSize: 16,
-    color: 'white'
+    color: "white",
   },
-  formRow: {
-    flexDirection: "row",
-    gap: 16,
-    marginBottom: 16,
-  },
-  rowItem: {
-    flex: 1,
-  },
+  formRow: { flexDirection: "row", gap: 16, marginBottom: 16 },
+  rowItem: { flex: 1 },
   imageRow: {
     flexDirection: "row",
     flexWrap: "wrap",

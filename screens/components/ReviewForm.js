@@ -25,7 +25,7 @@ const ReviewForm = ({ title = "Post a Review", onSubmit }) => {
     }
 
     const newReview = {
-      name,
+     
       text: review,
       rating,
     };

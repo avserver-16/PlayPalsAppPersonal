@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
   },
   sportsText: {
     fontSize: 20,
-    fontWeight: "bold",
+   fontFamily:'PL',
     color: "#000",
   },
 
@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
     width:120,
     alignItems:'center'
   },
-  sectionTitle: { fontSize: 20, fontWeight: "bold", color: "#000" },
+  sectionTitle: { fontSize: 20, fontFamily:'PL', color: "#000" },
 
   carouselContainer: {
     flexDirection: "row",
@@ -319,7 +319,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  pickPlayRepeatText: { fontSize: 18, fontWeight: "bold", color: "white" ,fontFamily:'PxLi'},
+  pickPlayRepeatText: { fontSize: 18, fontFamily:'PL', color: "white" ,fontFamily:'PxLi'},
 
   card: {
     alignItems: "center",
@@ -332,7 +332,7 @@ const styles = StyleSheet.create({
     height: 210,
   },
   cardImage: { width: 100, height: 100, resizeMode: "contain" },
-  cardText: { marginTop: 10, fontSize: 16, fontWeight: "bold" },
+  cardText: { marginTop: 10, fontSize: 18, fontFamily:'PL'},
 });
 
 export default HomeScreen;

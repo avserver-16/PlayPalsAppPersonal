@@ -144,7 +144,7 @@ const AdminLogin = ({ navigation }) => {
             width: 300,
             position: "absolute",
             paddingLeft: 20,
-            fontFamily: "Kanit_400Regular",
+            fontFamily:"KanitLight", 
             fontSize: 24,
           }}
           placeholder="Password"

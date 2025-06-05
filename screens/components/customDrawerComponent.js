@@ -25,15 +25,16 @@ const CustomDrawerContent = (props) => {
 
 const styles = StyleSheet.create({
   drawerContainer: { flex: 1, backgroundColor: "#000", paddingHorizontal: 20 },
-  logoText: { fontSize: 18, fontWeight: "bold", color: "white", marginVertical: 20 },
+  logoText: { fontSize: 18, fontFamily:'PB', color: "white", marginVertical: 20},
   menuContainer: { flex: 1, marginVertical: 20 },
   signOutButton: {
-    width:280,
+    width:300,
     backgroundColor: "#fff",
     padding: 15,
     borderRadius: 15,
     alignItems: "center",
     marginTop: 20,
+    alignSelf:'center'
   },
   signOutText: { fontSize: 16, fontWeight: "bold", color: "#000" },
 });

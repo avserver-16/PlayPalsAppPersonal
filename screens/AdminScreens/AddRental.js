@@ -7,23 +7,25 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  Dimensions,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import BG2 from "../BG2";
-import { Dimensions } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width } = Dimensions.get("window");
 
 export default function AddRental() {
+  const navigation = useNavigation();
+
   const [rentalName, setRentalName] = useState("");
   const [rentalType, setRentalType] = useState("");
   const [description, setDescription] = useState("");
   const [pricePerHour, setPricePerHour] = useState("");
-  const [images, setImages] = useState([]);
-
-  const navigation = useNavigation();
+  const [quantity, setQuantity] = useState("1");
+  const [images, setImages] = useState([]); // not used in request body for now
 
   const pickImages = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -35,6 +37,49 @@ export default function AddRental() {
     if (!result.canceled) {
       const selected = result.assets || [result];
       setImages([...images, ...selected]);
+    }
+  };
+
+  const submitrental = async () => {
+    try {
+      const storedToken = await AsyncStorage.getItem("token");
+      if (!storedToken) {
+        console.error("No token found");
+        return;
+      }
+
+      const payload = {
+        name: rentalName,
+        category: rentalType,
+        description,
+        pricePerHour: Number(pricePerHour),
+        quantity: parseInt(quantity),
+        ownerType: "TURFOWNER",
+        // photos: [], // For now skipped. Add after FormData implementation
+      };
+
+      const response = await fetch("https://playpals-l797.onrender.com/rentals", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${storedToken}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const text = await response.text();
+      console.log("Raw Response:", text);
+
+      const data = JSON.parse(text);
+
+      if (response.ok) {
+        console.log("Success:", data);
+        navigation.goBack();
+      } else {
+        console.error("Server error:", data.error || data.message);
+      }
+    } catch (error) {
+      console.error("Error submitting rental:", error);
     }
   };
 
@@ -50,20 +95,12 @@ export default function AddRental() {
           <ScrollView contentContainerStyle={styles.form} showsVerticalScrollIndicator={false}>
             <View style={styles.formSection}>
               <Text style={styles.label}>Rental Name</Text>
-              <TextInput
-                style={styles.input}
-                value={rentalName}
-                onChangeText={setRentalName}
-              />
+              <TextInput style={styles.input} value={rentalName} onChangeText={setRentalName} />
             </View>
 
             <View style={styles.formSection}>
               <Text style={styles.label}>Type</Text>
-              <TextInput
-                style={styles.input}
-                value={rentalType}
-                onChangeText={setRentalType}
-              />
+              <TextInput style={styles.input} value={rentalType} onChangeText={setRentalType} />
             </View>
 
             <View style={styles.formSection}>
@@ -72,6 +109,16 @@ export default function AddRental() {
                 style={styles.input}
                 value={pricePerHour}
                 onChangeText={setPricePerHour}
+                keyboardType="numeric"
+              />
+            </View>
+
+            <View style={styles.formSection}>
+              <Text style={styles.label}>Quantity</Text>
+              <TextInput
+                style={styles.input}
+                value={quantity}
+                onChangeText={setQuantity}
                 keyboardType="numeric"
               />
             </View>
@@ -87,7 +134,7 @@ export default function AddRental() {
             </View>
 
             <View style={styles.formSection}>
-              <Text style={styles.label}>Photos</Text>
+              <Text style={styles.label}>Photos (preview only)</Text>
               <View style={styles.imageRow}>
                 {images.map((photo, index) => (
                   <View key={index} style={styles.imageWrapper}>
@@ -110,7 +157,7 @@ export default function AddRental() {
             </View>
 
             <View style={{ marginTop: 24, marginBottom: 40 }}>
-              <TouchableOpacity style={styles.submitButton}>
+              <TouchableOpacity style={styles.submitButton} onPress={submitrental}>
                 <Text style={styles.submitText}>Submit Rental</Text>
               </TouchableOpacity>
             </View>

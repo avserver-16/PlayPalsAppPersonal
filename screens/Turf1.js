@@ -134,8 +134,8 @@ function wordCutter(text) {
                   backgroundColor: isSelected ? '#423E3EB2' : 'black',
                   borderRadius: 15, alignItems: 'center', justifyContent: 'center'
                 }}>
-                <Text style={{ fontSize: 32, color: 'white' }}>{date.getDate()}</Text>
-                <Text style={{ fontSize: 20, color: 'white' }}>
+                <Text style={{ fontSize: 32, color: 'white' ,fontFamily:'PL'}}>{date.getDate()}</Text>
+                <Text style={{ fontSize: 20, color: 'white',fontFamily:'PL' }}>
                   {date.toLocaleString('en-US', { month: 'short' })}
                 </Text>
               </TouchableOpacity>

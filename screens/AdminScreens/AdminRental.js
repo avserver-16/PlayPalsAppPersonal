@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   View,
   Text,
@@ -9,9 +9,10 @@ import {
   Dimensions,
   RefreshControl,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation ,useRoute} from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import BG2 from "../BG2";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width } = Dimensions.get("window");
 
@@ -19,31 +20,44 @@ const CARD_HEIGHT = 120;
 
 export default function AdminRentalScreen() {
   const navigation = useNavigation();
+  const route = useRoute();
+  const { rentalsData } = route.params || {};
+  const [rentals, setRentals] = useState([]);
+useEffect(() => {
+    const fetchRentals = async () => {
+      console.log("Fetching Rentals...");
+      try {
+        const storedToken = await AsyncStorage.getItem("token");
+        console.log("Token:", storedToken)
+        if (!storedToken) {
+          console.log("No Token Found");
+          return;
+        }
+        console.log("ID:",rentalsData)
 
-  const [rentals, setRentals] = useState([
-    {
-      id: "1",
-      name: "Cricket Bat (English Willow)",
-      location: "Ernakulam",
-      price: 300,
-      image: require("../asset/cKit.png"),
-    },
-    {
-      id: "2",
-      name: "Football - Adidas Tango",
-      location: "Thrissur",
-      price: 150,
-      image: require("../asset/FBgloves.png"),
-    },
-    {
-      id: "3",
-      name: "Badminton Racket (Yonex)",
-      location: "Kozhikode",
-      price: 120,
-      image: require("../asset/badmintonRacket.png"),
-    },
-  ]);
+        const response = await fetch("https://playpals-l797.onrender.com/rentals", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${storedToken}`
+          }
+        });
 
+        const data = await response.json();
+        console.log("Data:", JSON.stringify(data, null, 2))
+      
+          setRentals(data);
+          console.log(data[1].photos[0])
+        
+      } catch (error) {
+        console.error("Error fetching rentals:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRentals();
+  }, []);
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {
@@ -56,11 +70,10 @@ export default function AdminRentalScreen() {
       style={styles.card}
       onPress={() => navigation.navigate("RentalInfo", { rental: item })}
     >
-      <Image source={item.image} style={styles.image} />
+      <Image source={{uri:item.photos[0]}} style={styles.image} />
       <View style={styles.infoContainer}>
         <Text style={styles.name}>{item.name}</Text>
-        <Text style={styles.location}>📍 {item.location}</Text>
-        <Text style={styles.price}>💸 ₹{item.price}/day</Text>
+        <Text style={styles.price}>💸 ₹{item.pricePerHour}/hr</Text>
       </View>
     </TouchableOpacity>
   );
@@ -134,6 +147,9 @@ const styles = StyleSheet.create({
     width: CARD_HEIGHT,
     height: CARD_HEIGHT,
     resizeMode: "contain",
+    left:20,
+    borderRadius:15,
+    marginRight:20
   },
   infoContainer: {
     flex: 1,
@@ -142,8 +158,9 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 18,
-    fontWeight: "bold",
+ fontFamily:'PL',
     color: "#333",
+   
   },
   location: {
     fontSize: 14,
@@ -154,7 +171,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: "#66bb6a",
     marginTop: 6,
-    fontWeight: "500",
+    fontWeight: "500", fontFamily:'PL',
   },
   emptyState: {
     flex: 1,

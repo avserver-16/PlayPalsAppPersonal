@@ -83,7 +83,7 @@ const RoleSelectionScreen = ({ navigation }) => {
               selectedRole === "user" ? "radio-button-checked" : "radio-button-unchecked"
             }
             size={28}
-            color="#0091ff"
+           color="#66bb6a"
             borderRadius={20}
           />
           <Text style={styles.checkboxLabel}>User</Text>
